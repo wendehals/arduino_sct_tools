@@ -73,9 +73,8 @@
             name="org.eclipse.cdt.feature.group"/>
         <requirement
             name="org.eclipse.cdt.arduino.feature.group"/>
-        <repositoryList>
-          <repository
-              url="http://updates.yakindu.org/sct/mars/releases"/>
+        <repositoryList
+            name="Neon">
           <repository
               url="http://updates.yakindu.org/sct/mars/releases"/>
           <repository
