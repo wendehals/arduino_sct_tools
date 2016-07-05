@@ -18,25 +18,11 @@
     <requirement
         name="org.eclipse.pde.feature.group"/>
     <requirement
-        name="org.eclipse.cdt.feature.group"/>
-    <requirement
         name="org.eclipse.xtext.sdk.feature.group"/>
     <requirement
         name="org.eclipse.xtend.sdk.feature.group"/>
     <requirement
         name="org.eclipse.egit.feature.group"/>
-    <requirement
-        name="org.eclipse.cdt.arduino.feature.group"/>
-    <requirement
-        name="org.yakindu.sct.feature.group"/>
-    <requirement
-        name="org.yakindu.sct.generator.c.feature.group"/>
-    <requirement
-        name="org.yakindu.sct.generator.cpp.feature.group"/>
-    <repository
-        url="http://updates.yakindu.org/sct/mars/releases"/>
-    <repository
-        url="http://download.eclipse.org/tools/cdt/releases/9.0"/>
   </setupTask>
   <setupTask
       xsi:type="setup:VariableTask"
@@ -71,9 +57,27 @@
             name="org.yakindu.sct.feature.group"/>
         <requirement
             name="org.yakindu.sct.generator.feature.group"/>
+        <requirement
+            name="org.eclipse.xtext.sdk.feature.group"/>
+        <requirement
+            name="org.eclipse.xtend.sdk.feature.group"/>
+        <requirement
+            name="org.yakindu.sct.feature.group"/>
+        <requirement
+            name="org.yakindu.sct.generator.c.feature.group"/>
+        <requirement
+            name="org.yakindu.sct.generator.cpp.feature.group"/>
+        <requirement
+            name="org.eclipse.cdt.feature.group"/>
+        <requirement
+            name="org.eclipse.cdt.arduino.feature.group"/>
         <repositoryList>
           <repository
               url="http://updates.yakindu.org/sct/mars/releases"/>
+          <repository
+              url="http://updates.yakindu.org/sct/mars/releases"/>
+          <repository
+              url="http://download.eclipse.org/tools/cdt/releases/9.0"/>
         </repositoryList>
       </targlet>
     </setupTask>
