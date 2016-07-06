@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: YAKINDU SCT C++ Code Generator for Arduino
+Bundle-SymbolicName: org.yakindu.sct.generator.cpp.arduino; singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Require-Bundle: org.yakindu.sct.model.sexec,
+ org.yakindu.sct.model.stext,
+ org.yakindu.sct.generator.core,
+ org.yakindu.sct.generator.genmodel,
+ org.yakindu.sct.generator.c,
+ org.yakindu.sct.generator.cpp
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-Vendor: statecharts.org

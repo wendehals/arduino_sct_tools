@@ -1,0 +1,9 @@
+eclipse.preferences.version=1
+encoding/.classpath=Cp1252
+encoding//.settings/org.eclipse.core.resources.prefs=Cp1252
+encoding//.settings/org.eclipse.xtend.shared.ui.prefs=Cp1252
+encoding//META-INF/MANIFEST.MF=Cp1252
+encoding//src/org/yakindu/sct/generator/cpp/arduino/ArduinoCodeGenerator.xtend=Cp1252
+encoding/<project>=UTF-8
+encoding/build.properties=Cp1252
+encoding/plugin.xml=Cp1252
