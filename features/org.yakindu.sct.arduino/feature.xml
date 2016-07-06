@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.yakindu.sct.arduino"
+      label="YAKINDU SCT Arduino Support"
+      version="1.0.0.qualifier"
+      provider-name="statecharts.org">
+
+   <description url="http://www.example.com/description">
+      [Enter Feature Description here.]
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <requires>
+      <import plugin="org.yakindu.sct.model.sexec"/>
+      <import plugin="org.yakindu.sct.model.stext"/>
+      <import plugin="org.yakindu.sct.generator.core"/>
+      <import plugin="org.yakindu.sct.generator.genmodel"/>
+      <import plugin="org.yakindu.sct.generator.c"/>
+      <import plugin="org.yakindu.sct.generator.cpp"/>
+   </requires>
+
+   <plugin
+         id="org.yakindu.sct.generator.cpp.arduino"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+</feature>
