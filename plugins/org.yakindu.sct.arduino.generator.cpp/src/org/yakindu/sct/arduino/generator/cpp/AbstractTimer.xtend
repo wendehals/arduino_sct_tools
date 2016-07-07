@@ -1,21 +1,20 @@
 package org.yakindu.sct.arduino.generator.cpp
 
 import com.google.inject.Inject
-import org.yakindu.sct.model.sexec.ExecutionFlow
-import org.yakindu.sct.model.sgraph.Statechart
 import org.eclipse.xtext.generator.IFileSystemAccess
-import org.yakindu.sct.model.sgen.GeneratorEntry
+import org.yakindu.sct.model.sexec.ExecutionFlow
 
 class AbstractTimer {
 
-	@Inject
-	extension Naming
+	@Inject extension Naming
 
-	def generateAbstractTimer(ExecutionFlow flow, Statechart sc, IFileSystemAccess fsa, GeneratorEntry entry) {
-		fsa.generateFile(abstractTimer.cpp, flow.generateContents(entry))
+	def generateAbstractTimer(ExecutionFlow it, IFileSystemAccess fsa) {
+		fsa.generateFile(abstractTimer.cpp, generateContents())
 	}
 
-	def private generateContents(ExecutionFlow it, GeneratorEntry entry) '''
+	def private generateContents(ExecutionFlow it) '''
+		«header»
+		
 		#include "«abstractTimer.h»"
 		
 		volatile bool runCycleFlag = false;
@@ -102,5 +101,5 @@ class AbstractTimer {
 			this->stop();
 		}
 	'''
-	
+
 }

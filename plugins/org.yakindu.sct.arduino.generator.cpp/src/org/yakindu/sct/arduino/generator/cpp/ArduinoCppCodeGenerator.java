@@ -1,8 +1,10 @@
 package org.yakindu.sct.arduino.generator.cpp;
 
+import org.eclipse.xtext.generator.IFileSystemAccess2;
 import org.yakindu.sct.generator.c.GenArtifactConfigurations;
 import org.yakindu.sct.generator.c.IGenArtifactConfigurations;
 import org.yakindu.sct.generator.c.types.CTypeSystemAccess;
+import org.yakindu.sct.generator.core.filesystem.EFSResourceFileSystemAccess;
 import org.yakindu.sct.generator.core.impl.GenericJavaBasedGenerator;
 import org.yakindu.sct.generator.core.types.ICodegenTypeSystemAccess;
 import org.yakindu.sct.generator.cpp.CppNamingService;
@@ -38,6 +40,7 @@ public class ArduinoCppCodeGenerator extends GenericJavaBasedGenerator {
 				binder.bind(IGenArtifactConfigurations.class)
 						.annotatedWith(Names.named(IGenArtifactConfigurations.DEFAULT))
 						.toInstance(GenArtifactConfigurations.DEFAULT);
+				binder.bind(IFileSystemAccess2.class).to(EFSResourceFileSystemAccess.class);
 			}
 		});
 	}

@@ -10,7 +10,10 @@
             contentType="statechart"
             elementRefType="org.yakindu.sct.model.sgraph.Statechart">
             <FeatureLibrary
-            	library_id="org.yakindu.generator.core.features">
+            	library_id="org.yakindu.generator.core.features.adapted">
+            </FeatureLibrary>
+            <FeatureLibrary
+                  library_id="org.yakindu.sct.arduino.feature.library">
             </FeatureLibrary>
       </SCTGenerator>
    </extension>
@@ -18,4 +21,17 @@
 	 	<ExtensionGeneratorMapping fileExtension="sct" generatorId="yakindu::arduino_cpp">
 	 	</ExtensionGeneratorMapping>
  	</extension>
+ <extension
+       point="org.yakindu.sct.generator.core.featuretypes">
+    <FeatureLibrary
+          defaultProvider="org.yakindu.sct.arduino.generator.cpp.features.CoreDefaultFeatureValueProvider"
+          library_id="org.yakindu.generator.core.features.adapted"
+          uri="platform:/plugin/org.yakindu.sct.generator.core/library/CoreFeatureTypeLibrary.xmi">
+    </FeatureLibrary>
+    <FeatureLibrary
+          defaultProvider="org.yakindu.sct.arduino.generator.cpp.features.ArduinoDefaultFeatureValueProvider"
+          library_id="org.yakindu.sct.arduino.feature.library"
+          uri="platform:/plugin/org.yakindu.sct.arduino.generator.cpp/library/ArduinoFeatureTypeLibrary.xmi">
+    </FeatureLibrary>
+ </extension>
 </plugin>

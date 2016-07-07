@@ -1,21 +1,20 @@
 package org.yakindu.sct.arduino.generator.cpp
 
 import com.google.inject.Inject
-import org.yakindu.sct.model.sexec.ExecutionFlow
-import org.yakindu.sct.model.sgraph.Statechart
 import org.eclipse.xtext.generator.IFileSystemAccess
-import org.yakindu.sct.model.sgen.GeneratorEntry
+import org.yakindu.sct.model.sexec.ExecutionFlow
 
-class Main {
+class ArduinoMain {
 
-	@Inject
-	extension Naming
+	@Inject extension Naming
 
-	def generateMain(ExecutionFlow flow, Statechart sc, IFileSystemAccess fsa, GeneratorEntry entry) {
-		fsa.generateFile(main.cpp, flow.generateContents(entry))
+	def generateMain(ExecutionFlow it, IFileSystemAccess fsa) {
+		fsa.generateFile(main.cpp, generateContents())
 	}
 
-	def private generateContents(ExecutionFlow it, GeneratorEntry entry) '''
+	def private generateContents(ExecutionFlow it) '''
+		«header»
+		
 		#include <Arduino.h>
 		#include "src-gen/«module.h»"
 		#include "src-gen/«atMega168_328Timer.h»"

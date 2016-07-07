@@ -1,22 +1,29 @@
 package org.yakindu.sct.arduino.generator.cpp
 
-import org.yakindu.sct.model.sexec.ExecutionFlow
-import org.yakindu.sct.model.sgraph.Statechart
-import org.eclipse.xtext.generator.IFileSystemAccess
-import org.yakindu.sct.model.sgen.GeneratorEntry
 import com.google.inject.Inject
+import org.eclipse.xtext.generator.IFileSystemAccess
+import org.yakindu.sct.arduino.generator.cpp.features.GenmodelEntriesExtension
+import org.yakindu.sct.model.sexec.ExecutionFlow
+import org.yakindu.sct.model.sgen.GeneratorEntry
 
 class StatemachineConnectorHeader {
 
-	@Inject
-	extension Naming
+	@Inject extension Naming
+	@Inject extension GenmodelEntriesExtension
 
-	def generateStatemachineConnectorHeader(ExecutionFlow flow, Statechart sc, IFileSystemAccess fsa,
-		GeneratorEntry entry) {
-		fsa.generateFile(flow.module.connector.h, flow.generateContents(entry))
+	def generateStatemachineConnectorHeader(ExecutionFlow flow, GeneratorEntry entry, IFileSystemAccess fsa) {
+		if (getUserSrcFolder(entry) != null) {
+			fsa.generateFile(getUserSrcFolder(entry) + "/" + flow.module.connector.h, flow.generateContents(entry))
+		} else {
+			fsa.generateFile(flow.module.connector.h, flow.generateContents(entry))
+		}
 	}
 
 	def private generateContents(ExecutionFlow it, GeneratorEntry entry) '''
+		«header»
+		
+		«entry.licenseText»
+		
 		#ifndef «module.connector.define»_H_
 		#define «module.connector.define»_H_
 		

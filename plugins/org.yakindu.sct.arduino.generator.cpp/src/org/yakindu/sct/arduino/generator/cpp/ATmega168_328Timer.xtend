@@ -1,21 +1,20 @@
 package org.yakindu.sct.arduino.generator.cpp
 
+import com.google.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.yakindu.sct.model.sexec.ExecutionFlow
-import org.yakindu.sct.model.sgen.GeneratorEntry
-import org.yakindu.sct.model.sgraph.Statechart
-import com.google.inject.Inject
 
 class ATmega168_328Timer {
-	
-	@Inject
-	extension Naming
 
-	def generateATmega168_328Timer(ExecutionFlow flow, Statechart sc, IFileSystemAccess fsa, GeneratorEntry entry) {
-		fsa.generateFile(atMega168_328Timer.cpp, flow.generateContents(entry))
+	@Inject extension Naming
+
+	def generateATmega168_328Timer(ExecutionFlow flow, IFileSystemAccess fsa) {
+		fsa.generateFile(atMega168_328Timer.cpp, flow.generateContents())
 	}
 
-	def private generateContents(ExecutionFlow it, GeneratorEntry entry) '''
+	def private generateContents(ExecutionFlow it) '''
+		«header»
+		
 		#include "«atMega168_328Timer.h»"
 		
 		extern bool runCycleFlag;
@@ -26,7 +25,7 @@ class ATmega168_328Timer {
 		
 		«atMega168_328Timer»::«atMega168_328Timer»(«statemachineInterface»* statemachine, «hardwareConnector»* hardware,
 				unsigned short maxParallelTimeEvents, unsigned int period) :
-				«abstractTimer.h»(statemachine, hardware, maxParallelTimeEvents, period) {
+				«abstractTimer»(statemachine, hardware, maxParallelTimeEvents, period) {
 		}
 		
 		void «atMega168_328Timer»::init() {
@@ -66,5 +65,5 @@ class ATmega168_328Timer {
 			TCCR1B = 0; // turn off the timer
 		}
 	'''
-	
+
 }

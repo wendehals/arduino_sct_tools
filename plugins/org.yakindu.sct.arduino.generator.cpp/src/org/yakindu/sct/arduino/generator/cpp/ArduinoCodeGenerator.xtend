@@ -7,46 +7,56 @@ import org.yakindu.sct.model.sexec.ExecutionFlow
 import org.yakindu.sct.model.sgen.GeneratorEntry
 import com.google.inject.Inject
 import org.yakindu.sct.model.sgraph.Statechart
+import org.yakindu.sct.generator.cpp.Types
+import org.yakindu.sct.generator.cpp.TimedStatemachineInterface
+import org.yakindu.sct.generator.cpp.TimerInterface
+import org.yakindu.sct.generator.cpp.StatemachineInterface
+import org.yakindu.sct.generator.cpp.StatemachineHeader
+import org.yakindu.sct.generator.cpp.StatemachineImplementation
 
 class ArduinoCodeGenerator extends AbstractWorkspaceGenerator implements IExecutionFlowGenerator {
 
-	@Inject
-	extension Main
+	@Inject extension Types
+	@Inject extension TimedStatemachineInterface
+	@Inject extension TimerInterface
+	@Inject extension StatemachineInterface
+	@Inject extension StatemachineHeader
+	@Inject extension StatemachineImplementation
 
-	@Inject
-	extension StatemachineConnectorHeader
-
-	@Inject
-	extension StatemachineConnector
-
-	@Inject
-	extension TimeEventHeader
-
-	@Inject
-	extension AbstractTimerHeader
-
-	@Inject
-	extension AbstractTimer
-
-	@Inject
-	extension ATmega168_328TimerHeader
-
-	@Inject
-	extension ATmega168_328Timer
-
-	@Inject
-	extension HardwareConnectorHeader
+	@Inject extension Naming
+	@Inject extension ArduinoMain
+	@Inject extension StatemachineConnectorHeader
+	@Inject extension StatemachineConnector
+	@Inject extension TimeEventHeader
+	@Inject extension AbstractTimerHeader
+	@Inject extension AbstractTimer
+	@Inject extension ATmega168_328TimerHeader
+	@Inject extension ATmega168_328Timer
+	@Inject extension HardwareConnectorHeader
 
 	override generate(ExecutionFlow flow, GeneratorEntry entry, IFileSystemAccess fsa) {
-		flow.generateMain(flow.sourceElement as Statechart, fsa, entry);
-		flow.generateStatemachineConnectorHeader(flow.sourceElement as Statechart, fsa, entry);
-		flow.generateStatemachineConnector(flow.sourceElement as Statechart, fsa, entry);
-		flow.generateTimeEventHeader(flow.sourceElement as Statechart, fsa, entry);
-		flow.generateAbstractTimerHeader(flow.sourceElement as Statechart, fsa, entry);
-		flow.generateAbstractTimer(flow.sourceElement as Statechart, fsa, entry);
-		flow.generateATmega168_328TimerHeader(flow.sourceElement as Statechart, fsa, entry);
-		flow.generateATmega168_328Timer(flow.sourceElement as Statechart, fsa, entry);
-		flow.generateHardwareConnectorHeader(flow.sourceElement as Statechart, fsa, entry);
+		// C++ code generation for statechart
+		flow.generateTypesHeader(entry, fsa)
+		flow.generateIStatemachine(entry, fsa);
+		flow.generateITimedStatemachine(entry, fsa);
+		flow.generateITimerService(entry, fsa);
+		flow.generateStatemachineHeader(flow.sourceElement as Statechart, fsa, entry)
+		flow.generateStatemachineImplemenation(flow.sourceElement as Statechart, fsa, entry)
+
+		// Arduino specific sources
+		flow.generateMain(fsa);
+		flow.generateStatemachineConnectorHeader(entry, fsa);
+		flow.generateStatemachineConnector(entry, fsa);
+		flow.generateTimeEventHeader(fsa);
+		flow.generateAbstractTimerHeader(fsa);
+		flow.generateAbstractTimer(fsa);
+		flow.generateATmega168_328TimerHeader(fsa);
+		flow.generateATmega168_328Timer(fsa);
+		flow.generateHardwareConnectorHeader(fsa);
+	}
+
+	def generateTypesHeader(ExecutionFlow it, GeneratorEntry entry, IFileSystemAccess fsa) {
+		fsa.generateFile(typesModule.h, typesHContent(entry))
 	}
 
 }

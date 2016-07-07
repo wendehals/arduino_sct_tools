@@ -1,21 +1,20 @@
 package org.yakindu.sct.arduino.generator.cpp
 
+import com.google.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.yakindu.sct.model.sexec.ExecutionFlow
-import org.yakindu.sct.model.sgen.GeneratorEntry
-import org.yakindu.sct.model.sgraph.Statechart
-import com.google.inject.Inject
 
 class ATmega168_328TimerHeader {
 
-	@Inject
-	extension Naming
+	@Inject extension Naming
 
-	def generateATmega168_328TimerHeader(ExecutionFlow flow, Statechart sc, IFileSystemAccess fsa, GeneratorEntry entry) {
-		fsa.generateFile(atMega168_328Timer.h, flow.generateContents(entry))
+	def generateATmega168_328TimerHeader(ExecutionFlow flow, IFileSystemAccess fsa) {
+		fsa.generateFile(atMega168_328Timer.h, flow.generateContents())
 	}
 
-	def private generateContents(ExecutionFlow it, GeneratorEntry entry) '''
+	def private generateContents(ExecutionFlow it) '''
+		«header»
+		
 		#ifndef «atMega168_328Timer.h.define»_H_
 		#define «atMega168_328Timer.h.define»_H_
 		
@@ -44,5 +43,5 @@ class ATmega168_328TimerHeader {
 		
 		#endif /* «atMega168_328Timer.h.define»_H_ */
 	'''
-	
+
 }

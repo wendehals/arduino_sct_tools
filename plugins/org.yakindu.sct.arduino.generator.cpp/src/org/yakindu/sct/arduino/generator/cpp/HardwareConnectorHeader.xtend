@@ -1,21 +1,20 @@
 package org.yakindu.sct.arduino.generator.cpp
 
+import com.google.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.yakindu.sct.model.sexec.ExecutionFlow
-import org.yakindu.sct.model.sgen.GeneratorEntry
-import org.yakindu.sct.model.sgraph.Statechart
-import com.google.inject.Inject
 
 class HardwareConnectorHeader {
-	
-	@Inject
-	extension Naming
 
-	def generateHardwareConnectorHeader(ExecutionFlow flow, Statechart sc, IFileSystemAccess fsa, GeneratorEntry entry) {
-		fsa.generateFile(hardwareConnector.h, flow.generateContents(entry))
+	@Inject	extension Naming
+
+	def generateHardwareConnectorHeader(ExecutionFlow flow, IFileSystemAccess fsa) {
+		fsa.generateFile(hardwareConnector.h, flow.generateContents())
 	}
 
-	def private generateContents(ExecutionFlow it, GeneratorEntry entry) '''
+	def private generateContents(ExecutionFlow it) '''
+		«header»
+		
 		#ifndef «hardwareConnector.h.define»_H_
 		#define «hardwareConnector.h.define»_H_
 		
@@ -34,5 +33,5 @@ class HardwareConnectorHeader {
 		
 		#endif /* «hardwareConnector.h.define»_H_ */
 	'''
-	
+
 }
