@@ -2,8 +2,8 @@
 <feature
       id="org.yakindu.sct.arduino"
       label="YAKINDU SCT Arduino Support"
-      version="1.0.0.qualifier"
-      provider-name="statecharts.org">
+      version="0.1.0.qualifier"
+      provider-name="Lothar Wendehals">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]

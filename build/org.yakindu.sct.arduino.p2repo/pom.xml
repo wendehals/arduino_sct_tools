@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<relativePath>../build/org.yakindu.sct.arduino.build/pom.xml</relativePath>
+		<groupId>build/org.yakindu.sct.arduino</groupId>
+		<artifactId>parent</artifactId>
+		<version>0.1.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>build/org.yakindu.sct.arduino.p2repo</artifactId>
+	<packaging>eclipse-repository</packaging>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>jboss-public-repository-group</id>
+			<name>JBoss Public Repository Group</name>
+			<url>http://repository.jboss.org/nexus/content/groups/public/</url>
+		</pluginRepository>
+
+		<pluginRepository>
+			<id>jboss-snapshots-repository</id>
+			<name>JBoss Snapshots Repository</name>
+			<url>https://repository.jboss.org/nexus/content/repositories/snapshots/</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-p2-repository-plugin</artifactId>
+				<version>${tycho.version}</version>
+
+				<configuration>
+					<compress/>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-p2-director-plugin</artifactId>
+				<version>${tycho.version}</version>
+
+				<executions>
+					<execution>
+						<id>materialize-products</id>
+						<goals>
+							<goal>materialize-products</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>archive-products</id>
+						<goals>
+							<goal>archive-products</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.jboss.tools.tycho-plugins</groupId>
+				<artifactId>repository-utils</artifactId>
+				<version>${org.jboss.tools.tycho-plugins.version}</version>
+
+				<executions>
+					<execution>
+						<id>generate-facade</id>
+						<phase>package</phase>
+	
+						<goals>
+							<goal>generate-repository-facade</goal>
+						</goals>
+	
+						<configuration>
+							<siteTemplateFolder>siteTemplate</siteTemplateFolder>
+							
+							<!-- Symbols are used while expanding index.html template -->
+							<symbols>
+								<update.site.name>${project.parent.name}</update.site.name>
+								<target.eclipse.version>Neon (4.6.0)</target.eclipse.version>
+							</symbols>
+
+							<associateSites>
+								<site>http://download.eclipse.org/releases/neon</site>
+								<site>http://download.eclipse.org/eclipse/updates/4.6</site>
+								<site>http://download.eclipse.org/tools/cdt/releases/9.0</site>
+								<site>http://updates.yakindu.org/sct/mars/releases</site>
+							</associateSites>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

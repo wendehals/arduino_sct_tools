@@ -29,6 +29,8 @@
         name="org.yakindu.sct.feature.group"/>
     <requirement
         name="org.yakindu.sct.generator.feature.group"/>
+    <requirement
+        name="org.eclipse.m2e.feature.feature.group"/>
     <repository
         url="http://updates.yakindu.org/sct/mars/releases"/>
   </setupTask>
