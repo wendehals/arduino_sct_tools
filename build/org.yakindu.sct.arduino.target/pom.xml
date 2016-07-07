@@ -32,9 +32,9 @@
 						<configuration>
 							<artifacts>
 								<artifact>
-									<file>Neno-4.6.0.target</file>
+									<file>Neon-4.6.0.target</file>
 									<type>target</type>
-									<classifier>Neno-4.6.0</classifier>
+									<classifier>Neon-4.6.0</classifier>
 								</artifact>
 							</artifacts>
 						</configuration>
