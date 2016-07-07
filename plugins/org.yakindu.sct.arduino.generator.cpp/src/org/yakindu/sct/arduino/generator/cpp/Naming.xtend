@@ -14,6 +14,10 @@ class Naming extends org.yakindu.sct.generator.cpp.Naming {
 		"AbstractTimer"
 	}
 
+	def softwareTimer() {
+		"SoftwareTimer"
+	}
+
 	def atMega168_328Timer() {
 		"ATmega168_328Timer"
 	}

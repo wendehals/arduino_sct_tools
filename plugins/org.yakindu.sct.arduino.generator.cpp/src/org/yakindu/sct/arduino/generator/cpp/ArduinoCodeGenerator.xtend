@@ -13,6 +13,7 @@ import org.yakindu.sct.generator.cpp.TimerInterface
 import org.yakindu.sct.generator.cpp.StatemachineInterface
 import org.yakindu.sct.generator.cpp.StatemachineHeader
 import org.yakindu.sct.generator.cpp.StatemachineImplementation
+import org.yakindu.sct.arduino.generator.cpp.features.GenmodelEntriesExtension
 
 class ArduinoCodeGenerator extends AbstractWorkspaceGenerator implements IExecutionFlowGenerator {
 
@@ -24,12 +25,15 @@ class ArduinoCodeGenerator extends AbstractWorkspaceGenerator implements IExecut
 	@Inject extension StatemachineImplementation
 
 	@Inject extension Naming
+	@Inject extension GenmodelEntriesExtension
 	@Inject extension ArduinoMain
 	@Inject extension StatemachineConnectorHeader
 	@Inject extension StatemachineConnector
 	@Inject extension TimeEventHeader
 	@Inject extension AbstractTimerHeader
 	@Inject extension AbstractTimer
+	@Inject extension SoftwareTimerHeader
+	@Inject extension SoftwareTimer
 	@Inject extension ATmega168_328TimerHeader
 	@Inject extension ATmega168_328Timer
 	@Inject extension HardwareConnectorHeader
@@ -44,14 +48,21 @@ class ArduinoCodeGenerator extends AbstractWorkspaceGenerator implements IExecut
 		flow.generateStatemachineImplemenation(flow.sourceElement as Statechart, fsa, entry)
 
 		// Arduino specific sources
-		flow.generateMain(fsa);
+		flow.generateMain(entry, fsa);
 		flow.generateStatemachineConnectorHeader(entry, fsa);
 		flow.generateStatemachineConnector(entry, fsa);
 		flow.generateTimeEventHeader(fsa);
 		flow.generateAbstractTimerHeader(fsa);
 		flow.generateAbstractTimer(fsa);
-		flow.generateATmega168_328TimerHeader(fsa);
-		flow.generateATmega168_328Timer(fsa);
+
+		if (isSoftwareTimer(entry)) {
+			flow.generateSoftwareTimerHeader(fsa);
+			flow.generateSoftwareTimer(fsa);
+		} else if (isATmega168_328Timer(entry)) {
+			flow.generateATmega168_328TimerHeader(fsa);
+			flow.generateATmega168_328Timer(fsa);
+		}
+
 		flow.generateHardwareConnectorHeader(fsa);
 	}
 
