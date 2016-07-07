@@ -1,4 +1,4 @@
-package org.yakindu.sct.generator.cpp.arduino
+package org.yakindu.sct.arduino.generator.cpp
 
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.yakindu.sct.generator.core.AbstractWorkspaceGenerator

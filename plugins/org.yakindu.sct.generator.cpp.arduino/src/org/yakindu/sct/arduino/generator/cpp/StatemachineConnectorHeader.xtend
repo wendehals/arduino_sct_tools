@@ -1,4 +1,4 @@
-package org.yakindu.sct.generator.cpp.arduino
+package org.yakindu.sct.arduino.generator.cpp
 
 import org.yakindu.sct.model.sexec.ExecutionFlow
 import org.yakindu.sct.model.sgraph.Statechart

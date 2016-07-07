@@ -1,4 +1,4 @@
-package org.yakindu.sct.generator.cpp.arduino;
+package org.yakindu.sct.arduino.generator.cpp;
 
 import org.yakindu.sct.generator.c.GenArtifactConfigurations;
 import org.yakindu.sct.generator.c.IGenArtifactConfigurations;

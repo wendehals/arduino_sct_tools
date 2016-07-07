@@ -3,7 +3,7 @@
 <plugin>
    <extension
          point="org.yakindu.sct.generator.core.generator">
-      <SCTGenerator class="org.yakindu.sct.generator.cpp.arduino.ArduinoCppCodeGenerator"
+      <SCTGenerator class="org.yakindu.sct.arduino.generator.cpp.ArduinoCppCodeGenerator"
             description="YAKINDU SCT C++ Code Generator for Arduino"
             id="yakindu::arduino_cpp"
             name="YAKINDU SCT C++ Code Generator for Arduino"
