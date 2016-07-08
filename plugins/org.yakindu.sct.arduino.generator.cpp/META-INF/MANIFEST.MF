@@ -11,4 +11,5 @@ Require-Bundle: org.yakindu.sct.model.sexec,
  org.yakindu.sct.generator.cpp
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: Lothar Wendehals
-Export-Package: org.yakindu.sct.arduino.generator.cpp
+Export-Package: org.yakindu.sct.arduino.generator.cpp,
+ org.yakindu.sct.arduino.generator.cpp.features

@@ -1,0 +1,5 @@
+<templateManifest>
+	<file open="true"
+		src="/templates/arduino_sgen/arduino_sgen.template"
+		dest="/${projectName}/model/${statechartName}.sgen"/>
+</templateManifest>

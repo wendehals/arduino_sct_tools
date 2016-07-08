@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: YAKINDU SCT Arduino Support UI
+Bundle-SymbolicName: org.yakindu.sct.arduino.ui;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Activator: org.yakindu.sct.arduino.ui.SCTArduinoUIPlugin
+Bundle-Vendor: Lothar Wendehals
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.eclipse.ui.ide,
+ org.eclipse.tools.templates.freemarker,
+ org.eclipse.tools.templates.ui,
+ org.yakindu.sct.arduino.core
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy

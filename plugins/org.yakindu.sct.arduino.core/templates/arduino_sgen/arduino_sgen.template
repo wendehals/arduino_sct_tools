@@ -1,0 +1,15 @@
+GeneratorModel for yakindu::arduino_cpp {
+
+	statechart ${statechartName} {
+
+		feature Outlet {
+			targetProject = "${projectName}"
+			targetFolder = "src-gen"
+		}
+
+		feature Arduino {
+			userSrcFolder = "src"
+			timer = "${timer}"
+		}
+	}
+}

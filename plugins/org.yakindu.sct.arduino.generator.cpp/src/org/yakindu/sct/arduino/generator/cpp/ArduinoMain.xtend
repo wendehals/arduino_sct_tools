@@ -19,9 +19,9 @@ class ArduinoMain {
 		«header»
 		
 		#include <Arduino.h>
-		#include "src-gen/«module.h»"
-		#include "src-gen/«IF isSoftwareTimer(entry)»«softwareTimer.h»«ELSE»«atMega168_328Timer.h»«ENDIF»"
-		#include "src/«module.connector.h»"
+		#include "«module.h»"
+		#include "«IF isSoftwareTimer(entry)»«softwareTimer.h»«ELSE»«atMega168_328Timer.h»«ENDIF»"
+		#include "../src/«module.connector.h»"
 		
 		#define PERIOD 10
 		#define MAX_PARALLEL_TIMERS 2

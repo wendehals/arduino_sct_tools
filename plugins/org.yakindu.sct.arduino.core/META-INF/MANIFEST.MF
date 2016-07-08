@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: YAKINDU SCT Arduino Support
+Bundle-SymbolicName: org.yakindu.sct.arduino.core
+Bundle-Version: 0.1.0.qualifier
+Bundle-Activator: org.yakindu.sct.arduino.core.SCTArduinoPlugin
+Bundle-Vendor: Lothar Wendehals
+Require-Bundle: org.eclipse.core.resources,
+ org.eclipse.core.runtime,
+ org.eclipse.cdt.core,
+ org.eclipse.emf.transaction,
+ org.eclipse.emf.workspace,
+ org.eclipse.gmf.runtime.emf.commands.core,
+ org.eclipse.tools.templates.freemarker,
+ org.yakindu.sct.generator.core,
+ org.yakindu.sct.arduino.generator.cpp,
+ org.yakindu.sct.ui.editor
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Export-Package: org.yakindu.sct.arduino.core

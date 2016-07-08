@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="org.yakindu.sct.arduino.ui.wizard.category"
+            class="org.yakindu.sct.arduino.ui.wizards.NewArduinoSCTProjectWizard"
+            finalPerspective="org.eclipse.cdt.ui.CPerspective"
+            icon="icons/arduino.png"
+            id="org.yakindu.sct.arduino.ui.wizard.project"
+            name="Arduino Project with YAKINDU SCT Model"
+            preferredPerspectives="org.eclipse.cdt.ui.CPerspective,org.yakindu.sct.ui.ModelingPerspective,org.yakindu.sct.ui.SimulationPerspective"
+            project="true">
+      </wizard>
+      <category
+            id="org.yakindu.sct.arduino.ui.wizard.category"
+            name="YAKINDU SCT Arduino Support">
+      </category>
+   </extension>
+
+</plugin>

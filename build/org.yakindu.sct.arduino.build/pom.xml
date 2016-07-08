@@ -26,7 +26,9 @@
 	<!-- Common plugins and features contained in the open source distribution -->
 	<modules>
 		<!-- Plugins -->
+		<module>../../plugins/org.yakindu.sct.arduino.core</module>
 		<module>../../plugins/org.yakindu.sct.arduino.generator.cpp</module>
+		<module>../../plugins/org.yakindu.sct.arduino.ui</module>
 
 		<!-- Features -->
 		<module>../../features/org.yakindu.sct.arduino</module>
