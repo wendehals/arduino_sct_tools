@@ -113,7 +113,7 @@
               nature="org.eclipse.pde.PluginNature"/>
           <operand
               xsi:type="predicates:NamePredicate"
-              pattern=".*arduino.*"/>
+              pattern=".*yakindu.*arduino.*"/>
         </predicate>
       </workingSet>
       <workingSet
@@ -125,7 +125,7 @@
               nature="org.eclipse.pde.FeatureNature"/>
           <operand
               xsi:type="predicates:NamePredicate"
-              pattern=".*arduino.*"/>
+              pattern=".*yakindu.*arduino.*"/>
         </predicate>
       </workingSet>
       <workingSet
@@ -146,7 +146,7 @@
           </operand>
           <operand
               xsi:type="predicates:NamePredicate"
-              pattern=".*arduino.*"/>
+              pattern=".*yakindu.*arduino.*"/>
         </predicate>
       </workingSet>
     </setupTask>
