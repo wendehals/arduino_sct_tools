@@ -5,6 +5,7 @@ import org.eclipse.xtext.generator.IFileSystemAccess
 import org.yakindu.sct.arduino.generator.cpp.features.GenmodelEntriesExtension
 import org.yakindu.sct.model.sexec.ExecutionFlow
 import org.yakindu.sct.model.sgen.GeneratorEntry
+import org.yakindu.sct.arduino.generator.cpp.features.IArduinoFeatureConstants
 
 class StatemachineConnectorHeader {
 
@@ -13,7 +14,7 @@ class StatemachineConnectorHeader {
 
 	def generateStatemachineConnectorHeader(ExecutionFlow flow, GeneratorEntry entry, IFileSystemAccess fsa) {
 		if (getUserSrcFolder(entry) != null) {
-			fsa.generateFile(getUserSrcFolder(entry) + "/" + flow.module.connector.h, flow.generateContents(entry))
+			fsa.generateFile(flow.module.connector.h, IArduinoFeatureConstants::PARAM_USER_SRC_FOLDER, flow.generateContents(entry))
 		} else {
 			fsa.generateFile(flow.module.connector.h, flow.generateContents(entry))
 		}

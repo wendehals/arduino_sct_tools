@@ -48,9 +48,9 @@ class ArduinoCodeGenerator extends AbstractWorkspaceGenerator implements IExecut
 		flow.generateStatemachineImplemenation(flow.sourceElement as Statechart, fsa, entry)
 
 		// Arduino specific sources
+		// output folder
 		flow.generateMain(entry, fsa);
-		flow.generateStatemachineConnectorHeader(entry, fsa);
-		flow.generateStatemachineConnector(entry, fsa);
+		flow.generateHardwareConnectorHeader(fsa);
 		flow.generateTimeEventHeader(fsa);
 		flow.generateAbstractTimerHeader(fsa);
 		flow.generateAbstractTimer(fsa);
@@ -63,7 +63,9 @@ class ArduinoCodeGenerator extends AbstractWorkspaceGenerator implements IExecut
 			flow.generateATmega168_328Timer(fsa);
 		}
 
-		flow.generateHardwareConnectorHeader(fsa);
+		// userSrcFolder
+		flow.generateStatemachineConnectorHeader(entry, fsa);
+		flow.generateStatemachineConnector(entry, fsa);
 	}
 
 	def generateTypesHeader(ExecutionFlow it, GeneratorEntry entry, IFileSystemAccess fsa) {
