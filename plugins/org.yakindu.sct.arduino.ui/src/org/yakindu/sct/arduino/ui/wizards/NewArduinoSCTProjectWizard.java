@@ -9,11 +9,13 @@ import org.yakindu.sct.arduino.core.ArduinoSCTProjectGenerator;
 
 public class NewArduinoSCTProjectWizard extends TemplateWizard {
 
-	private WizardNewProjectCreationPage mainPage;
+	private WizardNewProjectCreationPage projectCreationPage;
+
+	private ArduinoSCTWizardPage arduinoSCTWizardPage;
 
 	@Override
 	public void addPages() {
-		this.mainPage = new WizardNewProjectCreationPage("basicNewProjectPage") { //$NON-NLS-1$
+		this.projectCreationPage = new WizardNewProjectCreationPage("basicNewProjectPage") { //$NON-NLS-1$
 			@Override
 			public void createControl(Composite parent) {
 				super.createControl(parent);
@@ -22,18 +24,27 @@ public class NewArduinoSCTProjectWizard extends TemplateWizard {
 				Dialog.applyDialogFont(getControl());
 			}
 		};
-		this.mainPage.setTitle("New Arduino SCT Project"); //$NON-NLS-1$
-		this.mainPage.setDescription("Specify properties of new Arduino SCT project."); //$NON-NLS-1$
+		this.projectCreationPage.setTitle("New Arduino SCT Project");
+		this.projectCreationPage.setDescription("Specify name and working set of new Arduino SCT project.");
 
-		addPage(this.mainPage);
+		this.arduinoSCTWizardPage = new ArduinoSCTWizardPage();
+		this.arduinoSCTWizardPage.setTitle("New Arduino SCT Project");
+
+		addPage(this.projectCreationPage);
+		addPage(this.arduinoSCTWizardPage);
 	}
 
 	@Override
 	protected IGenerator getGenerator() {
 		final ArduinoSCTProjectGenerator generator = new ArduinoSCTProjectGenerator(
-				"templates/arduino_sgen/manifest.xml", this.mainPage.getProjectName()); //$NON-NLS-1$
-		if (!this.mainPage.useDefaults()) {
-			generator.setLocationURI(this.mainPage.getLocationURI());
+				"templates/arduino_sgen/manifest.xml", this.projectCreationPage.getProjectName()); //$NON-NLS-1$
+		generator.setStatechartName(this.arduinoSCTWizardPage.getStatechartName());
+		generator.setSrcFolder(this.arduinoSCTWizardPage.getSrcFolderName());
+		generator.setSrcGenFolder(this.arduinoSCTWizardPage.getSrcGenFolderName());
+		generator.setTimer(this.arduinoSCTWizardPage.getTimer());
+
+		if (!this.projectCreationPage.useDefaults()) {
+			generator.setLocationURI(this.projectCreationPage.getLocationURI());
 		}
 
 		return generator;

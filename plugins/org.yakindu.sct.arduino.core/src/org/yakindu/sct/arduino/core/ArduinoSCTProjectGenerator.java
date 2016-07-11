@@ -44,10 +44,34 @@ public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 
 	private final String projectName;
 
+	private String statechartName;
+
+	private String srcFolderName;
+
+	private String srcGenFolderName;
+
+	private Timer timer;
+
 	public ArduinoSCTProjectGenerator(String manifestPath, String projectName) {
 		super(manifestPath);
 		this.projectName = projectName;
 		setProjectName(projectName);
+	}
+
+	public void setStatechartName(String statechartName) {
+		this.statechartName = statechartName;
+	}
+
+	public void setSrcFolder(String srcFolderName) {
+		this.srcFolderName = srcFolderName;
+	}
+
+	public void setSrcGenFolder(String srcGenFolderName) {
+		this.srcGenFolderName = srcGenFolderName;
+	}
+
+	public void setTimer(Timer timer) {
+		this.timer = timer;
 	}
 
 	@Override
@@ -66,8 +90,10 @@ public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 
 	@Override
 	public void generate(Map<String, Object> model, IProgressMonitor monitor) throws CoreException {
-		model.put("timer", Timer.ATMEGA168328.literal); //$NON-NLS-1$
-		model.put("statechartName", this.projectName); //$NON-NLS-1$
+		model.put("statechartName", this.statechartName); //$NON-NLS-1$
+		model.put("srcFolder", this.srcFolderName); //$NON-NLS-1$
+		model.put("srcGenFolder", this.srcGenFolderName); //$NON-NLS-1$
+		model.put("timer", this.timer.literal); //$NON-NLS-1$
 
 		final SubMonitor subMonitor = SubMonitor.convert(monitor, 100);
 		super.generate(model, subMonitor.split(80));

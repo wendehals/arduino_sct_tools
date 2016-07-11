@@ -4,11 +4,11 @@ GeneratorModel for yakindu::arduino_cpp {
 
 		feature Outlet {
 			targetProject = "${projectName}"
-			targetFolder = "src-gen"
+			targetFolder = "${srcGenFolder}"
 		}
 
 		feature Arduino {
-			userSrcFolder = "src"
+			userSrcFolder = "${srcFolder}"
 			timer = "${timer}"
 		}
 	}

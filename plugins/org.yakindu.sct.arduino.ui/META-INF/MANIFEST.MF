@@ -10,6 +10,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui.ide,
  org.eclipse.tools.templates.freemarker,
  org.eclipse.tools.templates.ui,
- org.yakindu.sct.arduino.core
+ org.yakindu.sct.arduino.core,
+ org.yakindu.sct.arduino.generator.cpp
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy

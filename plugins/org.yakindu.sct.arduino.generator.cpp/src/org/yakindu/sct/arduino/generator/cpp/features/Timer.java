@@ -2,13 +2,14 @@ package org.yakindu.sct.arduino.generator.cpp.features;
 
 public enum Timer {
 
-	SOFTWARE("software", "Software", "Software Timer that uses millies() to run the cycle."),
+	ATMEGA168328("atmega168_328", Messages.Timer_ATmega168328_title, Messages.Timer_ATmega168328_description), //$NON-NLS-1$
 
-	ATMEGA168328("atmega168_328", "ATmega 168/328",
-			"Hardware Timer of ATmega 168/328 microprocessor, uses timer 1 of the microprocessor and puts it to sleep beetween cycles.");
+	SOFTWARE("software", Messages.Timer_software_title, Messages.Timer_software_description); //$NON-NLS-1$
 
 	public final String literal;
+
 	public final String title;
+
 	public final String description;
 
 	private Timer(String literal, String title, String description) {
