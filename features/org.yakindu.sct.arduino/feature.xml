@@ -3,19 +3,17 @@
       id="org.yakindu.sct.arduino"
       label="YAKINDU SCT Arduino Support"
       version="0.1.0.qualifier"
-      provider-name="Lothar Wendehals">
+      provider-name="Lothar Wendehals"
+      license-feature="org.eclipse.license"
+      license-feature-version="1.0.1.qualifier">
 
-   <description url="http://www.example.com/description">
-      [Enter Feature Description here.]
+   <description url="https://github.com/wendehals/arduino_sct_tools">
+      YAKINDU SCT Arduino Support
    </description>
 
-   <copyright url="http://www.example.com/copyright">
-      [Enter Copyright Description here.]
+   <copyright url="https://github.com/wendehals/arduino_sct_tools">
+      Copyright 2016 by Lothar Wendehals
    </copyright>
-
-   <license url="http://www.example.com/license">
-      [Enter License Description here.]
-   </license>
 
    <requires>
       <import plugin="org.yakindu.sct.model.sexec"/>
