@@ -32,7 +32,7 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 
 	public ArduinoSCTWizardPage() {
 		super("arduinoSCTWizardPage"); //$NON-NLS-1$
-		setDescription("Specify properties of Arduino SCT project.");
+		setDescription(Messages.ArduinoSCTWizardPage_description);
 	}
 
 	/**
@@ -44,28 +44,28 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 		composite.setLayout(new GridLayout(2, false));
 
 		Label label = new Label(composite, SWT.NONE);
-		label.setText("Statechart name:");
+		label.setText(Messages.ArduinoSCTWizardPage_statechartLabel);
 
 		this.statechartNameText = new Text(composite, SWT.SINGLE | SWT.BORDER);
 		this.statechartNameText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		this.statechartNameText.addModifyListener(this);
 
 		label = new Label(composite, SWT.NONE);
-		label.setText("Source folder:");
+		label.setText(Messages.ArduinoSCTWizardPage_srcFolderLabel);
 
 		this.srcFolderText = new Text(composite, SWT.SINGLE | SWT.BORDER);
 		this.srcFolderText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		this.srcFolderText.addModifyListener(this);
 
 		label = new Label(composite, SWT.NONE);
-		label.setText("Generated Source folder:");
+		label.setText(Messages.ArduinoSCTWizardPage_genSrcFolderLabel);
 
 		this.srcGenFolderText = new Text(composite, SWT.SINGLE | SWT.BORDER);
 		this.srcGenFolderText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		this.srcGenFolderText.addModifyListener(this);
 
 		final Group group = new Group(composite, SWT.SHADOW_NONE);
-		group.setText("Arduino Timer Implementation:");
+		group.setText(Messages.ArduinoSCTWizardPage_timerLabel);
 		final GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gridData.horizontalSpan = 2;
 		group.setLayoutData(gridData);
@@ -146,7 +146,7 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 	private void checkPageComplete() {
 		setPageComplete(false);
 		if (getStatechartName().isEmpty()) {
-			setErrorMessage("Please provide a name for the statechart.");
+			setErrorMessage(Messages.ArduinoSCTWizardPage_missingStatechartNameMessage);
 			return;
 		}
 
@@ -154,7 +154,7 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 		setPageComplete(true);
 	}
 
-	private static class TimerProvider extends LabelProvider implements IStructuredContentProvider {
+	protected static class TimerProvider extends LabelProvider implements IStructuredContentProvider {
 
 		@Override
 		public String getText(Object element) {

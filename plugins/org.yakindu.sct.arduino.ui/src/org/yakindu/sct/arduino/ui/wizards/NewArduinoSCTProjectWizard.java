@@ -13,6 +13,9 @@ public class NewArduinoSCTProjectWizard extends TemplateWizard {
 
 	private ArduinoSCTWizardPage arduinoSCTWizardPage;
 
+	/**
+	 * @see org.eclipse.jface.wizard.Wizard#addPages()
+	 */
 	@Override
 	public void addPages() {
 		this.projectCreationPage = new WizardNewProjectCreationPage("basicNewProjectPage") { //$NON-NLS-1$
@@ -24,16 +27,19 @@ public class NewArduinoSCTProjectWizard extends TemplateWizard {
 				Dialog.applyDialogFont(getControl());
 			}
 		};
-		this.projectCreationPage.setTitle("New Arduino SCT Project");
-		this.projectCreationPage.setDescription("Specify name and working set of new Arduino SCT project.");
+		this.projectCreationPage.setTitle(Messages.NewArduinoSCTProjectWizard_title);
+		this.projectCreationPage.setDescription(Messages.NewArduinoSCTProjectWizard_description);
 
 		this.arduinoSCTWizardPage = new ArduinoSCTWizardPage();
-		this.arduinoSCTWizardPage.setTitle("New Arduino SCT Project");
+		this.arduinoSCTWizardPage.setTitle(Messages.NewArduinoSCTProjectWizard_title);
 
 		addPage(this.projectCreationPage);
 		addPage(this.arduinoSCTWizardPage);
 	}
 
+	/**
+	 * @see org.eclipse.tools.templates.ui.TemplateWizard#getGenerator()
+	 */
 	@Override
 	protected IGenerator getGenerator() {
 		final ArduinoSCTProjectGenerator generator = new ArduinoSCTProjectGenerator(
