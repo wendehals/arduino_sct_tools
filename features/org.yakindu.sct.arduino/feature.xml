@@ -30,7 +30,11 @@
       <import plugin="org.eclipse.ui.ide"/>
       <import plugin="org.eclipse.tools.templates.ui"/>
       <import plugin="org.eclipse.cdt.core"/>
-      <import plugin="org.eclipse.cdt.arduino.core"/>
+      <import plugin="org.eclipse.tools.templates.freemarker"/>
+      <import plugin="org.eclipse.emf.transaction"/>
+      <import plugin="org.eclipse.emf.workspace"/>
+      <import plugin="org.eclipse.gmf.runtime.emf.commands.core"/>
+      <import plugin="org.yakindu.sct.ui.editor"/>
    </requires>
 
    <plugin
