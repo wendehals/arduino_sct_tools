@@ -3,7 +3,6 @@ package org.yakindu.sct.arduino.generator.cpp
 import com.google.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.yakindu.sct.model.sexec.ExecutionFlow
-import org.yakindu.sct.arduino.generator.cpp.features.GenmodelEntriesExtension
 import org.yakindu.sct.model.sgen.GeneratorEntry
 
 class ArduinoMain {
@@ -21,7 +20,7 @@ class ArduinoMain {
 		#include <Arduino.h>
 		#include "«module.h»"
 		#include "«IF isSoftwareTimer(entry)»«softwareTimer.h»«ELSE»«atMega168_328Timer.h»«ENDIF»"
-		#include "../src/«module.connector.h»"
+		#include "«entry.userSrcFolderRelativeToSrcGen»«module.connector.h»"
 		
 		#define PERIOD 10
 		#define MAX_PARALLEL_TIMERS 2

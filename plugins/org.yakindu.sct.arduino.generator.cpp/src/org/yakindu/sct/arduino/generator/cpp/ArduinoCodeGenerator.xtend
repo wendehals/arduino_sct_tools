@@ -13,7 +13,6 @@ import org.yakindu.sct.generator.cpp.TimerInterface
 import org.yakindu.sct.generator.cpp.StatemachineInterface
 import org.yakindu.sct.generator.cpp.StatemachineHeader
 import org.yakindu.sct.generator.cpp.StatemachineImplementation
-import org.yakindu.sct.arduino.generator.cpp.features.GenmodelEntriesExtension
 
 class ArduinoCodeGenerator extends AbstractWorkspaceGenerator implements IExecutionFlowGenerator {
 

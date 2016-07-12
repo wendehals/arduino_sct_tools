@@ -2,10 +2,9 @@ package org.yakindu.sct.arduino.generator.cpp
 
 import com.google.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess
-import org.yakindu.sct.arduino.generator.cpp.features.GenmodelEntriesExtension
+import org.yakindu.sct.arduino.generator.cpp.features.IArduinoFeatureConstants
 import org.yakindu.sct.model.sexec.ExecutionFlow
 import org.yakindu.sct.model.sgen.GeneratorEntry
-import org.yakindu.sct.arduino.generator.cpp.features.IArduinoFeatureConstants
 
 class StatemachineConnectorHeader {
 
@@ -14,7 +13,8 @@ class StatemachineConnectorHeader {
 
 	def generateStatemachineConnectorHeader(ExecutionFlow flow, GeneratorEntry entry, IFileSystemAccess fsa) {
 		if (getUserSrcFolder(entry) != null) {
-			fsa.generateFile(flow.module.connector.h, IArduinoFeatureConstants::PARAM_USER_SRC_FOLDER, flow.generateContents(entry))
+			fsa.generateFile(flow.module.connector.h, IArduinoFeatureConstants::PARAM_USER_SRC_FOLDER,
+				flow.generateContents(entry))
 		} else {
 			fsa.generateFile(flow.module.connector.h, flow.generateContents(entry))
 		}
@@ -22,15 +22,14 @@ class StatemachineConnectorHeader {
 
 	def private generateContents(ExecutionFlow it, GeneratorEntry entry) '''
 		«header»
-		
 		«entry.licenseText»
 		
 		#ifndef «module.connector.define»_H_
 		#define «module.connector.define»_H_
 		
-		#include "../src-gen/«abstractTimer.h»"
-		#include "../src-gen/«module.h»"
-		#include "../src-gen/«atMega168_328Timer.h»"
+		#include <Arduino.h>
+		#include "«entry.srcGenFolderRelativeToUserSrc»«hardwareConnector.h»"
+		#include "«entry.srcGenFolderRelativeToUserSrc»«module.h»"
 		
 		class «module.connector»: public «hardwareConnector» {
 		public:

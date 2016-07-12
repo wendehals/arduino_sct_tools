@@ -42,8 +42,6 @@ public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 
 	public static final String ARDUINO_PROJECT_NATURE_ID = "org.eclipse.cdt.arduino.core.arduinoNature"; //$NON-NLS-1$
 
-	private final String projectName;
-
 	private String statechartName;
 
 	private String srcFolderName;
@@ -54,7 +52,6 @@ public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 
 	public ArduinoSCTProjectGenerator(String manifestPath, String projectName) {
 		super(manifestPath);
-		this.projectName = projectName;
 		setProjectName(projectName);
 	}
 
@@ -102,12 +99,12 @@ public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 
 	protected void createDiagram(IProgressMonitor progressMonitor) {
 		final TransactionalEditingDomain editingDomain = WorkspaceEditingDomainFactory.INSTANCE.createEditingDomain();
-		progressMonitor.beginTask("Creating diagram file ...", 3);
+		progressMonitor.beginTask(Messages.ArduinoSCTProjectGenerator_creatingDiagram, 3);
 
 		final Resource resource = editingDomain.getResourceSet().createResource(getModelURI());
 
 		final AbstractTransactionalCommand command = new AbstractTransactionalCommand(editingDomain,
-				"Creating diagram file ...", Collections.EMPTY_LIST) {
+				Messages.ArduinoSCTProjectGenerator_creatingDiagram, Collections.EMPTY_LIST) {
 			@Override
 			protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info)
 					throws ExecutionException {
@@ -143,7 +140,7 @@ public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 	}
 
 	protected URI getModelURI() {
-		final IPath path = getProject().getFullPath().append("/model/" + this.projectName + ".sct"); //$NON-NLS-1$//$NON-NLS-2$
+		final IPath path = getProject().getFullPath().append("/model/" + this.statechartName + ".sct"); //$NON-NLS-1$//$NON-NLS-2$
 		return URI.createPlatformResourceURI(path.toString(), false);
 	}
 

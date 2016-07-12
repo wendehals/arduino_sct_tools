@@ -19,7 +19,8 @@ class SoftwareTimerHeader {
 		#define «softwareTimer.h.define»_H_
 		
 		#include <Arduino.h>
-		#include "«softwareTimer.h»"
+		#include "«abstractTimer.h»"
+		#include "«hardwareConnector.h»"
 		
 		class «softwareTimer»: public «abstractTimer» {
 		public:
