@@ -5,7 +5,8 @@ Bundle-SymbolicName: org.yakindu.sct.arduino.ui;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: org.yakindu.sct.arduino.ui.SCTArduinoUIPlugin
 Bundle-Vendor: Lothar Wendehals
-Require-Bundle: org.eclipse.core.runtime,
+Require-Bundle: org.eclipse.core.resources,
+ org.eclipse.core.runtime,
  org.eclipse.ui,
  org.eclipse.ui.ide,
  org.eclipse.tools.templates.freemarker,

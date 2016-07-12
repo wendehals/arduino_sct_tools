@@ -8,18 +8,28 @@
  */
 package org.yakindu.sct.arduino.ui.wizards;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.tools.templates.core.IGenerator;
 import org.eclipse.tools.templates.ui.TemplateWizard;
+import org.eclipse.ui.IEditorDescriptor;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
+import org.eclipse.ui.part.FileEditorInput;
 import org.yakindu.sct.arduino.core.ArduinoSCTProjectGenerator;
+import org.yakindu.sct.arduino.core.Log;
+import org.yakindu.sct.arduino.ui.SCTArduinoUIPlugin;
 
 public class NewArduinoSCTProjectWizard extends TemplateWizard {
 
 	private WizardNewProjectCreationPage projectCreationPage;
 
 	private ArduinoSCTWizardPage arduinoSCTWizardPage;
+
+	private ArduinoSCTProjectGenerator generator;
 
 	/**
 	 * @see org.eclipse.jface.wizard.Wizard#addPages()
@@ -50,18 +60,41 @@ public class NewArduinoSCTProjectWizard extends TemplateWizard {
 	 */
 	@Override
 	protected IGenerator getGenerator() {
-		final ArduinoSCTProjectGenerator generator = new ArduinoSCTProjectGenerator(
-				"templates/arduino_sgen/manifest.xml", this.projectCreationPage.getProjectName()); //$NON-NLS-1$
-		generator.setStatechartName(this.arduinoSCTWizardPage.getStatechartName());
-		generator.setSrcFolder(this.arduinoSCTWizardPage.getSrcFolderName());
-		generator.setSrcGenFolder(this.arduinoSCTWizardPage.getSrcGenFolderName());
-		generator.setTimer(this.arduinoSCTWizardPage.getTimer());
+		this.generator = new ArduinoSCTProjectGenerator("templates/arduino_sgen/manifest.xml", //$NON-NLS-1$
+				this.projectCreationPage.getProjectName());
+		this.generator.setStatechartName(this.arduinoSCTWizardPage.getStatechartName());
+		this.generator.setSrcFolder(this.arduinoSCTWizardPage.getSrcFolderName());
+		this.generator.setSrcGenFolder(this.arduinoSCTWizardPage.getSrcGenFolderName());
+		this.generator.setTimer(this.arduinoSCTWizardPage.getTimer());
 
 		if (!this.projectCreationPage.useDefaults()) {
-			generator.setLocationURI(this.projectCreationPage.getLocationURI());
+			this.generator.setLocationURI(this.projectCreationPage.getLocationURI());
 		}
 
-		return generator;
+		return this.generator;
+	}
+
+	/**
+	 * @see org.eclipse.tools.templates.ui.TemplateWizard#performFinish()
+	 */
+	@Override
+	public boolean performFinish() {
+		final boolean finished = super.performFinish();
+
+		if (finished) {
+			final IWorkbench workbench = getWorkbench();
+			final IWorkbenchPage page = workbench.getActiveWorkbenchWindow().getActivePage();
+			final IFile file = this.generator.getDiagramFile();
+			final IEditorDescriptor desc = workbench.getEditorRegistry().getDefaultEditor(file.getName());
+
+			try {
+				page.openEditor(new FileEditorInput(file), desc.getId());
+			} catch (final PartInitException exception) {
+				Log.logError(SCTArduinoUIPlugin.getDefault(), exception);
+			}
+		}
+
+		return finished;
 	}
 
 }

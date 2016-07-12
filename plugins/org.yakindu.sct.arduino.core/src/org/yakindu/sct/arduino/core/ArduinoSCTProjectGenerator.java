@@ -18,10 +18,10 @@ import org.eclipse.cdt.core.CProjectNature;
 import org.eclipse.cdt.core.build.CBuilder;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.ICommand;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
@@ -58,6 +58,8 @@ public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 
 	private Timer timer;
 
+	private IFile diagramFile;
+
 	public ArduinoSCTProjectGenerator(String manifestPath, String projectName) {
 		super(manifestPath);
 		setProjectName(projectName);
@@ -80,6 +82,22 @@ public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 	}
 
 	/**
+	 * @see org.eclipse.tools.templates.freemarker.FMProjectGenerator#generate(java.util.Map,
+	 *      org.eclipse.core.runtime.IProgressMonitor)
+	 */
+	@Override
+	public void generate(Map<String, Object> model, IProgressMonitor monitor) throws CoreException {
+		model.put("statechartName", this.statechartName); //$NON-NLS-1$
+		model.put("srcFolder", this.srcFolderName); //$NON-NLS-1$
+		model.put("srcGenFolder", this.srcGenFolderName); //$NON-NLS-1$
+		model.put("timer", this.timer.literal); //$NON-NLS-1$
+
+		final SubMonitor subMonitor = SubMonitor.convert(monitor, 100);
+		super.generate(model, subMonitor.split(80));
+		createDiagram(subMonitor.split(20));
+	}
+
+	/**
 	 * @see org.eclipse.tools.templates.freemarker.FMGenerator#getSourceBundle()
 	 */
 	@Override
@@ -99,28 +117,12 @@ public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 		description.setBuildSpec(new ICommand[] { command });
 	}
 
-	/**
-	 * @see org.eclipse.tools.templates.freemarker.FMProjectGenerator#generate(java.util.Map,
-	 *      org.eclipse.core.runtime.IProgressMonitor)
-	 */
-	@Override
-	public void generate(Map<String, Object> model, IProgressMonitor monitor) throws CoreException {
-		model.put("statechartName", this.statechartName); //$NON-NLS-1$
-		model.put("srcFolder", this.srcFolderName); //$NON-NLS-1$
-		model.put("srcGenFolder", this.srcGenFolderName); //$NON-NLS-1$
-		model.put("timer", this.timer.literal); //$NON-NLS-1$
-
-		final SubMonitor subMonitor = SubMonitor.convert(monitor, 100);
-		super.generate(model, subMonitor.split(80));
-		createDiagram(subMonitor.split(20));
-	}
-
 	protected void createDiagram(IProgressMonitor progressMonitor) {
 		final TransactionalEditingDomain editingDomain = WorkspaceEditingDomainFactory.INSTANCE.createEditingDomain();
 		progressMonitor.beginTask(Messages.ArduinoSCTProjectGenerator_creatingDiagram, 3);
 
-		final IPath path = getProject().getFullPath().append("/model/" + this.statechartName + ".sct"); //$NON-NLS-1$//$NON-NLS-2$
-		final URI uri = URI.createPlatformResourceURI(path.toString(), false);
+		this.diagramFile = getProject().getFile("/model/" + this.statechartName + ".sct"); //$NON-NLS-1$ //$NON-NLS-2$
+		final URI uri = URI.createPlatformResourceURI(this.diagramFile.getFullPath().toString(), false);
 		final Resource resource = editingDomain.getResourceSet().createResource(uri);
 
 		final AbstractTransactionalCommand command = new AbstractTransactionalCommand(editingDomain,
@@ -165,6 +167,10 @@ public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 		}
 
 		editingDomain.dispose();
+	}
+
+	public IFile getDiagramFile() {
+		return this.diagramFile;
 	}
 
 }
