@@ -79,11 +79,17 @@ public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 		this.timer = timer;
 	}
 
+	/**
+	 * @see org.eclipse.tools.templates.freemarker.FMGenerator#getSourceBundle()
+	 */
 	@Override
 	protected Bundle getSourceBundle() {
 		return SCTArduinoPlugin.getDefault().getBundle();
 	}
 
+	/**
+	 * @see org.eclipse.tools.templates.freemarker.FMProjectGenerator#initProjectDescription(org.eclipse.core.resources.IProjectDescription)
+	 */
 	@Override
 	protected void initProjectDescription(IProjectDescription description) throws CoreException {
 		description.setNatureIds(new String[] { CProjectNature.C_NATURE_ID, CCProjectNature.CC_NATURE_ID,
@@ -93,6 +99,10 @@ public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 		description.setBuildSpec(new ICommand[] { command });
 	}
 
+	/**
+	 * @see org.eclipse.tools.templates.freemarker.FMProjectGenerator#generate(java.util.Map,
+	 *      org.eclipse.core.runtime.IProgressMonitor)
+	 */
 	@Override
 	public void generate(Map<String, Object> model, IProgressMonitor monitor) throws CoreException {
 		model.put("statechartName", this.statechartName); //$NON-NLS-1$
@@ -109,59 +119,52 @@ public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 		final TransactionalEditingDomain editingDomain = WorkspaceEditingDomainFactory.INSTANCE.createEditingDomain();
 		progressMonitor.beginTask(Messages.ArduinoSCTProjectGenerator_creatingDiagram, 3);
 
-		final Resource resource = editingDomain.getResourceSet().createResource(getModelURI());
+		final IPath path = getProject().getFullPath().append("/model/" + this.statechartName + ".sct"); //$NON-NLS-1$//$NON-NLS-2$
+		final URI uri = URI.createPlatformResourceURI(path.toString(), false);
+		final Resource resource = editingDomain.getResourceSet().createResource(uri);
 
 		final AbstractTransactionalCommand command = new AbstractTransactionalCommand(editingDomain,
 				Messages.ArduinoSCTProjectGenerator_creatingDiagram, Collections.EMPTY_LIST) {
+			/**
+			 * @see org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCommand#doExecuteWithResult(org.eclipse.core.runtime.IProgressMonitor,
+			 *      org.eclipse.core.runtime.IAdaptable)
+			 */
 			@Override
 			protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info)
 					throws ExecutionException {
-
 				FactoryUtils.createStatechartModel(resource, DiagramActivator.DIAGRAM_PREFERENCES_HINT);
 				final Statechart statechart = (Statechart) EcoreUtil.getObjectByType(resource.getContents(),
 						SGraphPackage.Literals.STATECHART);
-				statechart.setDomainID(getDomainID());
+				statechart.setDomainID(BasePackage.Literals.DOMAIN_ELEMENT__DOMAIN_ID.getDefaultValueLiteral());
+
+				final Map<String, String> saveOptions = new HashMap<String, String>();
+				saveOptions.put(XMLResource.OPTION_ENCODING, UTF_8);
+				saveOptions.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED,
+						Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
 
 				try {
-					resource.save(getSaveOptions());
+					resource.save(saveOptions);
 				} catch (final IOException exception) {
 					return CommandResult.newErrorCommandResult(exception);
 				}
+
 				return CommandResult.newOKCommandResult();
 			}
-
 		};
 
 		try {
 			command.execute(progressMonitor, null);
-		} catch (final ExecutionException e) {
-			e.printStackTrace();
+		} catch (final ExecutionException exception) {
+			Log.logError(SCTArduinoPlugin.getDefault(), exception);
 		}
 
 		try {
 			WorkspaceSynchronizer.getFile(resource).setCharset(UTF_8, new NullProgressMonitor());
-		} catch (final CoreException e) {
-			e.printStackTrace();
+		} catch (final CoreException exception) {
+			Log.logError(SCTArduinoPlugin.getDefault(), exception);
 		}
 
 		editingDomain.dispose();
-	}
-
-	protected URI getModelURI() {
-		final IPath path = getProject().getFullPath().append("/model/" + this.statechartName + ".sct"); //$NON-NLS-1$//$NON-NLS-2$
-		return URI.createPlatformResourceURI(path.toString(), false);
-	}
-
-	protected Map<String, String> getSaveOptions() {
-		final Map<String, String> saveOptions = new HashMap<String, String>();
-		saveOptions.put(XMLResource.OPTION_ENCODING, UTF_8);
-		saveOptions.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED, Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
-
-		return saveOptions;
-	}
-
-	protected String getDomainID() {
-		return BasePackage.Literals.DOMAIN_ELEMENT__DOMAIN_ID.getDefaultValueLiteral();
 	}
 
 }
