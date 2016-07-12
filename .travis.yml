@@ -1,0 +1,8 @@
+language: java
+jdk:
+  - oraclejdk8
+ 
+before_script:
+  - cd build/org.yakindu.sct.arduino.build
+ 
+script: mvn clean install
