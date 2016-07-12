@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.yakindu.sct.arduino_0.1.0.201607121222.jar" id="org.yakindu.sct.arduino" version="0.1.0.201607121222">
+      <category name="org.yakindu.sct.arduino.p2repo"/>
+   </feature>
+   <category-def name="org.yakindu.sct.arduino.p2repo" label="YAKINDU SCT Arduino Support">
+      <description>
+         Here you can find Arduino support for the YAKINDU Statechart Tools.
+      </description>
+   </category-def>
+</site>
