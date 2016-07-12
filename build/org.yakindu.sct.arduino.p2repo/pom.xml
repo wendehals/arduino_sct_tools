@@ -88,6 +88,7 @@
 							<associateSites>
 								<site>http://download.eclipse.org/releases/neon</site>
 								<site>http://download.eclipse.org/eclipse/updates/4.6</site>
+								<site>http://download.eclipse.org/cbi/updates/license</site>
 								<site>http://download.eclipse.org/tools/cdt/releases/9.0</site>
 								<site>http://updates.yakindu.org/sct/mars/releases</site>
 							</associateSites>

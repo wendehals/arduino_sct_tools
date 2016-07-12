@@ -33,6 +33,7 @@
       <import plugin="org.eclipse.emf.workspace"/>
       <import plugin="org.eclipse.gmf.runtime.emf.commands.core"/>
       <import plugin="org.yakindu.sct.ui.editor"/>
+      <import feature="org.eclipse.cdt.arduino" version="0.0.0"/>
    </requires>
 
    <plugin
