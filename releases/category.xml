@@ -8,4 +8,7 @@
          Here you can find Arduino support for the YAKINDU Statechart Tools.
       </description>
    </category-def>
+   <repository-reference location="http://download.eclipse.org/cbi/updates/license" enabled="true" />
+   <repository-reference location="http://updates.yakindu.org/sct/mars/releases" enabled="true" />
+   <repository-reference location="http://download.eclipse.org/tools/cdt/releases/9.0" enabled="true" />
 </site>
