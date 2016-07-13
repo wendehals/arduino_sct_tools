@@ -28,8 +28,7 @@
   </annotation>
   <setupTask
       xsi:type="setup:InstallationTask"
-      id="installation"
-      relativeProductFolder="SCTforArduinoIDE"/>
+      id="installation"/>
   <setupTask
       xsi:type="setup:EclipseIniTask"
       option="-Xmx"
@@ -37,8 +36,8 @@
       vm="true"/>
   <setupTask
       xsi:type="setup:EclipseIniTask"
-      option="-Doomph.redirection.myProjectCatalog"
-      value="=index:/redirectable.projects.setup->https://raw.githubusercontent.com/wendehals/arduino_sct_tools/master/build/org.yakindu.sct.arduino.ide.setup/SCTArduinoIDE.setup"
+      option="-Doomph.redirection.myProjectCatalog.neon"
+      value="=index:/redirectable.products.setup->https://raw.githubusercontent.com/wendehals/arduino_sct_tools/master/build/org.yakindu.sct.arduino.ide.setup/SCTArduinoIDE.setup"
       vm="true"/>
   <version name="neon"
       label="Neon"
