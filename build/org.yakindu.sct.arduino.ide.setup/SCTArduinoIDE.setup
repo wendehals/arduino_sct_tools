@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<setup:Product
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
+    xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0"
+    name="org.yakindu.sct.arduino.ide"
+    label="YAKINDU SCT for Arduino IDE">
+  <annotation
+      source="http://www.eclipse.org/oomph/setup/BrandingInfo">
+    <detail
+        key="imageURI">
+      <value>http://www.eclipse.org/downloads/images/oomph-42x42.png</value>
+    </detail>
+    <detail
+        key="folderName">
+      <value>eclipse</value>
+    </detail>
+    <detail
+        key="folderName.macosx">
+      <value>Eclipse</value>
+    </detail>
+    <detail
+        key="siteURI">
+      <value>https://wendehals.github.io/arduino_sct_tools/</value>
+    </detail>
+  </annotation>
+  <setupTask
+      xsi:type="setup:InstallationTask"
+      id="installation"
+      relativeProductFolder="SCTforArduinoIDE"/>
+  <setupTask
+      xsi:type="setup:EclipseIniTask"
+      option="-Xmx"
+      value="2048m"
+      vm="true"/>
+  <setupTask
+      xsi:type="setup:EclipseIniTask"
+      option="-Doomph.redirection.myProjectCatalog"
+      value="=index:/redirectable.projects.setup->https://raw.githubusercontent.com/wendehals/arduino_sct_tools/master/build/org.yakindu.sct.arduino.ide.setup/SCTArduinoIDE.setup"
+      vm="true"/>
+  <version name="neon"
+      label="Neon"
+      requiredJavaVersion="1.8">
+    <setupTask
+        xsi:type="setup.p2:P2Task"
+        label="${scope.product.label} (${scope.product.version.label})">
+      <requirement
+          name="org.eclipse.platform.ide"/>
+      <requirement
+          name="org.eclipse.platform.feature.group"/>
+      <requirement
+          name="org.eclipse.rcp.feature.group"/>
+      <requirement
+          name="org.eclipse.cdt.feature.group"/>
+      <requirement
+          name="org.eclipse.cdt.arduino.feature.group"/>
+      <requirement
+          name="org.yakindu.sct.feature.group"/>
+      <requirement
+          name="org.yakindu.sct.generator.feature.group"/>
+      <requirement
+          name="org.yakindu.sct.arduino.feature.group"/>
+      <repository
+          url="http://download.eclipse.org/releases/neon"/>
+      <repository
+          url="http://download.eclipse.org/eclipse/updates/4.6"/>
+      <repository
+          url="http://download.eclipse.org/tools/cdt/releases/9.0"/>
+      <repository
+          url="http://updates.yakindu.org/sct/mars/releases"/>
+      <repository
+          url="https://wendehals.github.io/arduino_sct_tools/releases/"/>
+    </setupTask>
+    <description>YAKINDU SCT for Arduino IDE for Neon.</description>
+  </version>
+  <description>YAKINDU SCT for Arduino IDE lets you program your Arduino with statecharts.</description>
+</setup:Product>
