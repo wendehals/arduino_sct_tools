@@ -47,6 +47,20 @@
       checkoutBranch="master">
     <description>Arduino SCT Tools Git Repository</description>
   </setupTask>
+  <setupTask
+      xsi:type="git:GitCloneTask"
+      id="git.clone.statecharts"
+      remoteURI="https://github.com/Yakindu/statecharts.git"
+      checkoutBranch="master">
+    <description>YAKINDU SCT</description>
+  </setupTask>
+  <setupTask
+      xsi:type="git:GitCloneTask"
+      id="git.clone.tools_template"
+      remoteURI="https://git.eclipse.org/r/cdt/org.eclipse.tools.templates"
+      checkoutBranch="tmpl1_0">
+    <description>org.eclipse.tools.templates</description>
+  </setupTask>
   <stream name="master"
       label="Master">
     <setupTask
