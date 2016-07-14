@@ -53,6 +53,8 @@
       <requirement
           name="org.eclipse.rcp.feature.group"/>
       <requirement
+          name="org.eclipse.egit.feature.group"/>
+      <requirement
           name="org.eclipse.cdt.feature.group"/>
       <requirement
           name="org.eclipse.cdt.arduino.feature.group"/>
