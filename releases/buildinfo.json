@@ -1,7 +1,7 @@
 {
-    "timestamp" : 1468334564680,
+    "timestamp" : 1468501221345,
     "revision" : {
-        "HEAD" : "4fb591fe69b70208350cfa74880914a5be1d7238",
+        "HEAD" : "6aa4cf1e81f61b3f595c22fe92ae54cdae5f4cc4",
         "currentBranch" : "refs/heads/master",
         "knownReferences" : [{
             "name" : "origin",
@@ -12,7 +12,7 @@
     "properties" : {
         "TARGET_PLATFORM_VERSION_MAXIMUM" : "null",
         "java.version" : "1.8.0_92",
-        "user.dir" : "C:\\Entwicklung\\sct-arduino-tools\\git\\arduino_sct_tools\\build\\org.yakindu.sct.arduino.build",
+        "user.dir" : "C:\\Entwicklung\\sct-arduino-dev-ide\\git\\arduino_sct_tools\\build\\org.yakindu.sct.arduino.build",
         "os.arch" : "amd64",
         "RELEASE" : "null",
         "BUILD_ID" : "null",
@@ -26,7 +26,7 @@
         "java.vendor" : "Oracle Corporation",
         "os.name" : "Windows 10",
         "ZIPSUFFIX" : "null",
-        "WORKSPACE" : "C:\\Entwicklung\\sct-arduino-tools\\git\\arduino_sct_tools\\build\\org.yakindu.sct.arduino.build"
+        "WORKSPACE" : "C:\\Entwicklung\\sct-arduino-dev-ide\\git\\arduino_sct_tools\\build\\org.yakindu.sct.arduino.build"
     },
     "upstream" : null
 }
