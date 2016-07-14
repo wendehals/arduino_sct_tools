@@ -8,6 +8,7 @@
  */
 package org.yakindu.sct.arduino.ui.wizards;
 
+import org.eclipse.cdt.ui.CUIPlugin;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.widgets.Composite;
@@ -16,12 +17,15 @@ import org.eclipse.tools.templates.ui.TemplateWizard;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.WorkbenchException;
 import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
 import org.eclipse.ui.part.FileEditorInput;
 import org.yakindu.sct.arduino.core.ArduinoSCTProjectGenerator;
 import org.yakindu.sct.arduino.core.Log;
 import org.yakindu.sct.arduino.ui.SCTArduinoUIPlugin;
+import org.yakindu.sct.ui.perspectives.IYakinduSctPerspectives;
 
 public class NewArduinoSCTProjectWizard extends TemplateWizard {
 
@@ -83,13 +87,21 @@ public class NewArduinoSCTProjectWizard extends TemplateWizard {
 
 		if (finished) {
 			final IWorkbench workbench = getWorkbench();
-			final IWorkbenchPage page = workbench.getActiveWorkbenchWindow().getActivePage();
+			final IWorkbenchWindow workbenchWindow = workbench.getActiveWorkbenchWindow();
+			final IWorkbenchPage page = workbenchWindow.getActivePage();
 			final IFile file = this.generator.getDiagramFile();
 			final IEditorDescriptor desc = workbench.getEditorRegistry().getDefaultEditor(file.getName());
 
 			try {
 				page.openEditor(new FileEditorInput(file), desc.getId());
 			} catch (final PartInitException exception) {
+				Log.logError(SCTArduinoUIPlugin.getDefault(), exception);
+			}
+
+			try {
+				workbench.showPerspective(CUIPlugin.ID_CPERSPECTIVE, workbenchWindow);
+				workbench.showPerspective(IYakinduSctPerspectives.ID_PERSPECTIVE_SCT_MODELING, workbenchWindow);
+			} catch (final WorkbenchException exception) {
 				Log.logError(SCTArduinoUIPlugin.getDefault(), exception);
 			}
 		}
