@@ -23,7 +23,6 @@ import org.eclipse.ui.WorkbenchException;
 import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
 import org.eclipse.ui.part.FileEditorInput;
 import org.yakindu.sct.arduino.core.ArduinoSCTProjectGenerator;
-import org.yakindu.sct.arduino.core.Log;
 import org.yakindu.sct.arduino.ui.SCTArduinoUIPlugin;
 import org.yakindu.sct.ui.perspectives.IYakinduSctPerspectives;
 
@@ -95,14 +94,14 @@ public class NewArduinoSCTProjectWizard extends TemplateWizard {
 			try {
 				page.openEditor(new FileEditorInput(file), desc.getId());
 			} catch (final PartInitException exception) {
-				Log.logError(SCTArduinoUIPlugin.getDefault(), exception);
+				SCTArduinoUIPlugin.logError(exception);
 			}
 
 			try {
 				workbench.showPerspective(CUIPlugin.ID_CPERSPECTIVE, workbenchWindow);
 				workbench.showPerspective(IYakinduSctPerspectives.ID_PERSPECTIVE_SCT_MODELING, workbenchWindow);
 			} catch (final WorkbenchException exception) {
-				Log.logError(SCTArduinoUIPlugin.getDefault(), exception);
+				SCTArduinoUIPlugin.logError(exception);
 			}
 		}
 

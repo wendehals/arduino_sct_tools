@@ -12,6 +12,7 @@ import com.google.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.yakindu.sct.model.sexec.ExecutionFlow
 import org.yakindu.sct.model.sgen.GeneratorEntry
+import org.yakindu.sct.model.sgraph.Statechart
 
 class ArduinoMain {
 
@@ -31,7 +32,7 @@ class ArduinoMain {
 		#include "«entry.userSrcFolderRelativeToSrcGen»«module.connector.h»"
 		
 		#define PERIOD 10
-		#define MAX_PARALLEL_TIMERS 2
+		#define MAX_PARALLEL_TIMERS «MaxParallelTimersCalculator::calculate(it.sourceElement as Statechart)»
 		
 		«module»* statemachine;
 		«module.connector»* connector;

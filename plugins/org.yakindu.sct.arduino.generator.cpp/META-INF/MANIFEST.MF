@@ -13,3 +13,5 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: Lothar Wendehals
 Export-Package: org.yakindu.sct.arduino.generator.cpp,
  org.yakindu.sct.arduino.generator.cpp.features
+Bundle-ActivationPolicy: lazy
+Bundle-Activator: org.yakindu.sct.arduino.generator.cpp.ArduinoGeneratorPlugin

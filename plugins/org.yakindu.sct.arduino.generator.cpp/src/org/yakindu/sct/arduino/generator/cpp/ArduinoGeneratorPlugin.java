@@ -1,24 +1,16 @@
-/**
- * Copyright (c) 2016 by Lothar Wendehals.
- *
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- */
-package org.yakindu.sct.arduino.core;
+package org.yakindu.sct.arduino.generator.cpp;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.osgi.framework.BundleContext;
 
-public class SCTArduinoPlugin extends Plugin {
+public class ArduinoGeneratorPlugin extends Plugin {
 
 	/**
 	 * The shared instance
 	 */
-	private static SCTArduinoPlugin plugin;
+	private static ArduinoGeneratorPlugin plugin;
 
 	/**
 	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
@@ -43,7 +35,7 @@ public class SCTArduinoPlugin extends Plugin {
 	 *
 	 * @return the shared instance
 	 */
-	public static SCTArduinoPlugin getDefault() {
+	public static ArduinoGeneratorPlugin getDefault() {
 		return plugin;
 	}
 

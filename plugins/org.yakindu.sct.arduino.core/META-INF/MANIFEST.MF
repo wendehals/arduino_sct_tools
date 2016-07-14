@@ -13,8 +13,8 @@ Require-Bundle: org.eclipse.core.resources,
  org.eclipse.gmf.runtime.emf.commands.core,
  org.eclipse.tools.templates.freemarker,
  org.yakindu.sct.generator.core,
- org.yakindu.sct.arduino.generator.cpp,
- org.yakindu.sct.ui.editor
+ org.yakindu.sct.ui.editor,
+ org.yakindu.sct.arduino.generator.cpp
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: org.yakindu.sct.arduino.core

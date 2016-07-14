@@ -8,6 +8,8 @@
  */
 package org.yakindu.sct.arduino.ui;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -53,6 +55,20 @@ public class SCTArduinoUIPlugin extends AbstractUIPlugin {
 	 */
 	public static String getPluginId() {
 		return plugin.getBundle().getSymbolicName();
+	}
+
+	/**
+	 * Logs an exception.
+	 *
+	 * @param exception
+	 *            the exception that caused that error.
+	 * @return the {@link IStatus} that was logged.
+	 */
+	public static IStatus logError(final Throwable exception) {
+		final Status status = new Status(IStatus.ERROR, getPluginId(), exception.getLocalizedMessage(), exception);
+		plugin.getLog().log(status);
+
+		return status;
 	}
 
 }

@@ -157,13 +157,13 @@ public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 		try {
 			command.execute(progressMonitor, null);
 		} catch (final ExecutionException exception) {
-			Log.logError(SCTArduinoPlugin.getDefault(), exception);
+			SCTArduinoPlugin.logError(exception);
 		}
 
 		try {
 			WorkspaceSynchronizer.getFile(resource).setCharset(UTF_8, new NullProgressMonitor());
 		} catch (final CoreException exception) {
-			Log.logError(SCTArduinoPlugin.getDefault(), exception);
+			SCTArduinoPlugin.logError(exception);
 		}
 
 		editingDomain.dispose();
