@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="YAKINDU SCT Arduino Support">
+	<topic label="Installation"  href="html/Installation.html"> 
+	</topic>
+	<topic href="html/ProjectSetup.html" label="Project Setup"/>
+</toc>

@@ -31,8 +31,12 @@
         name="org.yakindu.sct.generator.feature.group"/>
     <requirement
         name="org.eclipse.m2e.feature.feature.group"/>
+    <requirement
+        name="markdown.editor.feature.feature.group"/>
     <repository
         url="http://updates.yakindu.org/sct/mars/releases"/>
+    <repository
+        url="http://www.winterwell.com/software/updatesite/"/>
   </setupTask>
   <setupTask
       xsi:type="setup:VariableTask"
