@@ -6,3 +6,4 @@ You will find further documentation here:
 
 * [Installation Guide](plugins/org.yakindu.sct.arduino.help/md/Installation.md)
 * [Project Setup](plugins/org.yakindu.sct.arduino.help/md/ProjectSetup.md)
+* [Arduino Tools Setup](plugins/org.yakindu.sct.arduino.help/md/ArduinoToolsSetup.md)
