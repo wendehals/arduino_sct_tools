@@ -28,3 +28,5 @@ You might be asked whether the Xtext nature should be added to the project. Plea
 Your Eclipse should look like this:
 
 ![New Arduino SCT Project - Project Properties](../screenshots/NewArduinoSCTProject.png)
+
+Proceed to the [Arduino Tools Setup](ArduinoToolsSetup.md).
