@@ -10,9 +10,9 @@ package org.yakindu.sct.arduino.generator.cpp.features;
 
 public enum Timer {
 
-	ATMEGA168328("atmega168_328", Messages.Timer_ATmega168328_title, Messages.Timer_ATmega168328_description), //$NON-NLS-1$
+	ATMEGA168328("atmega168_328", Messages.Timer_ATmega168328_title, Messages.Timer_ATmega168328_description, 1, 4194), //$NON-NLS-1$
 
-	SOFTWARE("software", Messages.Timer_software_title, Messages.Timer_software_description); //$NON-NLS-1$
+	SOFTWARE("software", Messages.Timer_software_title, Messages.Timer_software_description, 1, Integer.MAX_VALUE); //$NON-NLS-1$
 
 	public final String literal;
 
@@ -20,10 +20,16 @@ public enum Timer {
 
 	public final String description;
 
-	private Timer(String literal, String title, String description) {
+	public final int min;
+
+	public final int max;
+
+	private Timer(String literal, String title, String description, int min, int max) {
 		this.literal = literal;
 		this.title = title;
 		this.description = description;
+		this.min = min;
+		this.max = max;
 	}
 
 	public static Timer getTimer(String literal) {
@@ -35,4 +41,7 @@ public enum Timer {
 		return null;
 	}
 
+	public boolean isValidCyclePeriod(int cyclePeriod) {
+		return (cyclePeriod >= this.min) && (cyclePeriod <= this.max);
+	}
 }

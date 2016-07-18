@@ -9,5 +9,7 @@
         name="userSrcFolder"/>
     <parameters
         name="timer"/>
+    <parameters
+        name="cyclePeriod"/>
   </types>
 </sgen:FeatureTypeLibrary>

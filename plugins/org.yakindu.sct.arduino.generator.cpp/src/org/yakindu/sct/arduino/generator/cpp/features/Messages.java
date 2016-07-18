@@ -14,6 +14,10 @@ public class Messages extends NLS {
 
 	private static final String BUNDLE_NAME = "org.yakindu.sct.arduino.generator.cpp.features.messages"; //$NON-NLS-1$
 
+	public static String ArduinoDefaultFeatureValueProvider_cyclePeriodInvalid;
+
+	public static String ArduinoDefaultFeatureValueProvider_cyclePeriodNotInInterval;
+	public static String ArduinoDefaultFeatureValueProvider_timerInvalid;
 	public static String Timer_ATmega168328_description;
 	public static String Timer_ATmega168328_title;
 	public static String Timer_software_description;

@@ -17,6 +17,7 @@ import org.yakindu.sct.generator.core.library.IOutletFeatureHelper
 
 class GenmodelEntriesExtension extends GenmodelEntries {
 
+	@Inject extension Naming;
 	@Inject extension IOutletFeatureHelper outletFeatureHelper
 
 	def private getGeneratorOptionsFeature(GeneratorEntry it) {
@@ -26,8 +27,8 @@ class GenmodelEntriesExtension extends GenmodelEntries {
 	def getUserSrcFolder(GeneratorEntry it) {
 		generatorOptionsFeature?.getParameterValue(IArduinoFeatureConstants::PARAM_USER_SRC_FOLDER).stringValue
 	}
-	
-	def getSrcGenFolder(GeneratorEntry it){
+
+	def getSrcGenFolder(GeneratorEntry it) {
 		outletFeatureHelper.getTargetFolderValue(it).stringValue
 	}
 
@@ -43,14 +44,34 @@ class GenmodelEntriesExtension extends GenmodelEntries {
 		generatorOptionsFeature?.getParameterValue(IArduinoFeatureConstants::PARAM_TIMER).stringValue
 	}
 
-	def srcGenFolderRelativeToUserSrc(GeneratorEntry it){
+	def timerClassName(GeneratorEntry it) {
+		if (isSoftwareTimer) {
+			return softwareTimer
+		} else if (isATmega168_328Timer) {
+			return atMega168_328Timer
+		}
+	}
+
+	def cyclePeriod(GeneratorEntry it) {
+		val paramValue = generatorOptionsFeature?.getParameterValue(IArduinoFeatureConstants::PARAM_CYCLE_PERIOD)
+		if (paramValue != null) {
+			try {
+				return Integer.parseInt(paramValue.stringValue);
+			} catch (NumberFormatException exception) {
+			}
+		}
+
+		return IArduinoFeatureConstants::CYCLE_PERIOD_DEFAULT
+	}
+
+	def srcGenFolderRelativeToUserSrc(GeneratorEntry it) {
 		folderRelativeToOther(srcGenFolder, userSrcFolder)
 	}
 
-	def userSrcFolderRelativeToSrcGen(GeneratorEntry it){
+	def userSrcFolderRelativeToSrcGen(GeneratorEntry it) {
 		folderRelativeToOther(userSrcFolder, srcGenFolder)
 	}
-	
+
 	def folderRelativeToOther(String folder, String otherFolder) {
 		if (otherFolder.equals(folder)) {
 			""

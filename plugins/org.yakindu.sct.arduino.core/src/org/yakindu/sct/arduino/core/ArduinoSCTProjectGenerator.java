@@ -91,6 +91,7 @@ public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 		model.put("srcFolder", this.srcFolderName); //$NON-NLS-1$
 		model.put("srcGenFolder", this.srcGenFolderName); //$NON-NLS-1$
 		model.put("timer", this.timer.literal); //$NON-NLS-1$
+		model.put("cyclePeriod", "10"); //$NON-NLS-1$//$NON-NLS-2$
 
 		final SubMonitor subMonitor = SubMonitor.convert(monitor, 100);
 		super.generate(model, subMonitor.split(80));

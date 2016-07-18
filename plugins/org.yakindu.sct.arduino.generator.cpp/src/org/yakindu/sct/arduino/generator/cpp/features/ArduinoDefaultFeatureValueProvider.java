@@ -24,26 +24,42 @@ public class ArduinoDefaultFeatureValueProvider extends AbstractDefaultFeatureVa
 	}
 
 	@Override
-	protected void setDefaultValue(FeatureType featureType, FeatureParameterValue parameterValue,
-			EObject contextElement) {
+	protected void setDefaultValue(FeatureType featureType, FeatureParameterValue parameterValue, EObject contextElement) {
 		final String parameterName = parameterValue.getParameter().getName();
 		if (IArduinoFeatureConstants.PARAM_USER_SRC_FOLDER.equals(parameterName)) {
-			parameterValue.setValue("src");
+			parameterValue.setValue(IArduinoFeatureConstants.USER_SRC_FOLDER_DEFAULT);
 		} else if (IArduinoFeatureConstants.PARAM_TIMER.equals(parameterName)) {
 			parameterValue.setValue(Timer.ATMEGA168328.literal);
+		} else if (IArduinoFeatureConstants.PARAM_CYCLE_PERIOD.equals(parameterName)) {
+			parameterValue.setValue(Integer.toString(IArduinoFeatureConstants.CYCLE_PERIOD_DEFAULT));
 		}
 	}
 
 	@Override
 	public IStatus validateParameterValue(FeatureParameterValue parameterValue) {
 		final String parameterName = parameterValue.getParameter().getName();
+
 		if (IArduinoFeatureConstants.PARAM_TIMER.equals(parameterName)) {
 			if (Timer.getTimer(parameterValue.getStringValue()) == null) {
-				return error(String.format("The timer %s does not exist.", parameterValue.getExpression()));
+				return error(String.format(Messages.ArduinoDefaultFeatureValueProvider_timerInvalid,
+						parameterValue.getExpression()));
+			}
+		} else if (IArduinoFeatureConstants.PARAM_CYCLE_PERIOD.equals(parameterName)) {
+			final FeatureParameterValue timerParamValue = parameterValue.getFeatureConfiguration().getParameterValue(
+					IArduinoFeatureConstants.PARAM_TIMER);
+			final Timer timer = Timer.getTimer(timerParamValue.getStringValue());
+
+			try {
+				final int cyclePeriod = Integer.parseInt(parameterValue.getStringValue());
+				if ((timer != null) && !timer.isValidCyclePeriod(cyclePeriod)) {
+					return error(String.format(Messages.ArduinoDefaultFeatureValueProvider_cyclePeriodNotInInterval,
+							timer.title, timer.min, timer.max));
+				}
+			} catch (final NumberFormatException exception) {
+				return error(Messages.ArduinoDefaultFeatureValueProvider_cyclePeriodInvalid);
 			}
 		}
 
 		return Status.OK_STATUS;
 	}
-
 }

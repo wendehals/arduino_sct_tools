@@ -28,20 +28,20 @@ class ArduinoMain {
 		
 		#include <Arduino.h>
 		#include "«module.h»"
-		#include "«IF isSoftwareTimer(entry)»«softwareTimer.h»«ELSE»«atMega168_328Timer.h»«ENDIF»"
+		#include "«timerClassName(entry).h»"
 		#include "«entry.userSrcFolderRelativeToSrcGen»«module.connector.h»"
 		
-		#define PERIOD 10
+		#define PERIOD «cyclePeriod(entry)»
 		#define MAX_PARALLEL_TIMERS «MaxParallelTimersCalculator::calculate(it.sourceElement as Statechart)»
 		
 		«module»* statemachine;
 		«module.connector»* connector;
-		«IF isSoftwareTimer(entry)»«softwareTimer»«ELSE»«atMega168_328Timer»«ENDIF»* timer;
+		«timerClassName(entry)»* timer;
 		
 		void setup() {
 			statemachine = new «module»();
 			connector = new «module.connector»(statemachine);
-			timer = new «IF isSoftwareTimer(entry)»«softwareTimer»«ELSE»«atMega168_328Timer»«ENDIF»(statemachine, connector, MAX_PARALLEL_TIMERS, PERIOD);
+			timer = new «timerClassName(entry)»(statemachine, connector, MAX_PARALLEL_TIMERS, PERIOD);
 		
 			statemachine->setTimer(timer);
 			timer->start();
