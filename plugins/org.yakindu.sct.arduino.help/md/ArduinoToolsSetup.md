@@ -15,3 +15,5 @@ On the first wizard page select the Arduino list entry and click "Next>". On the
 ![New Arduino Target Wizard](../screenshots/NewArduinoTargetWizard.png)
 
 The environment is now ready to compile and upload programs to your Arduino.
+
+Proceed to the [Project Setup](ProjectSetup.md).

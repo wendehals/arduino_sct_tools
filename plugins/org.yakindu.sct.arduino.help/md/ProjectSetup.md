@@ -29,4 +29,4 @@ Your Eclipse should look like this:
 
 ![New Arduino SCT Project - Project Properties](../screenshots/NewArduinoSCTProject.png)
 
-Proceed to the [Arduino Tools Setup](ArduinoToolsSetup.md).
+Proceed to [Programming an Arduino with statecharts](ProgrammingArduino.md).

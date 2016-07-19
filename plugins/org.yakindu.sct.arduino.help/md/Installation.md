@@ -19,4 +19,4 @@ Just click "Next>" on the Projects page. On the Variables page choose an Install
 
 The installation will start immediately. The installed IDE will start automatically, you just need to enter and confirm the workspace path.
 
-Proceed to the [Project Setup](ProjectSetup.md).
+Proceed to the [Arduino Tools Setup](ArduinoToolsSetup.md).
