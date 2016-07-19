@@ -5,5 +5,6 @@ This project brings you tooling to program your Arduino with statecharts. You wi
 You will find further documentation here:
 
 * [Installation Guide](plugins/org.yakindu.sct.arduino.help/md/Installation.md)
-* [Project Setup](plugins/org.yakindu.sct.arduino.help/md/ProjectSetup.md)
 * [Arduino Tools Setup](plugins/org.yakindu.sct.arduino.help/md/ArduinoToolsSetup.md)
+* [Project Setup](plugins/org.yakindu.sct.arduino.help/md/ProjectSetup.md)
+* [Programming an Arduino with statecharts](plugins/org.yakindu.sct.arduino.help/md/ProgrammingArduino.md)
