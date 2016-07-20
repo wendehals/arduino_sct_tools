@@ -58,4 +58,10 @@
          version="0.0.0"
          unpack="false"/>
 
+   <plugin
+         id="org.yakindu.sct.arduino.help"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
 </feature>

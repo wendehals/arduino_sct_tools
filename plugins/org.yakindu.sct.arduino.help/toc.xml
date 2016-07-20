@@ -4,5 +4,9 @@
 <toc label="YAKINDU SCT Arduino Support">
 	<topic label="Installation"  href="html/Installation.html"> 
 	</topic>
-	<topic href="html/ProjectSetup.html" label="Project Setup"/>
+ <topic href="html/ArduinoToolchainSetup.html" label="Arduino Toolchain Setup">
+ </topic>
+	<topic href="html/ProjectSetup.html" label="Arduino SCT Project Setup"/>
+ <topic href="html/ProgrammingArduino.html" label="Programming an Arduino with Statecharts">
+ </topic>
 </toc>

@@ -28,6 +28,7 @@
 		<!-- Plugins -->
 		<module>../../plugins/org.yakindu.sct.arduino.core</module>
 		<module>../../plugins/org.yakindu.sct.arduino.generator.cpp</module>
+		<module>../../plugins/org.yakindu.sct.arduino.help</module>
 		<module>../../plugins/org.yakindu.sct.arduino.ui</module>
 
 		<!-- Features -->
