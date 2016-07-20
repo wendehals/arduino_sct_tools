@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.yakindu.sct.arduino_0.1.0.201607181123.jar" id="org.yakindu.sct.arduino" version="0.1.0.201607181123">
+   <feature url="features/org.yakindu.sct.arduino_0.1.0.201607201140.jar" id="org.yakindu.sct.arduino" version="0.1.0.201607201140">
       <category name="org.yakindu.sct.arduino.p2repo"/>
    </feature>
    <category-def name="org.yakindu.sct.arduino.p2repo" label="YAKINDU SCT Arduino Support">
