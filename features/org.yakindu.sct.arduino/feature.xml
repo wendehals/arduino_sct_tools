@@ -35,6 +35,7 @@
       <import plugin="org.eclipse.emf.workspace"/>
       <import plugin="org.eclipse.gmf.runtime.emf.commands.core"/>
       <import plugin="org.yakindu.sct.ui.editor"/>
+      <import plugin="org.eclipse.emf.common.ui"/>
    </requires>
 
    <plugin
@@ -60,6 +61,12 @@
 
    <plugin
          id="org.yakindu.sct.arduino.help"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.yakindu.sct.arduino.examples"
          download-size="0"
          install-size="0"
          version="0.0.0"/>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="org.eclipse.ui.Examples/org.yakindu.sct.arduino.examples.category"
+            class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard"
+            finalPerspective="org.eclipse.cdt.ui.CPerspective"
+            icon="icons/arduino.png"
+            id="org.yakindu.sct.arduino.examples.arduinoUno"
+            name="Arduino Uno Examples"
+            preferredPerspectives="org.eclipse.cdt.ui.CPerspective,org.yakindu.sct.ui.ModelingPerspective,org.yakindu.sct.ui.SimulationPerspective"
+            project="true">
+         <description>
+            A pedestrian crossing traffic light.
+         </description>
+      </wizard>
+      <category
+            id="org.yakindu.sct.arduino.examples.category"
+            name="YAKINDU SCT Arduino Support Examples"
+            parentCategory="org.eclipse.ui.Examples">
+      </category>
+   </extension>
+   <extension
+         point="org.eclipse.emf.common.ui.examples">
+      <example
+            pageImage="icons/arduino.png"
+            wizardID="org.yakindu.sct.arduino.examples.arduinoUno">
+         <projectDescriptor
+               contentURI="projects/PedestrianCrossing.zip"
+               description="A pedestrian crossing traffic light."
+               name="PedestrianCrossing">
+         </projectDescriptor>
+         <fileToOpen
+               location="PedestrianCrossing/model/PedestrianCrossing.sct">
+         </fileToOpen>
+      </example>
+   </extension>
+
+</plugin>
