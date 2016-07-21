@@ -23,8 +23,8 @@ class TimeEventHeader {
 	def private generateContents(ExecutionFlow it) '''
 		«header»
 		
-		#ifndef «timeEvent.h.define»_H_
-		#define «timeEvent.h.define»_H_
+		#ifndef «timeEvent.h.define»
+		#define «timeEvent.h.define»
 		
 		#include "«timedStatemachineInterface.h»"
 		
@@ -39,7 +39,7 @@ class TimeEventHeader {
 			bool eventRaised;
 		};
 		
-		#endif /* «timeEvent.h.define»_H_ */
+		#endif /* «timeEvent.h.define» */
 	'''
 
 }

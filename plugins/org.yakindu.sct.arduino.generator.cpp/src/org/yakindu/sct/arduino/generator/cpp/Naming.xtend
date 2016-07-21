@@ -10,7 +10,7 @@ package org.yakindu.sct.arduino.generator.cpp
 
 class Naming extends org.yakindu.sct.generator.cpp.Naming {
 
-	def main() {
+	def arduinoMain() {
 		"ArduinoMain"
 	}
 

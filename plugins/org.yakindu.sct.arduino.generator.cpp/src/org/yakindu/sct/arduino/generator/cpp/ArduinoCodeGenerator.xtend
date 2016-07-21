@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2016 by Lothar Wendehals.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -33,6 +33,7 @@ class ArduinoCodeGenerator extends AbstractWorkspaceGenerator implements IExecut
 
 	@Inject extension Naming
 	@Inject extension GenmodelEntriesExtension
+	@Inject extension ArduinoMainHeader
 	@Inject extension ArduinoMain
 	@Inject extension StatemachineConnectorHeader
 	@Inject extension StatemachineConnector
@@ -56,7 +57,8 @@ class ArduinoCodeGenerator extends AbstractWorkspaceGenerator implements IExecut
 
 		// Arduino specific sources
 		// output folder
-		flow.generateMain(entry, fsa);
+		flow.generateArduinoMainHeader(entry, fsa);
+		flow.generateArduinoMain(entry, fsa);
 		flow.generateHardwareConnectorHeader(fsa);
 		flow.generateTimeEventHeader(fsa);
 		flow.generateAbstractTimerHeader(fsa);

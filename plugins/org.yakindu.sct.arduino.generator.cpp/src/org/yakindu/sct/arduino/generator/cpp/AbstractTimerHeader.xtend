@@ -23,8 +23,8 @@ class AbstractTimerHeader {
 	def private generateContents(ExecutionFlow it) '''
 		«header»
 		
-		#ifndef «abstractTimer.h.define»_H_
-		#define «abstractTimer.h.define»_H_
+		#ifndef «abstractTimer.h.define»
+		#define «abstractTimer.h.define»
 		
 		#include <stdio.h>
 		#include "«typesModule.h»"
@@ -75,7 +75,7 @@ class AbstractTimerHeader {
 			void raiseTimeEvents();
 		};
 		
-		#endif /* «abstractTimer.h.define»_H_ */
+		#endif /* «abstractTimer.h.define» */
 	'''
 
 }

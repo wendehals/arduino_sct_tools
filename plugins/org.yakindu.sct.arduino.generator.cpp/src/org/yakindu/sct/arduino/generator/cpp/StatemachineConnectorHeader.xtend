@@ -32,8 +32,8 @@ class StatemachineConnectorHeader {
 		«header»
 		«entry.licenseText»
 		
-		#ifndef «module.connector.define»_H_
-		#define «module.connector.define»_H_
+		#ifndef «module.connector.h.define»
+		#define «module.connector.h.define»
 		
 		#include <Arduino.h>
 		#include "«entry.srcGenFolderRelativeToUserSrc»«hardwareConnector.h»"
@@ -55,7 +55,8 @@ class StatemachineConnectorHeader {
 		
 		«module.connector»::~«module.connector»() {
 		}
-		#endif /* «module.connector.define»_H_ */
+		
+		#endif /* «module.connector.h.define» */
 	'''
 
 }

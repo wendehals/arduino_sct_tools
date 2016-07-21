@@ -23,8 +23,8 @@ class SoftwareTimerHeader {
 	def private generateContents(ExecutionFlow it) '''
 		«header»
 		
-		#ifndef «softwareTimer.h.define»_H_
-		#define «softwareTimer.h.define»_H_
+		#ifndef «softwareTimer.h.define»
+		#define «softwareTimer.h.define»
 		
 		#include <Arduino.h>
 		#include "«abstractTimer.h»"
@@ -54,7 +54,7 @@ class SoftwareTimerHeader {
 		«softwareTimer»::~«softwareTimer»() {
 		}
 		
-		#endif /* «softwareTimer.h.define»_H_ */
+		#endif /* «softwareTimer.h.define» */
 	'''
 
 }

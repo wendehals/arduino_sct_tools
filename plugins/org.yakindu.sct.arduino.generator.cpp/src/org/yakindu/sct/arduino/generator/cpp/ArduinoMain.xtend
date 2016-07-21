@@ -19,15 +19,14 @@ class ArduinoMain {
 	@Inject extension Naming
 	@Inject extension GenmodelEntriesExtension
 
-	def generateMain(ExecutionFlow it, GeneratorEntry entry, IFileSystemAccess fsa) {
-		fsa.generateFile(main.cpp, generateContents(entry))
+	def generateArduinoMain(ExecutionFlow it, GeneratorEntry entry, IFileSystemAccess fsa) {
+		fsa.generateFile(arduinoMain.cpp, generateContents(entry))
 	}
 
 	def private generateContents(ExecutionFlow it, GeneratorEntry entry) '''
 		«header»
 		
-		#include <Arduino.h>
-		#include "«module.h»"
+		#include "«arduinoMain.h»"
 		#include "«timerClassName(entry).h»"
 		#include "«entry.userSrcFolderRelativeToSrcGen»«module.connector.h»"
 		
@@ -37,6 +36,10 @@ class ArduinoMain {
 		«module»* statemachine;
 		«module.connector»* connector;
 		«timerClassName(entry)»* timer;
+		
+		«module»* getStatemachine(){
+			return statemachine;
+		}
 		
 		void setup() {
 			statemachine = new «module»();

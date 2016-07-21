@@ -37,12 +37,12 @@ class StatemachineConnector {
 		}
 		
 		void «module.connector»::init() {
-			// put your code here to initialize your hardware
+			// put your code here to initialize the hardware
 			// pinMode(LED_BUILTIN, OUTPUT);
 		}
 		
 		void «module.connector»::runCycle() {
-			// put your code here to update your hardware depending on the statechart's state
+			// put your code here to update the hardware depending on the statechart's state
 			// digitalWrite(LED_BUILTIN, statemachine->getXXX());
 		}
 	'''

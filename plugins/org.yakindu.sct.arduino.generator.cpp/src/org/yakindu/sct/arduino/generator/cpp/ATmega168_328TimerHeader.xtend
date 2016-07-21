@@ -23,8 +23,8 @@ class ATmega168_328TimerHeader {
 	def private generateContents(ExecutionFlow it) '''
 		«header»
 		
-		#ifndef «atMega168_328Timer.h.define»_H_
-		#define «atMega168_328Timer.h.define»_H_
+		#ifndef «atMega168_328Timer.h.define»
+		#define «atMega168_328Timer.h.define»
 		
 		#include <Arduino.h>
 		#include <avr/sleep.h>
@@ -49,7 +49,7 @@ class ATmega168_328TimerHeader {
 		«atMega168_328Timer»::~«atMega168_328Timer»() {
 		}
 		
-		#endif /* «atMega168_328Timer.h.define»_H_ */
+		#endif /* «atMega168_328Timer.h.define» */
 	'''
 
 }

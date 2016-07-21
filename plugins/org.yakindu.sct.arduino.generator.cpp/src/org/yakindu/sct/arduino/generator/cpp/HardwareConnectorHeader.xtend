@@ -23,8 +23,8 @@ class HardwareConnectorHeader {
 	def private generateContents(ExecutionFlow it) '''
 		«header»
 		
-		#ifndef «hardwareConnector.h.define»_H_
-		#define «hardwareConnector.h.define»_H_
+		#ifndef «hardwareConnector.h.define»
+		#define «hardwareConnector.h.define»
 		
 		
 		class «hardwareConnector» {
@@ -39,7 +39,7 @@ class HardwareConnectorHeader {
 		«hardwareConnector»::~«hardwareConnector»() {
 		}
 		
-		#endif /* «hardwareConnector.h.define»_H_ */
+		#endif /* «hardwareConnector.h.define» */
 	'''
 
 }
