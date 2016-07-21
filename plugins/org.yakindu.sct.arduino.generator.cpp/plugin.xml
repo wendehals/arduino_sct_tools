@@ -4,9 +4,9 @@
    <extension
          point="org.yakindu.sct.generator.core.generator">
       <SCTGenerator class="org.yakindu.sct.arduino.generator.cpp.ArduinoCppCodeGenerator"
-            description="YAKINDU SCT C++ Code Generator for Arduino"
+            description="YAKINDU Statechart Tools for Arduino C++ Code Generator"
             id="yakindu::arduino_cpp"
-            name="YAKINDU SCT C++ Code Generator for Arduino"
+            name="YAKINDU Statechart Tools for Arduino C++ Code Generator"
             contentType="statechart"
             elementRefType="org.yakindu.sct.model.sgraph.Statechart">
             <FeatureLibrary

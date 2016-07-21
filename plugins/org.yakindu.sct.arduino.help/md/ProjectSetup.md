@@ -4,7 +4,7 @@ To start programming your Arduino, you need to create a project. After closing t
 
 ![New Project](screenshots/NewProjectContextMenu.png)
 
-Select "Arduino Project with YAKINDU SCT Model" from the list on the first page of the New Project wizard and click "Next>".
+Select "Arduino Project with YAKINDU Statechart" from the list on the first page of the New Project wizard and click "Next>".
 
 ![New Project Wizard](screenshots/NewProjectWizard.png)
 

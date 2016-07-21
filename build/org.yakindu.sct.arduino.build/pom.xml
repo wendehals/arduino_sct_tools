@@ -11,7 +11,7 @@
 	<packaging>pom</packaging>
 
 	<url>https://github.com/wendehals/arduino_sct_tools</url>
-	<name>YAKINDU SCT Arduino Support</name>
+	<name>YAKINDU Statechart Tools for Arduino</name>
 
 	<properties>
 		<tycho.version>0.25.0</tycho.version>

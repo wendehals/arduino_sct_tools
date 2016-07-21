@@ -12,7 +12,7 @@
     xmlns:setup.workingsets="http://www.eclipse.org/oomph/setup/workingsets/1.0"
     xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Git.ecore http://www.eclipse.org/oomph/predicates/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Predicates.ecore http://www.eclipse.org/oomph/setup/projects/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Projects.ecore http://www.eclipse.org/oomph/setup/targlets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupTarglets.ecore http://www.eclipse.org/oomph/setup/workingsets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupWorkingSets.ecore"
     name="org.yakindu.sct.arduino.dev.ide"
-    label="YAKINDU SCT for Arduino Development IDE">
+    label="YAKINDU Statechart Tools for Arduino Development IDE">
   <setupTask
       xsi:type="setup.p2:P2Task">
     <requirement
@@ -33,10 +33,14 @@
         name="org.eclipse.m2e.feature.feature.group"/>
     <requirement
         name="markdown.editor.feature.feature.group"/>
+    <requirement
+        name="com.inventage.tools.versiontiger.gui.feature.group"/>
     <repository
         url="http://updates.yakindu.org/sct/mars/releases"/>
     <repository
         url="http://www.winterwell.com/software/updatesite/"/>
+    <repository
+        url="https://raw.github.com/inventage/version-tiger-repos/master/releases/"/>
   </setupTask>
   <setupTask
       xsi:type="setup:VariableTask"
@@ -49,7 +53,7 @@
       remoteURI="https://github.com/wendehals/arduino_sct_tools.git"
       pushURI=""
       checkoutBranch="master">
-    <description>Arduino SCT Tools Git Repository</description>
+    <description>YAKINDU Statechart Tools for Arduino Git Repository</description>
   </setupTask>
   <setupTask
       xsi:type="git:GitCloneTask"
@@ -76,7 +80,7 @@
         xsi:type="setup.targlets:TargletTask"
         id="org.yakindu.sct.arduino.tools">
       <targlet
-          name="YAKINDU SCT Arduino Tools">
+          name="YAKINDU Statechart Tools for Arduino">
         <annotation
             source="http:/www.eclipse.org/oomph/targlets/TargetDefinitionGenerator">
           <detail
@@ -122,7 +126,7 @@
               url="http://download.eclipse.org/tools/cdt/releases/9.0"/>
         </repositoryList>
       </targlet>
-      <description>YAKINDU SCT Arduino Tools</description>
+      <description>YAKINDU Statechart Tools for Arduino</description>
     </setupTask>
     <setupTask
         xsi:type="setup.workingsets:WorkingSetTask">
@@ -176,5 +180,5 @@
   <logicalProjectContainer
       xsi:type="setup:ProjectCatalog"
       href="index:/org.eclipse.setup#//@projectCatalogs[name='com.github']"/>
-  <description>Develop tools for YAKINDU SCT to support programming Arduinos</description>
+  <description>Develop tools for YAKINDU Statechart Tools to support programming Arduinos</description>
 </setup:Project>

@@ -9,13 +9,13 @@
             finalPerspective="org.eclipse.cdt.ui.CPerspective"
             icon="icons/arduino.png"
             id="org.yakindu.sct.arduino.ui.wizard.project"
-            name="Arduino Project with YAKINDU SCT Model"
+            name="Arduino Project with YAKINDU Statechart"
             preferredPerspectives="org.eclipse.cdt.ui.CPerspective,org.yakindu.sct.ui.ModelingPerspective,org.yakindu.sct.ui.SimulationPerspective"
             project="true">
       </wizard>
       <category
             id="org.yakindu.sct.arduino.ui.wizard.category"
-            name="YAKINDU SCT Arduino Support">
+            name="YAKINDU Statechart Tools for Arduino">
       </category>
    </extension>
 

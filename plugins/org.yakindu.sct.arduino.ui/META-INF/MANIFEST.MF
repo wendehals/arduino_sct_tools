@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: YAKINDU SCT Arduino Support UI
+Bundle-Name: YAKINDU Statechart Tools for Arduino UI
 Bundle-SymbolicName: org.yakindu.sct.arduino.ui;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: org.yakindu.sct.arduino.ui.SCTArduinoUIPlugin

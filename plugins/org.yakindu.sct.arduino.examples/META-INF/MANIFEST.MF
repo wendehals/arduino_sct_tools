@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: YAKINDU SCT for Arduino Examples
+Bundle-Name: YAKINDU Statechart Tools for Arduino Examples
 Bundle-SymbolicName: org.yakindu.sct.arduino.examples;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Vendor: Lothar Wendehals

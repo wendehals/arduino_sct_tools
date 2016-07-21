@@ -6,7 +6,7 @@
     xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
     xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0"
     name="org.yakindu.sct.arduino.ide"
-    label="YAKINDU SCT for Arduino">
+    label="YAKINDU Statechart Tools for Arduino">
   <annotation
       source="http://www.eclipse.org/oomph/setup/BrandingInfo">
     <detail
@@ -77,7 +77,7 @@
       <repository
           url="https://wendehals.github.io/arduino_sct_tools/releases/"/>
     </setupTask>
-    <description>YAKINDU SCT for Arduino</description>
+    <description>YAKINDU Statechart Tools for Arduino</description>
   </version>
-  <description>YAKINDU SCT for Arduino lets you program your Arduino with statecharts.</description>
+  <description>YAKINDU Statechart Tools for Arduino lets you program your Arduino with statecharts.</description>
 </setup:Product>

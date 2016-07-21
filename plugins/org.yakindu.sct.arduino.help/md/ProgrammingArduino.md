@@ -32,7 +32,7 @@ Now the statechart will be simulated. The current state(s) of the statechart wil
 
 ![Running Simulation](screenshots/RunningSimulation.png)
 
-For more details about simulation refer to the YAKINDU SCT pages in the Eclipse help.
+For more details about simulation refer to the YAKINDU Statechart Tools pages in the Eclipse help.
 
 ## Connecting the Statechart Model with the Hardware
 

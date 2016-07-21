@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.yakindu.sct.arduino"
-      label="YAKINDU SCT Arduino Support"
+      label="YAKINDU Statechart Tools for Arduino"
       version="0.1.0.qualifier"
       provider-name="Lothar Wendehals"
       license-feature="org.eclipse.license"
       license-feature-version="1.0.1.qualifier">
 
    <description url="https://github.com/wendehals/arduino_sct_tools">
-      YAKINDU SCT Arduino Support
+      YAKINDU Statechart Tools for Arduino
    </description>
 
    <copyright url="https://github.com/wendehals/arduino_sct_tools">
