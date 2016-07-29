@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2016 by Lothar Wendehals.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,16 +8,16 @@
  */
 package org.yakindu.sct.arduino.generator.cpp
 
-import org.yakindu.sct.generator.c.GenmodelEntries
-import org.yakindu.sct.model.sgen.GeneratorEntry
-import org.yakindu.sct.arduino.generator.cpp.features.IArduinoFeatureConstants
-import org.yakindu.sct.arduino.generator.cpp.features.Timer
 import com.google.inject.Inject
+import org.yakindu.sct.arduino.generator.cpp.features.IArduinoFeatureConstants
+import org.yakindu.sct.arduino.generator.cpp.timers.Architectures
+import org.yakindu.sct.arduino.generator.cpp.timers.Timer
+import org.yakindu.sct.generator.c.GenmodelEntries
 import org.yakindu.sct.generator.core.library.IOutletFeatureHelper
+import org.yakindu.sct.model.sgen.GeneratorEntry
 
 class GenmodelEntriesExtension extends GenmodelEntries {
 
-	@Inject extension Naming;
 	@Inject extension IOutletFeatureHelper outletFeatureHelper
 
 	def private getGeneratorOptionsFeature(GeneratorEntry it) {
@@ -32,24 +32,9 @@ class GenmodelEntriesExtension extends GenmodelEntries {
 		outletFeatureHelper.getTargetFolderValue(it).stringValue
 	}
 
-	def boolean isSoftwareTimer(GeneratorEntry it) {
-		Timer::SOFTWARE.literal.equals(getTimer)
-	}
-
-	def boolean isATmega168_328Timer(GeneratorEntry it) {
-		Timer::ATMEGA168328.literal.equals(getTimer)
-	}
-
-	def getTimer(GeneratorEntry it) {
-		generatorOptionsFeature?.getParameterValue(IArduinoFeatureConstants::PARAM_TIMER).stringValue
-	}
-
-	def timerClassName(GeneratorEntry it) {
-		if (isSoftwareTimer) {
-			return softwareTimer
-		} else if (isATmega168_328Timer) {
-			return atMega168_328Timer
-		}
+	def Timer getTimer(GeneratorEntry it) {
+		val timerId = generatorOptionsFeature?.getParameterValue(IArduinoFeatureConstants::PARAM_TIMER).stringValue
+		Architectures.getTimer(timerId)
 	}
 
 	def cyclePeriod(GeneratorEntry it) {

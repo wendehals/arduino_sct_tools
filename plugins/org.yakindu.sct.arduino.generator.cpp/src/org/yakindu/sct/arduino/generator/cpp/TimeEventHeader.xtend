@@ -14,7 +14,7 @@ import org.yakindu.sct.model.sexec.ExecutionFlow
 
 class TimeEventHeader {
 
-	@Inject extension Naming
+	@Inject extension NamingExtension
 
 	def generateTimeEventHeader(ExecutionFlow flow, IFileSystemAccess fsa) {
 		fsa.generateFile(timeEvent.h, flow.generateContents())

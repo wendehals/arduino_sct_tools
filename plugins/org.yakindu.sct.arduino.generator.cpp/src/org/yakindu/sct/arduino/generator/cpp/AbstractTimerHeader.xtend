@@ -14,7 +14,7 @@ import org.yakindu.sct.model.sexec.ExecutionFlow
 
 class AbstractTimerHeader {
 
-	@Inject extension Naming
+	@Inject extension NamingExtension
 
 	def generateAbstractTimerHeader(ExecutionFlow flow, IFileSystemAccess fsa) {
 		fsa.generateFile(abstractTimer.h, flow.generateContents())

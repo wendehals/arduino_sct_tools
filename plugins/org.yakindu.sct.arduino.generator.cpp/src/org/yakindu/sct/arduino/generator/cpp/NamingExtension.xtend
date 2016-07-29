@@ -8,7 +8,7 @@
  */
 package org.yakindu.sct.arduino.generator.cpp
 
-class Naming extends org.yakindu.sct.generator.cpp.Naming {
+class NamingExtension extends org.yakindu.sct.generator.cpp.Naming {
 
 	def arduinoMain() {
 		"ArduinoMain"
@@ -20,14 +20,6 @@ class Naming extends org.yakindu.sct.generator.cpp.Naming {
 
 	def abstractTimer() {
 		"AbstractTimer"
-	}
-
-	def softwareTimer() {
-		"SoftwareTimer"
-	}
-
-	def atMega168_328Timer() {
-		"ATmega168_328Timer"
 	}
 
 	def hardwareConnector() {

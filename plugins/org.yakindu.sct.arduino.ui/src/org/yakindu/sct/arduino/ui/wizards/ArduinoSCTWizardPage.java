@@ -8,11 +8,14 @@
  */
 package org.yakindu.sct.arduino.ui.wizards;
 
+import java.util.Collection;
+
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -24,7 +27,10 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
-import org.yakindu.sct.arduino.generator.cpp.features.Timer;
+import org.yakindu.sct.arduino.generator.cpp.timers.AbstractNamedExtensionElement;
+import org.yakindu.sct.arduino.generator.cpp.timers.Architecture;
+import org.yakindu.sct.arduino.generator.cpp.timers.Architectures;
+import org.yakindu.sct.arduino.generator.cpp.timers.Timer;
 
 public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, ISelectionChangedListener {
 
@@ -34,7 +40,11 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 
 	private Text srcGenFolderText;
 
+	private Text cyclePeriodText;
+
 	private Text timerImplDescText;
+
+	private ComboViewer architectureViewer;
 
 	private ComboViewer timerViewer;
 
@@ -72,6 +82,15 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 		this.srcGenFolderText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		this.srcGenFolderText.addModifyListener(this);
 
+		label = new Label(composite, SWT.NONE);
+		label.setText(Messages.ArduinoSCTWizardPage_cyclePeriodLabel);
+		label.setToolTipText(Messages.ArduinoSCTWizardPage_cyclePeriodToolTip);
+
+		this.cyclePeriodText = new Text(composite, SWT.SINGLE | SWT.BORDER);
+		this.cyclePeriodText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		this.cyclePeriodText.addModifyListener(this);
+		this.cyclePeriodText.setToolTipText(Messages.ArduinoSCTWizardPage_cyclePeriodToolTip);
+
 		final Group group = new Group(composite, SWT.SHADOW_NONE);
 		group.setText(Messages.ArduinoSCTWizardPage_timerLabel);
 		final GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
@@ -79,16 +98,24 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 		group.setLayoutData(gridData);
 		group.setLayout(new GridLayout());
 
+		this.architectureViewer = new ComboViewer(group, SWT.READ_ONLY | SWT.DROP_DOWN);
+		this.architectureViewer.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		this.architectureViewer.addSelectionChangedListener(this);
+
+		NamedExtensionElementsProvider provider = new NamedExtensionElementsProvider();
+		this.architectureViewer.setContentProvider(provider);
+		this.architectureViewer.setLabelProvider(provider);
+
+		this.architectureViewer.setInput(Architectures.getArchitectures());
+		this.architectureViewer.getCombo().select(0);
+
 		this.timerViewer = new ComboViewer(group, SWT.READ_ONLY | SWT.DROP_DOWN);
 		this.timerViewer.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		this.timerViewer.addSelectionChangedListener(this);
 
-		final TimerProvider provider = new TimerProvider();
+		provider = new NamedExtensionElementsProvider();
 		this.timerViewer.setContentProvider(provider);
 		this.timerViewer.setLabelProvider(provider);
-
-		this.timerViewer.setInput(Timer.values());
-		this.timerViewer.getCombo().select(0);
 
 		this.timerImplDescText = new Text(group, SWT.MULTI | SWT.READ_ONLY | SWT.BORDER | SWT.WRAP);
 		this.timerImplDescText.setLayoutData(gridData);
@@ -112,7 +139,11 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 	 */
 	@Override
 	public void selectionChanged(SelectionChangedEvent event) {
-		updateTimerDescription();
+		if (event.getSource() == this.architectureViewer) {
+			updateArchitecture();
+		} else if (event.getSource() == this.timerViewer) {
+			updateTimer();
+		}
 	}
 
 	/**
@@ -123,7 +154,6 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 		super.setVisible(visible);
 
 		this.statechartNameText.setText(((WizardNewProjectCreationPage) getPreviousPage()).getProjectName());
-		updateTimerDescription();
 	}
 
 	public String getStatechartName() {
@@ -138,6 +168,10 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 		return this.srcGenFolderText.getText().trim();
 	}
 
+	public int getCyclePeriod() {
+		return Integer.parseInt(this.cyclePeriodText.getText());
+	}
+
 	public Timer getTimer() {
 		return (Timer) this.timerViewer.getStructuredSelection().getFirstElement();
 	}
@@ -145,10 +179,23 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 	private void initialize() {
 		this.srcFolderText.setText("src"); //$NON-NLS-1$
 		this.srcGenFolderText.setText("src-gen"); //$NON-NLS-1$
+		this.cyclePeriodText.setText("10"); //$NON-NLS-1$
+
+		updateArchitecture();
 	}
 
-	private void updateTimerDescription() {
-		this.timerImplDescText.setText(getTimer().description);
+	private void updateArchitecture() {
+		final Architecture architecture = (Architecture) this.architectureViewer.getStructuredSelection()
+				.getFirstElement();
+		this.timerViewer.setInput(architecture.getTimers());
+		this.timerViewer.getCombo().select(0);
+
+		updateTimer();
+	}
+
+	private void updateTimer() {
+		this.timerImplDescText.setText(getTimer().getDescription());
+		checkPageComplete();
 	}
 
 	private void checkPageComplete() {
@@ -158,20 +205,51 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 			return;
 		}
 
+		try {
+			final int cyclePeriod = Integer.parseInt(this.cyclePeriodText.getText());
+			final Timer timer = getTimer();
+			if ((cyclePeriod < timer.getMinCyclePeriod()) || (cyclePeriod > timer.getMaxCyclePeriod())) {
+				setErrorMessage(String.format(Messages.ArduinoSCTWizardPage_cyclePeriodNotInIntervalMessage,
+						timer.getMinCyclePeriod(), timer.getMaxCyclePeriod()));
+				return;
+			}
+		} catch (final NumberFormatException exception) {
+			setErrorMessage(Messages.ArduinoSCTWizardPage_invalidCyclePeriodMessage);
+			return;
+		}
+
 		setErrorMessage(null);
 		setPageComplete(true);
 	}
 
-	protected static class TimerProvider extends LabelProvider implements IStructuredContentProvider {
+	protected static class NamedExtensionElementsProvider extends LabelProvider implements IStructuredContentProvider {
 
+		private Collection<AbstractNamedExtensionElement> namedExtensionElement;
+
+		/**
+		 * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface.viewers.Viewer,
+		 *      java.lang.Object, java.lang.Object)
+		 */
 		@Override
-		public String getText(Object element) {
-			return ((Timer) element).title;
+		@SuppressWarnings("unchecked")
+		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+			this.namedExtensionElement = (Collection<AbstractNamedExtensionElement>) newInput;
 		}
 
+		/**
+		 * @see org.eclipse.jface.viewers.LabelProvider#getText(java.lang.Object)
+		 */
+		@Override
+		public String getText(Object element) {
+			return ((AbstractNamedExtensionElement) element).getName();
+		}
+
+		/**
+		 * @see org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java.lang.Object)
+		 */
 		@Override
 		public Object[] getElements(Object inputElement) {
-			return Timer.values();
+			return this.namedExtensionElement.toArray();
 		}
 
 	}

@@ -68,6 +68,7 @@ public class NewArduinoSCTProjectWizard extends TemplateWizard {
 		this.generator.setStatechartName(this.arduinoSCTWizardPage.getStatechartName());
 		this.generator.setSrcFolder(this.arduinoSCTWizardPage.getSrcFolderName());
 		this.generator.setSrcGenFolder(this.arduinoSCTWizardPage.getSrcGenFolderName());
+		this.generator.setCyclePeriod(this.arduinoSCTWizardPage.getCyclePeriod());
 		this.generator.setTimer(this.arduinoSCTWizardPage.getTimer());
 
 		if (!this.projectCreationPage.useDefaults()) {

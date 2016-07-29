@@ -8,21 +8,25 @@
  */
 package org.yakindu.sct.arduino.generator.cpp
 
+import com.google.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess
+import org.yakindu.sct.arduino.generator.cpp.timers.AbstractTimerCodeGenerator
 import org.yakindu.sct.generator.core.AbstractWorkspaceGenerator
 import org.yakindu.sct.generator.core.impl.IExecutionFlowGenerator
-import org.yakindu.sct.model.sexec.ExecutionFlow
-import org.yakindu.sct.model.sgen.GeneratorEntry
-import com.google.inject.Inject
-import org.yakindu.sct.model.sgraph.Statechart
-import org.yakindu.sct.generator.cpp.Types
-import org.yakindu.sct.generator.cpp.TimedStatemachineInterface
-import org.yakindu.sct.generator.cpp.TimerInterface
-import org.yakindu.sct.generator.cpp.StatemachineInterface
 import org.yakindu.sct.generator.cpp.StatemachineHeader
 import org.yakindu.sct.generator.cpp.StatemachineImplementation
+import org.yakindu.sct.generator.cpp.StatemachineInterface
+import org.yakindu.sct.generator.cpp.TimedStatemachineInterface
+import org.yakindu.sct.generator.cpp.TimerInterface
+import org.yakindu.sct.generator.cpp.Types
+import org.yakindu.sct.model.sexec.ExecutionFlow
+import org.yakindu.sct.model.sgen.GeneratorEntry
+import org.yakindu.sct.model.sgraph.Statechart
+import com.google.inject.Injector
 
 class ArduinoCodeGenerator extends AbstractWorkspaceGenerator implements IExecutionFlowGenerator {
+
+	@Inject Injector injector;
 
 	@Inject extension Types
 	@Inject extension TimedStatemachineInterface
@@ -31,8 +35,8 @@ class ArduinoCodeGenerator extends AbstractWorkspaceGenerator implements IExecut
 	@Inject extension StatemachineHeader
 	@Inject extension StatemachineImplementation
 
-	@Inject extension Naming
 	@Inject extension GenmodelEntriesExtension
+	@Inject extension NamingExtension
 	@Inject extension ArduinoMainHeader
 	@Inject extension ArduinoMain
 	@Inject extension StatemachineConnectorHeader
@@ -40,45 +44,41 @@ class ArduinoCodeGenerator extends AbstractWorkspaceGenerator implements IExecut
 	@Inject extension TimeEventHeader
 	@Inject extension AbstractTimerHeader
 	@Inject extension AbstractTimer
-	@Inject extension SoftwareTimerHeader
-	@Inject extension SoftwareTimer
-	@Inject extension ATmega168_328TimerHeader
-	@Inject extension ATmega168_328Timer
 	@Inject extension HardwareConnectorHeader
 
-	override generate(ExecutionFlow flow, GeneratorEntry entry, IFileSystemAccess fsa) {
+	override generate(ExecutionFlow it, GeneratorEntry entry, IFileSystemAccess fsa) {
 		// C++ code generation for statechart
-		flow.generateTypesHeader(entry, fsa)
-		flow.generateIStatemachine(entry, fsa);
-		flow.generateITimedStatemachine(entry, fsa);
-		flow.generateITimerService(entry, fsa);
-		flow.generateStatemachineHeader(flow.sourceElement as Statechart, fsa, entry)
-		flow.generateStatemachineImplemenation(flow.sourceElement as Statechart, fsa, entry)
+		generateTypesHeader(entry, fsa)
+		generateIStatemachine(entry, fsa);
+		generateITimedStatemachine(entry, fsa);
+		generateITimerService(entry, fsa);
+		generateStatemachineHeader(sourceElement as Statechart, fsa, entry)
+		generateStatemachineImplemenation(sourceElement as Statechart, fsa, entry)
 
 		// Arduino specific sources
 		// output folder
-		flow.generateArduinoMainHeader(entry, fsa);
-		flow.generateArduinoMain(entry, fsa);
-		flow.generateHardwareConnectorHeader(fsa);
-		flow.generateTimeEventHeader(fsa);
-		flow.generateAbstractTimerHeader(fsa);
-		flow.generateAbstractTimer(fsa);
-
-		if (isSoftwareTimer(entry)) {
-			flow.generateSoftwareTimerHeader(fsa);
-			flow.generateSoftwareTimer(fsa);
-		} else if (isATmega168_328Timer(entry)) {
-			flow.generateATmega168_328TimerHeader(fsa);
-			flow.generateATmega168_328Timer(fsa);
-		}
+		generateArduinoMainHeader(entry, fsa);
+		generateArduinoMain(entry, fsa);
+		generateHardwareConnectorHeader(fsa);
+		generateTimeEventHeader(fsa);
+		generateAbstractTimerHeader(fsa);
+		generateAbstractTimer(fsa);
+		
+		injector.injectMembers(entry.timer.codeGenerator)
+		generateTimer(fsa, entry.timer.codeGenerator)
 
 		// userSrcFolder
-		flow.generateStatemachineConnectorHeader(entry, fsa);
-		flow.generateStatemachineConnector(entry, fsa);
+		generateStatemachineConnectorHeader(entry, fsa);
+		generateStatemachineConnector(entry, fsa);
 	}
 
 	def generateTypesHeader(ExecutionFlow it, GeneratorEntry entry, IFileSystemAccess fsa) {
 		fsa.generateFile(typesModule.h, typesHContent(entry))
+	}
+
+	def generateTimer(ExecutionFlow it,IFileSystemAccess fsa, AbstractTimerCodeGenerator generator) {
+		fsa.generateFile(generator.timerName.h, generator.generateTimerHeader(it))
+		fsa.generateFile(generator.timerName.cpp, generator.generateTimer(it))
 	}
 
 }

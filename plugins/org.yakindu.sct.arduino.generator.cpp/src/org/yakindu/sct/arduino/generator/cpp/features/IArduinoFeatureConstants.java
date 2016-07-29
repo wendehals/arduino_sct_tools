@@ -16,5 +16,5 @@ public interface IArduinoFeatureConstants {
 	String PARAM_CYCLE_PERIOD = "cyclePeriod"; //$NON-NLS-1$
 
 	String USER_SRC_FOLDER_DEFAULT = "src"; //$NON-NLS-1$
-	int CYCLE_PERIOD_DEFAULT = 10;
+	int CYCLE_PERIOD_DEFAULT = 10000;
 }

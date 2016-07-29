@@ -16,7 +16,7 @@ import org.yakindu.sct.arduino.generator.cpp.features.IArduinoFeatureConstants
 
 class StatemachineConnector {
 
-	@Inject extension Naming
+	@Inject extension NamingExtension
 	@Inject extension GenmodelEntriesExtension
 
 	def generateStatemachineConnector(ExecutionFlow flow, GeneratorEntry entry, IFileSystemAccess fsa) {

@@ -15,7 +15,7 @@ import org.yakindu.sct.model.sgen.GeneratorEntry
 
 class ArduinoMainHeader {
 
-	@Inject extension Naming
+	@Inject extension NamingExtension
 
 	def generateArduinoMainHeader(ExecutionFlow it, GeneratorEntry entry, IFileSystemAccess fsa) {
 		fsa.generateFile(arduinoMain.h, generateContents(entry))

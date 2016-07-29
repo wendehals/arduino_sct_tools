@@ -37,7 +37,7 @@ import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCo
 import org.eclipse.tools.templates.freemarker.FMProjectGenerator;
 import org.osgi.framework.Bundle;
 import org.yakindu.base.base.BasePackage;
-import org.yakindu.sct.arduino.generator.cpp.features.Timer;
+import org.yakindu.sct.arduino.generator.cpp.timers.Timer;
 import org.yakindu.sct.builder.nature.SCTNature;
 import org.yakindu.sct.model.sgraph.SGraphPackage;
 import org.yakindu.sct.model.sgraph.Statechart;
@@ -55,6 +55,8 @@ public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 	private String srcFolderName;
 
 	private String srcGenFolderName;
+
+	private int cyclePeriod = 10;
 
 	private Timer timer;
 
@@ -77,6 +79,10 @@ public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 		this.srcGenFolderName = srcGenFolderName;
 	}
 
+	public void setCyclePeriod(int cyclePeriod) {
+		this.cyclePeriod = cyclePeriod;
+	}
+
 	public void setTimer(Timer timer) {
 		this.timer = timer;
 	}
@@ -90,8 +96,8 @@ public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 		model.put("statechartName", this.statechartName); //$NON-NLS-1$
 		model.put("srcFolder", this.srcFolderName); //$NON-NLS-1$
 		model.put("srcGenFolder", this.srcGenFolderName); //$NON-NLS-1$
-		model.put("timer", this.timer.literal); //$NON-NLS-1$
-		model.put("cyclePeriod", "10"); //$NON-NLS-1$//$NON-NLS-2$
+		model.put("timer", this.timer.getId()); //$NON-NLS-1$
+		model.put("cyclePeriod", Integer.toString(this.cyclePeriod)); //$NON-NLS-1$
 
 		final SubMonitor subMonitor = SubMonitor.convert(monitor, 100);
 		super.generate(model, subMonitor.split(80));

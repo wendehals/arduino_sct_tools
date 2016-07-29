@@ -16,8 +16,9 @@ import org.yakindu.sct.model.sgraph.Statechart
 
 class ArduinoMain {
 
-	@Inject extension Naming
+	@Inject extension NamingExtension
 	@Inject extension GenmodelEntriesExtension
+	@Inject extension MaxParallelTimersExtension
 
 	def generateArduinoMain(ExecutionFlow it, GeneratorEntry entry, IFileSystemAccess fsa) {
 		fsa.generateFile(arduinoMain.cpp, generateContents(entry))
@@ -27,15 +28,15 @@ class ArduinoMain {
 		«header»
 		
 		#include "«arduinoMain.h»"
-		#include "«timerClassName(entry).h»"
+		#include "«entry.timerClassName.h»"
 		#include "«entry.userSrcFolderRelativeToSrcGen»«module.connector.h»"
 		
-		#define PERIOD «cyclePeriod(entry)»
-		#define MAX_PARALLEL_TIMERS «MaxParallelTimersCalculator::calculate(it.sourceElement as Statechart)»
+		#define CYCLE_PERIOD «cyclePeriod(entry)»
+		#define MAX_PARALLEL_TIMERS «maxParallelTimers(it.sourceElement as Statechart)»
 		
 		«module»* statemachine;
 		«module.connector»* connector;
-		«timerClassName(entry)»* timer;
+		«entry.timerClassName»* timer;
 		
 		«module»* getStatemachine(){
 			return statemachine;
@@ -44,7 +45,7 @@ class ArduinoMain {
 		void setup() {
 			statemachine = new «module»();
 			connector = new «module.connector»(statemachine);
-			timer = new «timerClassName(entry)»(statemachine, connector, MAX_PARALLEL_TIMERS, PERIOD);
+			timer = new «entry.timerClassName»(statemachine, connector, MAX_PARALLEL_TIMERS, CYCLE_PERIOD);
 		
 			statemachine->setTimer(timer);
 			timer->start();
@@ -54,5 +55,11 @@ class ArduinoMain {
 			timer->runCycle();
 		}
 	'''
+	
+	
+	def timerClassName(GeneratorEntry it){
+		timer.codeGenerator.timerName
+	}
+	
 
 }

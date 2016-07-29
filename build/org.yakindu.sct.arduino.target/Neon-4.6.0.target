@@ -16,7 +16,7 @@
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.yakindu.sct.feature.group" version="2.6.2.201606071318"/>
 <unit id="org.yakindu.sct.generator.feature.group" version="2.6.2.201606071318"/>
-<repository location="http://updates.yakindu.org/sct/mars/releases"/>
+<repository location="http://updates.yakindu.org/sct/neon/releases"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.license.feature.group" version="1.0.1.v20140414-1359"/>
