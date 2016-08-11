@@ -92,11 +92,15 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 		this.cyclePeriodText.setToolTipText(Messages.ArduinoSCTWizardPage_cyclePeriodToolTip);
 
 		final Group group = new Group(composite, SWT.SHADOW_NONE);
-		group.setText(Messages.ArduinoSCTWizardPage_timerLabel);
-		final GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		group.setText(Messages.ArduinoSCTWizardPage_timerImplLabel);
+		group.setLayout(new GridLayout(2, false));
+
+		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gridData.horizontalSpan = 2;
 		group.setLayoutData(gridData);
-		group.setLayout(new GridLayout());
+
+		label = new Label(group, SWT.NONE);
+		label.setText(Messages.ArduinoSCTWizardPage_architectureLabel);
 
 		this.architectureViewer = new ComboViewer(group, SWT.READ_ONLY | SWT.DROP_DOWN);
 		this.architectureViewer.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
@@ -109,6 +113,9 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 		this.architectureViewer.setInput(Architectures.getArchitectures());
 		this.architectureViewer.getCombo().select(0);
 
+		label = new Label(group, SWT.NONE);
+		label.setText(Messages.ArduinoSCTWizardPage_timerLabel);
+
 		this.timerViewer = new ComboViewer(group, SWT.READ_ONLY | SWT.DROP_DOWN);
 		this.timerViewer.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		this.timerViewer.addSelectionChangedListener(this);
@@ -116,6 +123,9 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 		provider = new NamedExtensionElementsProvider();
 		this.timerViewer.setContentProvider(provider);
 		this.timerViewer.setLabelProvider(provider);
+
+		gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		gridData.horizontalSpan = 2;
 
 		this.timerImplDescText = new Text(group, SWT.MULTI | SWT.READ_ONLY | SWT.BORDER | SWT.WRAP);
 		this.timerImplDescText.setLayoutData(gridData);
