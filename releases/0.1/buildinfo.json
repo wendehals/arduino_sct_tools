@@ -1,7 +1,7 @@
 {
-    "timestamp" : 1469136330547,
+    "timestamp" : 1470916232664,
     "revision" : {
-        "HEAD" : "6cd1f0e91e3860836f89cd86a2726d538790d557",
+        "HEAD" : "052563c59a331bc8fdb4b781801c7baeaff59eac",
         "currentBranch" : "refs/heads/master",
         "knownReferences" : [{
             "name" : "origin",
@@ -11,7 +11,7 @@
     },
     "properties" : {
         "TARGET_PLATFORM_VERSION_MAXIMUM" : "null",
-        "java.version" : "1.8.0_92",
+        "java.version" : "1.8.0_102",
         "user.dir" : "C:\\Entwicklung\\sct-arduino-dev-ide\\git\\arduino_sct_tools\\build\\org.yakindu.sct.arduino.build",
         "os.arch" : "amd64",
         "RELEASE" : "null",

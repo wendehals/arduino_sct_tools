@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.yakindu.sct.arduino_0.1.0.201607212124.jar" id="org.yakindu.sct.arduino" version="0.1.0.201607212124">
+   <feature url="features/org.yakindu.sct.arduino_0.1.0.201608111149.jar" id="org.yakindu.sct.arduino" version="0.1.0.201608111149">
       <category name="org.yakindu.sct.arduino.p2repo"/>
    </feature>
    <category-def name="org.yakindu.sct.arduino.p2repo" label="YAKINDU Statechart Tools for Arduino">
