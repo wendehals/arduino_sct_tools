@@ -36,6 +36,7 @@
       <import plugin="org.eclipse.gmf.runtime.emf.commands.core"/>
       <import plugin="org.yakindu.sct.ui.editor"/>
       <import plugin="org.eclipse.emf.common.ui"/>
+      <import feature="org.eclipse.cdt.arduino"/>
    </requires>
 
    <plugin
