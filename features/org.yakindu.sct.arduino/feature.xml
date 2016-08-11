@@ -15,6 +15,10 @@
       Copyright 2016 by Lothar Wendehals
    </copyright>
 
+   <url>
+      <discovery label="CDT 9.0.0" url="http://download.eclipse.org/tools/cdt/releases/9.0"/>
+   </url>
+
    <requires>
       <import plugin="org.yakindu.sct.model.sexec"/>
       <import plugin="org.yakindu.sct.model.stext"/>

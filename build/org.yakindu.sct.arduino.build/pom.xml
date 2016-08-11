@@ -233,7 +233,7 @@
 							<groupId>org.yakindu.sct.arduino</groupId>
 							<artifactId>org.yakindu.sct.arduino.target</artifactId>
 							<version>0.1.0-SNAPSHOT</version>
-							<classifier>Neon-4.6.0</classifier>
+							<classifier>Neon</classifier>
 						</artifact>
 					</target>
 				</configuration>
