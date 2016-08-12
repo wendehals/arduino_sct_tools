@@ -8,7 +8,7 @@
  */
 package org.yakindu.sct.arduino.generator.cpp
 
-class NamingExtension extends org.yakindu.sct.generator.cpp.Naming {
+class Naming extends org.yakindu.sct.generator.cpp.Naming {
 
 	def arduinoMain() {
 		"ArduinoMain"

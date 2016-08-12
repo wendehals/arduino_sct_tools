@@ -14,7 +14,7 @@ import org.yakindu.sct.model.sexec.ExecutionFlow
 
 class HardwareConnectorHeader {
 
-	@Inject	extension NamingExtension
+	@Inject	extension Naming
 
 	def generateHardwareConnectorHeader(ExecutionFlow flow, IFileSystemAccess fsa) {
 		fsa.generateFile(hardwareConnector.h, flow.generateContents())

@@ -16,9 +16,9 @@ import org.yakindu.sct.model.sgraph.Statechart
 
 class ArduinoMain {
 
-	@Inject extension NamingExtension
-	@Inject extension GenmodelEntriesExtension
-	@Inject extension MaxParallelTimersExtension
+	@Inject extension Naming
+	@Inject extension GenmodelEntries
+	@Inject extension MaxParallelTimers
 
 	def generateArduinoMain(ExecutionFlow it, GeneratorEntry entry, IFileSystemAccess fsa) {
 		fsa.generateFile(arduinoMain.cpp, generateContents(entry))

@@ -18,6 +18,10 @@ import org.yakindu.sct.model.sgen.FeatureType;
 
 public class CoreDefaultFeatureValueProvider extends CoreLibraryDefaultFeatureValueProvider {
 
+	/**
+	 * @see org.yakindu.sct.generator.core.features.impl.CoreLibraryDefaultFeatureValueProvider#setDefaultValue(org.yakindu.sct.model.sgen.FeatureType,
+	 *      org.yakindu.sct.model.sgen.FeatureParameterValue, org.eclipse.emf.ecore.EObject)
+	 */
 	@Override
 	protected void setDefaultValue(FeatureType featureType, FeatureParameterValue parameterValue,
 			EObject contextElement) {

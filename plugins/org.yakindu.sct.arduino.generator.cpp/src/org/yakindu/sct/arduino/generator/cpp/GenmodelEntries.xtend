@@ -12,11 +12,10 @@ import com.google.inject.Inject
 import org.yakindu.sct.arduino.generator.cpp.features.IArduinoFeatureConstants
 import org.yakindu.sct.arduino.generator.cpp.timers.Architectures
 import org.yakindu.sct.arduino.generator.cpp.timers.Timer
-import org.yakindu.sct.generator.c.GenmodelEntries
 import org.yakindu.sct.generator.core.library.IOutletFeatureHelper
 import org.yakindu.sct.model.sgen.GeneratorEntry
 
-class GenmodelEntriesExtension extends GenmodelEntries {
+class GenmodelEntries extends org.yakindu.sct.generator.c.GenmodelEntries {
 
 	@Inject extension IOutletFeatureHelper outletFeatureHelper
 

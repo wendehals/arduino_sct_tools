@@ -10,11 +10,11 @@ package org.yakindu.sct.arduino.generator.cpp.timers
 
 import com.google.inject.Inject
 import org.yakindu.sct.model.sexec.ExecutionFlow
-import org.yakindu.sct.arduino.generator.cpp.NamingExtension
+import org.yakindu.sct.arduino.generator.cpp.Naming
 
 class SoftwareTimerCounter implements AbstractTimerCodeGenerator {
 
-	@Inject extension NamingExtension
+	@Inject extension Naming
 
 	override timerName(){
 		"SoftwareTimerCounter"

@@ -20,7 +20,7 @@ import org.yakindu.sct.model.stext.stext.LocalReaction
 import org.yakindu.sct.model.stext.stext.ReactionTrigger
 import org.yakindu.sct.model.stext.stext.TimeEventSpec
 
-class MaxParallelTimersExtension {
+class MaxParallelTimers {
 
 	def dispatch int maxParallelTimers(Statechart it) {
 		var int maximum = 0

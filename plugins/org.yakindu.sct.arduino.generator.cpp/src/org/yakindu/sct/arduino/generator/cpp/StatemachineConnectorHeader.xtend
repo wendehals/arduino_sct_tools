@@ -16,8 +16,8 @@ import org.yakindu.sct.model.sgen.GeneratorEntry
 
 class StatemachineConnectorHeader {
 
-	@Inject extension NamingExtension
-	@Inject extension GenmodelEntriesExtension
+	@Inject extension Naming
+	@Inject extension GenmodelEntries
 
 	def generateStatemachineConnectorHeader(ExecutionFlow flow, GeneratorEntry entry, IFileSystemAccess fsa) {
 		if (getUserSrcFolder(entry) != null) {

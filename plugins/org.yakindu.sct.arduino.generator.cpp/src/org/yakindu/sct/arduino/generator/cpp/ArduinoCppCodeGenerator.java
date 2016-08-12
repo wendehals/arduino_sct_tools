@@ -34,11 +34,31 @@ public class ArduinoCppCodeGenerator extends GenericJavaBasedGenerator {
 	@Inject
 	private ArduinoCodeGenerator delegate;
 
+	@Inject
+	private IGenArtifactConfigurations artifactConfigs;
+
+	/**
+	 * @see org.yakindu.sct.generator.core.impl.GenericJavaBasedGenerator#runGenerator(org.yakindu.sct.model.sgraph.Statechart,
+	 *      org.yakindu.sct.model.sgen.GeneratorEntry)
+	 */
 	@Override
 	public void runGenerator(Statechart statechart, GeneratorEntry entry) {
-		this.delegate.generate(createExecutionFlow(statechart, entry), entry, this.sctFsa.getIFileSystemAccess());
+		this.delegate.generate(createExecutionFlow(statechart, entry), entry, this.sctFsa.getIFileSystemAccess(),
+				this.artifactConfigs);
 	}
 
+	/**
+	 * @see org.yakindu.sct.generator.core.impl.AbstractSGraphModelGenerator#prepareGenerator(org.yakindu.sct.model.sgen.GeneratorEntry)
+	 */
+	@Override
+	protected void prepareGenerator(GeneratorEntry entry) {
+		super.prepareGenerator(entry);
+		this.artifactConfigs.setFileSystemAccess(this.sctFsa);
+	}
+
+	/**
+	 * @see org.yakindu.sct.generator.core.impl.GenericJavaBasedGenerator#getOverridesModule(org.yakindu.sct.model.sgen.GeneratorEntry)
+	 */
 	@Override
 	public Module getOverridesModule(final GeneratorEntry entry) {
 		final Module module = super.getOverridesModule(entry);
@@ -52,10 +72,14 @@ public class ArduinoCppCodeGenerator extends GenericJavaBasedGenerator {
 						.annotatedWith(Names.named(IGenArtifactConfigurations.DEFAULT))
 						.toInstance(GenArtifactConfigurations.DEFAULT);
 				binder.bind(IFileSystemAccess2.class).to(EFSResourceFileSystemAccess.class);
+				binder.bind(IGenArtifactConfigurations.class).to(GenArtifactConfigurations.class);
 			}
 		});
 	}
 
+	/**
+	 * @see org.yakindu.sct.generator.core.impl.AbstractSGraphModelGenerator#initFileSystemAccess(org.yakindu.sct.model.sgen.GeneratorEntry)
+	 */
 	@Override
 	protected void initFileSystemAccess(GeneratorEntry entry) {
 		super.initFileSystemAccess(entry);
