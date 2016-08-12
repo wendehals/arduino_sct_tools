@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 by Lothar Wendehals.
+O * Copyright (c) 2016 by Lothar Wendehals.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,25 +9,17 @@
 package org.yakindu.sct.arduino.generator.cpp
 
 import com.google.inject.Inject
-import org.eclipse.xtext.generator.IFileSystemAccess
+import org.yakindu.sct.generator.c.IContentTemplate
 import org.yakindu.sct.model.sexec.ExecutionFlow
 import org.yakindu.sct.model.sgen.GeneratorEntry
-import org.yakindu.sct.arduino.generator.cpp.features.IArduinoFeatureConstants
+import org.yakindu.sct.generator.c.IGenArtifactConfigurations
 
-class StatemachineConnector {
+class StatemachineConnector implements IContentTemplate {
 
 	@Inject extension Naming
 	@Inject extension GenmodelEntries
 
-	def generateStatemachineConnector(ExecutionFlow flow, GeneratorEntry entry, IFileSystemAccess fsa) {
-		if (getUserSrcFolder(entry) != null) {
-			fsa.generateFile(flow.module.connector.cpp, IArduinoFeatureConstants::PARAM_USER_SRC_FOLDER, flow.generateContents(entry))
-		} else {
-			fsa.generateFile(flow.module.connector.cpp, flow.generateContents(entry))
-		}
-	}
-
-	def private generateContents(ExecutionFlow it, GeneratorEntry entry) '''
+	override content(ExecutionFlow it, GeneratorEntry entry, IGenArtifactConfigurations locations) '''
 		«entry.licenseText»
 		
 		#include "«module.connector.h»"

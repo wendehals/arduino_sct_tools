@@ -9,26 +9,17 @@
 package org.yakindu.sct.arduino.generator.cpp
 
 import com.google.inject.Inject
-import org.eclipse.xtext.generator.IFileSystemAccess
-import org.yakindu.sct.arduino.generator.cpp.features.IArduinoFeatureConstants
+import org.yakindu.sct.generator.c.IContentTemplate
+import org.yakindu.sct.generator.c.IGenArtifactConfigurations
 import org.yakindu.sct.model.sexec.ExecutionFlow
 import org.yakindu.sct.model.sgen.GeneratorEntry
 
-class StatemachineConnectorHeader {
+class StatemachineConnectorHeader implements IContentTemplate {
 
 	@Inject extension Naming
 	@Inject extension GenmodelEntries
 
-	def generateStatemachineConnectorHeader(ExecutionFlow flow, GeneratorEntry entry, IFileSystemAccess fsa) {
-		if (getUserSrcFolder(entry) != null) {
-			fsa.generateFile(flow.module.connector.h, IArduinoFeatureConstants::PARAM_USER_SRC_FOLDER,
-				flow.generateContents(entry))
-		} else {
-			fsa.generateFile(flow.module.connector.h, flow.generateContents(entry))
-		}
-	}
-
-	def private generateContents(ExecutionFlow it, GeneratorEntry entry) '''
+	override content(ExecutionFlow it, GeneratorEntry entry, IGenArtifactConfigurations locations) '''
 		«header»
 		«entry.licenseText»
 		
@@ -58,5 +49,5 @@ class StatemachineConnectorHeader {
 		
 		#endif /* «module.connector.h.define» */
 	'''
-
+	
 }

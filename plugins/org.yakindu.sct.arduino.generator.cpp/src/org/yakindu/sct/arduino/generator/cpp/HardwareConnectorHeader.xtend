@@ -9,18 +9,16 @@
 package org.yakindu.sct.arduino.generator.cpp
 
 import com.google.inject.Inject
-import org.eclipse.xtext.generator.IFileSystemAccess
+import org.yakindu.sct.generator.c.IContentTemplate
+import org.yakindu.sct.generator.c.IGenArtifactConfigurations
 import org.yakindu.sct.model.sexec.ExecutionFlow
+import org.yakindu.sct.model.sgen.GeneratorEntry
 
-class HardwareConnectorHeader {
+class HardwareConnectorHeader implements IContentTemplate {
 
 	@Inject	extension Naming
 
-	def generateHardwareConnectorHeader(ExecutionFlow flow, IFileSystemAccess fsa) {
-		fsa.generateFile(hardwareConnector.h, flow.generateContents())
-	}
-
-	def private generateContents(ExecutionFlow it) '''
+	override content(ExecutionFlow flow, GeneratorEntry entry, IGenArtifactConfigurations locations) '''
 		«header»
 		
 		#ifndef «hardwareConnector.h.define»

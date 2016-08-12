@@ -9,18 +9,16 @@
 package org.yakindu.sct.arduino.generator.cpp
 
 import com.google.inject.Inject
-import org.eclipse.xtext.generator.IFileSystemAccess
+import org.yakindu.sct.generator.c.IContentTemplate
+import org.yakindu.sct.generator.c.IGenArtifactConfigurations
 import org.yakindu.sct.model.sexec.ExecutionFlow
+import org.yakindu.sct.model.sgen.GeneratorEntry
 
-class AbstractTimer {
+class AbstractTimer implements IContentTemplate {
 
 	@Inject extension Naming
 
-	def generateAbstractTimer(ExecutionFlow it, IFileSystemAccess fsa) {
-		fsa.generateFile(abstractTimer.cpp, generateContents())
-	}
-
-	def private generateContents(ExecutionFlow it) '''
+	override content(ExecutionFlow it, GeneratorEntry entry, IGenArtifactConfigurations locations) '''
 		«header»
 		
 		#include "«abstractTimer.h»"
@@ -109,5 +107,5 @@ class AbstractTimer {
 			this->stop();
 		}
 	'''
-
+	
 }

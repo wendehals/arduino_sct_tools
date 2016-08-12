@@ -23,6 +23,8 @@ import org.yakindu.sct.generator.cpp.TimerInterface
 import org.yakindu.sct.generator.cpp.Types
 import org.yakindu.sct.model.sexec.ExecutionFlow
 import org.yakindu.sct.model.sgen.GeneratorEntry
+import org.yakindu.sct.generator.c.IContentTemplate
+import org.yakindu.sct.arduino.generator.cpp.features.IArduinoFeatureConstants
 
 class ArduinoCodeGenerator implements IExecutionFlowGenerator {
 
@@ -34,74 +36,68 @@ class ArduinoCodeGenerator implements IExecutionFlowGenerator {
 	@Inject StatemachineHeader statemachineHeaderContent
 	@Inject StatemachineImplementation statemachineImplementationContent
 
+	@Inject ArduinoMainHeader arduinoMainHeaderContent
+	@Inject ArduinoMain arduinoMainContent
+	@Inject TimeEventHeader timeEventHeaderContent
+	@Inject AbstractTimerHeader abstractTimerHeaderContent
+	@Inject AbstractTimer abstractTimerContent
+	@Inject HardwareConnectorHeader hardwareConnectorHeaderContent
+	@Inject StatemachineConnectorHeader statemachineConnectorHeaderContent
+	@Inject StatemachineConnector statemachineConnectorContent
+
 	@Inject extension Naming
 	@Inject extension GenmodelEntries
-	@Inject extension ArduinoMainHeader
-	@Inject extension ArduinoMain
-	@Inject extension StatemachineConnectorHeader
-	@Inject extension StatemachineConnector
-	@Inject extension TimeEventHeader
-	@Inject extension AbstractTimerHeader
-	@Inject extension AbstractTimer
-	@Inject extension HardwareConnectorHeader
-//
-//	@Inject @Named(IGenArtifactConfigurations.DEFAULT)
-//	IGenArtifactConfigurations defaultConfigs
-//
 
 	override generate(ExecutionFlow flow, GeneratorEntry entry, IFileSystemAccess fsa) {
 		throw new UnsupportedOperationException("deprecated")
 	}
 
-//	/**
-//	 * @Deprecated use {@link #generate(ExecutionFlow, GeneratorEntry, IFileSystemAccess, ArtifactLocationProvider)} instead
-//	 */
-//	@Deprecated
-//	override generate(ExecutionFlow it, GeneratorEntry entry, IFileSystemAccess fsa) {
-//		generate(entry, fsa, defaultConfigs)
-//	}
-
 	def generate(ExecutionFlow it, GeneratorEntry entry, IFileSystemAccess fsa, IGenArtifactConfigurations locations) {
-		initGenerationArtifacts(entry, locations)
-		generateArtifacts(entry, fsa, locations)
+		initGenerationArtifacts(locations, it, entry)
 
-		// Arduino specific sources
-		// output folder
-		generateArduinoMainHeader(entry, fsa)
-		generateArduinoMain(entry, fsa)
-		generateHardwareConnectorHeader(fsa)
-		generateTimeEventHeader(fsa)
-		generateAbstractTimerHeader(fsa)
-		generateAbstractTimer(fsa)
+		for (GenArtifactConfiguration genArtifactConfig : locations.configurations) {
+			fsa.generateFile(genArtifactConfig.getName, genArtifactConfig.getOutputName,
+				genArtifactConfig.getContentTemplate.content(it, entry, locations))
+		}
 
 		injector.injectMembers(entry.timer.codeGenerator)
 		generateTimer(fsa, entry.timer.codeGenerator)
-
-		// userSrcFolder
-		generateStatemachineConnectorHeader(entry, fsa)
-		generateStatemachineConnector(entry, fsa)
 	}
 
-	def generateArtifacts(ExecutionFlow flow, GeneratorEntry entry, IFileSystemAccess fsa,
-		IGenArtifactConfigurations locations) {
-		for (GenArtifactConfiguration a : locations.configurations) {
-			fsa.generateFile(a.getName, a.getOutputName, a.getContentTemplate.content(flow, entry, locations))
+	def private initGenerationArtifacts(IGenArtifactConfigurations it, ExecutionFlow flow, GeneratorEntry entry) {
+		configure(flow.typesModule.h, typesContent)
+		configure(statemachineInterface.h, statemachineInterfaceContent)
+		configure(timedStatemachineInterface.h, timedStatemachineInterfaceContent)
+		configure(timerInterface.h, timerInterfaceContent)
+		configure(flow.module.h, statemachineHeaderContent)
+		configure(flow.module.cpp, statemachineImplementationContent)
+
+		// Arduino specific sources
+		// output folder
+		configure(arduinoMain.h, arduinoMainHeaderContent);
+		configure(arduinoMain.cpp, arduinoMainContent);
+		configure(hardwareConnector.h, hardwareConnectorHeaderContent);
+		configure(timeEvent.h, timeEventHeaderContent);
+		configure(abstractTimer.h, abstractTimerHeaderContent);
+		configure(abstractTimer.cpp, abstractTimerContent);
+
+		// userSrcFolder
+		if (getUserSrcFolder(entry) != null) {
+			configure(flow.module.connector.h, IArduinoFeatureConstants::PARAM_USER_SRC_FOLDER,
+				statemachineConnectorHeaderContent)
+			configure(flow.module.connector.cpp, IArduinoFeatureConstants::PARAM_USER_SRC_FOLDER,
+				statemachineConnectorContent)
+		} else {
+			configure(flow.module.connector.h, statemachineConnectorHeaderContent)
+			configure(flow.module.connector.cpp, statemachineConnectorContent)
 		}
 	}
 
-	def initGenerationArtifacts(ExecutionFlow flow, GeneratorEntry entry, IGenArtifactConfigurations locations) {
-		locations.configure(flow.typesModule.h, IExecutionFlowGenerator.TARGET_FOLDER_OUTPUT, typesContent)
-		locations.configure(statemachineInterface.h, IExecutionFlowGenerator.TARGET_FOLDER_OUTPUT,
-			statemachineInterfaceContent)
-		locations.configure(timedStatemachineInterface.h, IExecutionFlowGenerator.TARGET_FOLDER_OUTPUT,
-			timedStatemachineInterfaceContent)
-		locations.configure(timerInterface.h, IExecutionFlowGenerator.TARGET_FOLDER_OUTPUT, timerInterfaceContent)
-		locations.configure(flow.module.h, IExecutionFlowGenerator.TARGET_FOLDER_OUTPUT, statemachineHeaderContent)
-		locations.configure(flow.module.cpp, IExecutionFlowGenerator.TARGET_FOLDER_OUTPUT,
-			statemachineImplementationContent)
+	def private configure(IGenArtifactConfigurations it, String artifactName, IContentTemplate contentTemplate) {
+		configure(artifactName, IExecutionFlowGenerator.TARGET_FOLDER_OUTPUT, contentTemplate)
 	}
 
-	def generateTimer(ExecutionFlow it, IFileSystemAccess fsa, AbstractTimerCodeGenerator generator) {
+	def private generateTimer(ExecutionFlow it, IFileSystemAccess fsa, AbstractTimerCodeGenerator generator) {
 		fsa.generateFile(generator.timerName.h, generator.generateTimerHeader(it))
 		fsa.generateFile(generator.timerName.cpp, generator.generateTimer(it))
 	}
