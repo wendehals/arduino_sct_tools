@@ -12,7 +12,7 @@
             category="org.eclipse.ui.Examples/org.yakindu.sct.arduino.examples.category"
             class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard"
             finalPerspective="org.eclipse.cdt.ui.CPerspective"
-            icon="icons/arduino16.png"
+            icon="icons/yakindu16.png"
             id="org.yakindu.sct.arduino.examples.pedestrianCrossing"
             name="Pedestrian Crossing"
             preferredPerspectives="org.eclipse.cdt.ui.CPerspective,org.yakindu.sct.ui.ModelingPerspective,org.yakindu.sct.ui.SimulationPerspective"
@@ -25,7 +25,7 @@
             category="org.eclipse.ui.Examples/org.yakindu.sct.arduino.examples.category"
             class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard"
             finalPerspective="org.eclipse.cdt.ui.CPerspective"
-            icon="icons/arduino16.png"
+            icon="icons/yakindu16.png"
             id="org.yakindu.sct.arduino.examples.blink"
             name="Blink"
             preferredPerspectives="org.eclipse.cdt.ui.CPerspective,org.yakindu.sct.ui.ModelingPerspective,org.yakindu.sct.ui.SimulationPerspective"
@@ -38,7 +38,7 @@
    <extension
          point="org.eclipse.emf.common.ui.examples">
       <example
-            pageImage="icons/arduino48.png"
+            pageImage="icons/yakindu48.png"
             wizardID="org.yakindu.sct.arduino.examples.pedestrianCrossing">
          <projectDescriptor
                contentURI="projects/PedestrianCrossing.zip"
@@ -50,7 +50,7 @@
          </fileToOpen>
       </example>
       <example
-            pageImage="icons/arduino48.png"
+            pageImage="icons/yakindu48.png"
             wizardID="org.yakindu.sct.arduino.examples.blink">
          <projectDescriptor
                contentURI="projects/Blink.zip"

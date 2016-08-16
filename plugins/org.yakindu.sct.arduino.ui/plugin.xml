@@ -7,7 +7,7 @@
             category="org.yakindu.sct.arduino.ui.wizard.category"
             class="org.yakindu.sct.arduino.ui.wizards.NewArduinoSCTProjectWizard"
             finalPerspective="org.eclipse.cdt.ui.CPerspective"
-            icon="icons/arduino.png"
+            icon="icons/yakindu16.png"
             id="org.yakindu.sct.arduino.ui.wizard.project"
             name="Arduino Project with YAKINDU Statechart"
             preferredPerspectives="org.eclipse.cdt.ui.CPerspective,org.yakindu.sct.ui.ModelingPerspective,org.yakindu.sct.ui.SimulationPerspective"
