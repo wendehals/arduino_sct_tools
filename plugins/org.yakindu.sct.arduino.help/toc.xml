@@ -2,11 +2,8 @@
 <?NLS TYPE="org.eclipse.help.toc"?>
 
 <toc label="YAKINDU Statechart Tools for Arduino">
-	<topic label="Installation"  href="html/Installation.html"> 
-	</topic>
- <topic href="html/ArduinoToolchainSetup.html" label="Arduino Toolchain Setup">
- </topic>
+	<topic href="html/ArduinoToolchainSetup.html" label="Arduino Toolchain Setup"/>
 	<topic href="html/ProjectSetup.html" label="Arduino SCT Project Setup"/>
- <topic href="html/ProgrammingArduino.html" label="Programming an Arduino with Statecharts">
- </topic>
+ 	<topic href="html/ProgrammingArduino.html" label="Programming an Arduino with Statecharts"/>
+ 	<topic href="html/CreatingExamples.html" label="Creating an Example Project"/>
 </toc>

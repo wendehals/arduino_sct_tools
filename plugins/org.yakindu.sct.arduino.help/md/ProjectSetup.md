@@ -1,6 +1,6 @@
 # Arduino SCT Project Setup
 
-To start programming your Arduino, you need to create a project. After closing the Welcome page open the context menu of the Project Explorer view in the upper left corner of the Eclipse Window. Select "New">"Project...".
+To start programming your Arduino, you need to create a project. After closing the Welcome page open the context menu of the Project Explorer view in the upper left corner of the Eclipse Window and select "New">"Project...".
 
 ![New Project](screenshots/NewProjectContextMenu.png)
 

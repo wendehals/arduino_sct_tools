@@ -14,7 +14,7 @@
             finalPerspective="org.eclipse.cdt.ui.CPerspective"
             icon="icons/yakindu16.png"
             id="org.yakindu.sct.arduino.examples.pedestrianCrossing"
-            name="Pedestrian Crossing"
+            name="Pedestrian Crossing - Arduino SCT Project Example"
             preferredPerspectives="org.eclipse.cdt.ui.CPerspective,org.yakindu.sct.ui.ModelingPerspective,org.yakindu.sct.ui.SimulationPerspective"
             project="true">
          <description>
@@ -27,7 +27,7 @@
             finalPerspective="org.eclipse.cdt.ui.CPerspective"
             icon="icons/yakindu16.png"
             id="org.yakindu.sct.arduino.examples.blink"
-            name="Blink"
+            name="Blink - Arduino SCT Project Example"
             preferredPerspectives="org.eclipse.cdt.ui.CPerspective,org.yakindu.sct.ui.ModelingPerspective,org.yakindu.sct.ui.SimulationPerspective"
             project="true">
          <description>

@@ -1,20 +1,19 @@
 # Installation
 
-First you need to download the [Eclipse Installer](https://www.eclipse.org/downloads/). Start it and switch to the advanced mode.
+First you need to download the [YAKINDU Statechart Tools](https://www.statecharts.org/). Unzip the archive to an arbitrary directory and start SCT. Choose "Install New Software..." from the "Help" menu.
 
-![Installer - Switch to Advanced Mode](screenshots/Installer_AdvancedMode.png)
+![Install New Software](screenshots/InstallNewSoftware.png)
 
-In the advanced mode click the "+" button in the upper right corner to add a user product. Copy and paste the URL of the YAKINDU Statechart Tools for Arduino IDE setup to the dialog:
-https://raw.githubusercontent.com/wendehals/arduino_sct_tools/master/build/org.yakindu.sct.arduino.ide.setup/SCTArduinoIDE.setup
+Select the "Add..." button in the upper right corner to add a new update site. Copy the following URL to the "Location" text field: [https://wendehals.github.io/arduino\_sct\_tools/releases/](https://wendehals.github.io/arduino_sct_tools/releases/). Use any value for the "Name" field and select "OK".
 
-![Installer - Add the YAKINDU Statechart Tools for Arduino IDE setup to the user products](screenshots/Installer_AddUserProduct.png)
+![Add Repository](screenshots/AddRepository.png)
 
 Select YAKINDU Statechart Tools for Arduino and press the "Next>" button to switch to the next page.  
 
-![Installer - YAKINDU Statechart Tools for Arduino IDE](screenshots/Installer_UserProductSetup.png)
+![Install YAKINDU SCT for Arduino](screenshots/InstallSCTforArduino.png)
 
-Just click "Next>" on the Projects page. On the Variables page choose an Installation folder name and the Root install folder and press "Next>". Just confirm the last page by clicking "Finish" on the last page. 
+ 
 
 ![Installer - Variables](screenshots/Installer_Variables.png)
 
-The installation will start immediately. The installed IDE will start automatically, you just need to enter and confirm the workspace path.
+
