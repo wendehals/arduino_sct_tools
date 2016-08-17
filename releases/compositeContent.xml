@@ -7,6 +7,7 @@
   </properties>
   <children size='2'>
     <child location='0.1'/>
+    <child location='http://download.eclipse.org/releases/neon'/>
     <child location='http://download.eclipse.org/tools/cdt/releases/9.0'/>
   </children>
 </repository>
