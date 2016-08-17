@@ -8,3 +8,4 @@ You will find further documentation here:
 * [Arduino Toolchain Setup](plugins/org.yakindu.sct.arduino.help/md/ArduinoToolchainSetup.md)
 * [Arduino SCT Project Setup](plugins/org.yakindu.sct.arduino.help/md/ProjectSetup.md)
 * [Programming an Arduino with Statecharts](plugins/org.yakindu.sct.arduino.help/md/ProgrammingArduino.md)
+* [Creating an Example Project](plugins/org.yakindu.sct.arduino.help/md/CreatingExamples.md)
