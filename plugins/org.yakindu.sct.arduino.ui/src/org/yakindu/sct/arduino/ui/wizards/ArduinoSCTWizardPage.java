@@ -9,6 +9,8 @@
 package org.yakindu.sct.arduino.ui.wizards;
 
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.TreeSet;
 
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -234,7 +236,17 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 
 	protected static class NamedExtensionElementsProvider extends LabelProvider implements IStructuredContentProvider {
 
-		private Collection<AbstractNamedExtensionElement> namedExtensionElement;
+		private final Collection<AbstractNamedExtensionElement> namedExtensionElement = new TreeSet<>(
+				new Comparator<AbstractNamedExtensionElement>() {
+
+					/**
+					 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+					 */
+					@Override
+					public int compare(AbstractNamedExtensionElement element1, AbstractNamedExtensionElement element2) {
+						return element1.getName().compareTo(element2.getName());
+					}
+				});
 
 		/**
 		 * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface.viewers.Viewer,
@@ -243,7 +255,8 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 		@Override
 		@SuppressWarnings("unchecked")
 		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-			this.namedExtensionElement = (Collection<AbstractNamedExtensionElement>) newInput;
+			this.namedExtensionElement.clear();
+			this.namedExtensionElement.addAll((Collection<AbstractNamedExtensionElement>) newInput);
 		}
 
 		/**
