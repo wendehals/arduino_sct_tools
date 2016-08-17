@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension
-         point="org.eclipse.ui.newWizards">
+   <extension point="org.eclipse.ui.newWizards">
       <category
             id="org.yakindu.sct.arduino.examples.category"
             name="YAKINDU Statechart Tools for Arduino Examples"
             parentCategory="org.eclipse.ui.Examples">
       </category>
       <wizard
-            category="org.eclipse.ui.Examples/org.yakindu.sct.arduino.examples.category"
-            class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard"
-            finalPerspective="org.eclipse.cdt.ui.CPerspective"
-            icon="icons/yakindu16.png"
             id="org.yakindu.sct.arduino.examples.pedestrianCrossing"
-            name="Pedestrian Crossing - Arduino SCT Project Example"
+            name="Pedestrian Crossing"
+            class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard"
+            category="org.eclipse.ui.Examples/org.yakindu.sct.arduino.examples.category"
+            finalPerspective="org.eclipse.cdt.ui.CPerspective"
             preferredPerspectives="org.eclipse.cdt.ui.CPerspective,org.yakindu.sct.ui.ModelingPerspective,org.yakindu.sct.ui.SimulationPerspective"
+            icon="icons/yakindu16.png"
             project="true">
          <description>
             A pedestrian crossing traffic light running on an Arduino Uno.
@@ -27,7 +26,7 @@
             finalPerspective="org.eclipse.cdt.ui.CPerspective"
             icon="icons/yakindu16.png"
             id="org.yakindu.sct.arduino.examples.blink"
-            name="Blink - Arduino SCT Project Example"
+            name="Blink"
             preferredPerspectives="org.eclipse.cdt.ui.CPerspective,org.yakindu.sct.ui.ModelingPerspective,org.yakindu.sct.ui.SimulationPerspective"
             project="true">
          <description>
@@ -64,3 +63,4 @@
    </extension>
 
 </plugin>
+            
