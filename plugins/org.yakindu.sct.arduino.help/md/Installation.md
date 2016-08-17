@@ -11,9 +11,3 @@ Select the "Add..." button in the upper right corner to add a new update site. C
 Select YAKINDU Statechart Tools for Arduino and press the "Next>" button to switch to the next page.  
 
 ![Install YAKINDU SCT for Arduino](screenshots/InstallSCTforArduino.png)
-
- 
-
-![Installer - Variables](screenshots/Installer_Variables.png)
-
-
