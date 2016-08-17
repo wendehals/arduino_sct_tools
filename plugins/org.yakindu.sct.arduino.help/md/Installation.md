@@ -1,6 +1,6 @@
 # Installation
 
-First you need to download the [YAKINDU Statechart Tools](https://www.statecharts.org/). Unzip the archive to an arbitrary directory and start SCT. Choose "Install New Software..." from the "Help" menu.
+First you need to download the [YAKINDU Statechart Tools](http://www.statecharts.org/). Unzip the archive to an arbitrary directory and start SCT. Choose "Install New Software..." from the "Help" menu.
 
 ![Install New Software](screenshots/InstallNewSoftware.png)
 
