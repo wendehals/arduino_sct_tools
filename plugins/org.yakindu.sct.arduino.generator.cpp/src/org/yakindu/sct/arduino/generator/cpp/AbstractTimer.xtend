@@ -90,6 +90,8 @@ class AbstractTimer implements IContentTemplate {
 					continue;
 				}
 		
+				events[i].overflowCounter++;
+		
 				if ((events[i].overflowCounter >= events[i].overflows) && !events[i].eventRaised) {
 					events[i].timedStatemachine->raiseTimeEvent(events[i].eventId);
 					events[i].overflowCounter = 0;
@@ -98,8 +100,6 @@ class AbstractTimer implements IContentTemplate {
 						events[i].eventRaised = true;
 					}
 				}
-		
-				events[i].overflowCounter++;
 			}
 		}
 		
