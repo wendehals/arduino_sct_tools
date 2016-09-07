@@ -18,10 +18,6 @@ class Naming extends org.yakindu.sct.generator.cpp.Naming {
 		"TimeEvent"
 	}
 
-	def abstractTimer() {
-		"AbstractTimer"
-	}
-
 	def hardwareConnector() {
 		"Hardware".connector
 	}

@@ -39,8 +39,6 @@ class ArduinoCodeGenerator implements IExecutionFlowGenerator {
 	@Inject ArduinoMainHeader arduinoMainHeaderContent
 	@Inject ArduinoMain arduinoMainContent
 	@Inject TimeEventHeader timeEventHeaderContent
-	@Inject AbstractTimerHeader abstractTimerHeaderContent
-	@Inject AbstractTimer abstractTimerContent
 	@Inject HardwareConnectorHeader hardwareConnectorHeaderContent
 	@Inject StatemachineConnectorHeader statemachineConnectorHeaderContent
 	@Inject StatemachineConnector statemachineConnectorContent
@@ -78,8 +76,6 @@ class ArduinoCodeGenerator implements IExecutionFlowGenerator {
 		configure(arduinoMain.cpp, arduinoMainContent);
 		configure(hardwareConnector.h, hardwareConnectorHeaderContent);
 		configure(timeEvent.h, timeEventHeaderContent);
-		configure(abstractTimer.h, abstractTimerHeaderContent);
-		configure(abstractTimer.cpp, abstractTimerContent);
 
 		// userSrcFolder
 		if (getUserSrcFolder(entry) != null) {
