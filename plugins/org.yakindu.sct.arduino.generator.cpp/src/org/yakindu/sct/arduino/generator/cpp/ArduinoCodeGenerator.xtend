@@ -59,7 +59,7 @@ class ArduinoCodeGenerator implements IExecutionFlowGenerator {
 		}
 
 		injector.injectMembers(entry.timer.codeGenerator)
-		generateTimer(fsa, entry.timer.codeGenerator)
+		generateTimer(entry, fsa, entry.timer.codeGenerator)
 	}
 
 	def private initGenerationArtifacts(IGenArtifactConfigurations it, ExecutionFlow flow, GeneratorEntry entry) {
@@ -93,9 +93,9 @@ class ArduinoCodeGenerator implements IExecutionFlowGenerator {
 		configure(artifactName, IExecutionFlowGenerator.TARGET_FOLDER_OUTPUT, contentTemplate)
 	}
 
-	def private generateTimer(ExecutionFlow it, IFileSystemAccess fsa, AbstractTimerCodeGenerator generator) {
-		fsa.generateFile(generator.timerName.h, generator.generateTimerHeader(it))
-		fsa.generateFile(generator.timerName.cpp, generator.generateTimer(it))
+	def private generateTimer(ExecutionFlow flow, GeneratorEntry entry, IFileSystemAccess fsa, AbstractTimerCodeGenerator it) {
+		fsa.generateFile(timerName.h, generateTimerHeader(flow, entry))
+		fsa.generateFile(timerName.cpp, generateTimer(flow, entry))
 	}
 
 }

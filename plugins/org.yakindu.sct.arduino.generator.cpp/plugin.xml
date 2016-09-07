@@ -66,7 +66,7 @@
              cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega328P_Timer1"
              description="Hardware timer based on Timer/Counter1, puts microcontroller into the idle sleep mode between cycles."
              id="atmega328p.timer1"
-             maxCyclePeriod="4194"
+             maxCyclePeriod="1068959"
              minCyclePeriod="1"
              name="Timer/Counter1 (16 bit)">
        </timer>

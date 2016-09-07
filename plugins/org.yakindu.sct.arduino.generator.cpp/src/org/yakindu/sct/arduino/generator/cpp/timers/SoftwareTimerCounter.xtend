@@ -11,6 +11,7 @@ package org.yakindu.sct.arduino.generator.cpp.timers
 import com.google.inject.Inject
 import org.yakindu.sct.model.sexec.ExecutionFlow
 import org.yakindu.sct.arduino.generator.cpp.Naming
+import org.yakindu.sct.model.sgen.GeneratorEntry
 
 class SoftwareTimerCounter extends AbstractTimerCodeGenerator {
 
@@ -20,7 +21,7 @@ class SoftwareTimerCounter extends AbstractTimerCodeGenerator {
 		"SoftwareTimerCounter"
 	}
 
-	override generateTimer(ExecutionFlow it) '''
+	override generateTimer(ExecutionFlow it, GeneratorEntry entry) '''
 		«header»
 		
 		#include "«timerName.h»"

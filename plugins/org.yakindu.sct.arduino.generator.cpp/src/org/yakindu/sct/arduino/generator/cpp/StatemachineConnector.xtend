@@ -31,6 +31,7 @@ class StatemachineConnector implements IContentTemplate {
 		void «module.connector»::init() {
 			// put your code here to initialize the hardware
 			// pinMode(LED_BUILTIN, OUTPUT);
+			// digitalWrite(LED_BUILTIN, statemachine->getXXX());
 		}
 		
 		void «module.connector»::runCycle() {

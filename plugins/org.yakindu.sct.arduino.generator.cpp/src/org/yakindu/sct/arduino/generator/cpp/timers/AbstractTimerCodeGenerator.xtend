@@ -11,6 +11,7 @@ package org.yakindu.sct.arduino.generator.cpp.timers
 import com.google.inject.Inject
 import org.yakindu.sct.arduino.generator.cpp.Naming
 import org.yakindu.sct.model.sexec.ExecutionFlow
+import org.yakindu.sct.model.sgen.GeneratorEntry
 
 abstract class AbstractTimerCodeGenerator {
 
@@ -18,7 +19,7 @@ abstract class AbstractTimerCodeGenerator {
 
 	public def String timerName()
 
-	public def generateTimerHeader(ExecutionFlow it) '''
+	public def generateTimerHeader(ExecutionFlow it, GeneratorEntry entry) '''
 		«header»
 		
 		#ifndef «timerName.h.define»
@@ -42,7 +43,7 @@ abstract class AbstractTimerCodeGenerator {
 	'''
 
 
-	public def CharSequence generateTimer(ExecutionFlow it)
+	public def CharSequence generateTimer(ExecutionFlow it, GeneratorEntry entry)
 
 	protected def headerIncludes(ExecutionFlow it) '''
 		#include <Arduino.h>
@@ -104,7 +105,7 @@ abstract class AbstractTimerCodeGenerator {
 		this->hardware = hardware;
 		this->maxParallelTimeEvents = maxParallelTimeEvents;
 		this->period = period;
-	
+		
 		this->events = new «timeEvent»[this->maxParallelTimeEvents];
 		for (unsigned char i = 0; i < this->maxParallelTimeEvents; i++) {
 			this->events[i].eventId = NULL;

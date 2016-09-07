@@ -11,77 +11,88 @@ package org.yakindu.sct.arduino.generator.cpp.timers
 import com.google.inject.Inject
 import org.yakindu.sct.arduino.generator.cpp.Naming
 import org.yakindu.sct.model.sexec.ExecutionFlow
+import org.yakindu.sct.arduino.generator.cpp.GenmodelEntries
+import org.yakindu.sct.model.sgen.GeneratorEntry
 
 class ATmega328P_Timer1 extends AbstractTimerCodeGenerator {
 
 	@Inject extension Naming
+	@Inject extension GenmodelEntries
+
+	private boolean useOverflows;
 
 	override timerName() {
 		"ATmega328P_Timer1"
 	}
 
-	override generateTimer(ExecutionFlow it) '''
-		«header»
-
+	override generateTimer(ExecutionFlow it, GeneratorEntry entry) '''
+		«initUseOverflows(entry)»«header»
+		
 		#include "«timerName.h»"
-
+		
 		«variableDeclarations»
 		
 		«ISR»
-
+		
 		«constructor»
 		
 		«start»
 		
 		«init»
-
+		
 		«setTimer»
 		
 		«unsetTimer»
-
+		
 		«runCycle»
-
+		
 		«raiseTimeEvents»
 		
 		«sleep»
-
+		
 		«cancel»
 	'''
 
 	protected def variableDeclarations() '''
+		«IF useOverflows»
 		const int MAX_PERIOD = 4192;
 		const int MAX_OVERFLOW_COUNTER = 65499;
-
+		
 		bool runCycleFlag = false;
-		unsigned int overflows = 0;
-		unsigned int overflowCounter = 0;
+		unsigned char overflows = 0;
+		unsigned char overflowCounter = 0;
 		unsigned int moduloRest = 0;
+		«ELSE»
+		bool runCycleFlag = false;
+		«ENDIF»
 	'''
 
 	override protected privateHeaderPart() '''
 		«super.privateHeaderPart()»
-
+		
 		void sleep();
 	'''
 
 	protected def ISR() '''
 		ISR(TIMER1_COMPA_vect) {
-			if (overflowCounter < (overflows - 1)) {
-				overflowCounter++;
-			} else if (overflowCounter == (overflows - 1)) {
+			«IF useOverflows»
+			overflowCounter++;
+			
+			if (overflowCounter == overflows && moduloRest != 0) {
 				noInterrupts();
 				OCR1A = (moduloRest * 0.001f * (16000000 / 1024)) - 1;
 				interrupts();
-
-				overflowCounter++;
 			} else {
 				noInterrupts();
 				OCR1A = MAX_OVERFLOW_COUNTER;
 				interrupts();
-
+			
 				runCycleFlag = true;
 				overflowCounter = 0;
 			}
+			«ELSE»
+			runCycleFlag = true;
+			«ENDIF»
 		}
 	'''
 
@@ -91,16 +102,16 @@ class ATmega328P_Timer1 extends AbstractTimerCodeGenerator {
 		TCCR1A = 0;     // set entire TCCR1A register to 0
 		TCCR1B = 0;     // same for TCCR1B
 		
-		// set compare match register to desired timer count:
-		// period in ms, Arduino runs at 16 MHz, prescaler at 1024
+		«IF useOverflows»
 		overflows = this->period / MAX_PERIOD;
 		moduloRest = this->period % MAX_PERIOD;
 		
-		if (overflows < 1) {
-			OCR1A = (this->period * 0.001f * (16000000 / 1024)) - 1;
-		} else {
-			OCR1A = MAX_OVERFLOW_COUNTER;
-		}
+		OCR1A = MAX_OVERFLOW_COUNTER;
+		«ELSE»
+		// set compare match register to desired timer count
+		// period in ms, Arduino runs at 16 MHz, prescaler at 1024
+		OCR1A = (this->period * 0.001f * (16000000 / 1024)) - 1;
+		«ENDIF»
 		
 		// turn on CTC mode
 		TCCR1B |= (1 << WGM12);
@@ -115,7 +126,7 @@ class ATmega328P_Timer1 extends AbstractTimerCodeGenerator {
 		// enable global interrupts
 		interrupts();
 	'''
-	
+
 	override protected runCycleBody() '''
 		if (runCycleFlag) {
 			«super.runCycleBody()»
@@ -138,5 +149,9 @@ class ATmega328P_Timer1 extends AbstractTimerCodeGenerator {
 	override protected cancelBody() '''
 		TCCR1B = 0; // turn off the timer
 	'''
+
+	private def void initUseOverflows(GeneratorEntry entry) {
+		useOverflows = entry.cyclePeriod > 4192;
+	}
 
 }
