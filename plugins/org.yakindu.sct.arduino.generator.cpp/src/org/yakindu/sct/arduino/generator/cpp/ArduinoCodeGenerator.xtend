@@ -11,7 +11,6 @@ package org.yakindu.sct.arduino.generator.cpp
 import com.google.inject.Inject
 import com.google.inject.Injector
 import org.eclipse.xtext.generator.IFileSystemAccess
-import org.yakindu.sct.arduino.generator.cpp.timers.AbstractTimerCodeGenerator
 import org.yakindu.sct.generator.c.GenArtifactConfigurations.GenArtifactConfiguration
 import org.yakindu.sct.generator.c.IGenArtifactConfigurations
 import org.yakindu.sct.generator.core.impl.IExecutionFlowGenerator
@@ -25,6 +24,7 @@ import org.yakindu.sct.model.sexec.ExecutionFlow
 import org.yakindu.sct.model.sgen.GeneratorEntry
 import org.yakindu.sct.generator.c.IContentTemplate
 import org.yakindu.sct.arduino.generator.cpp.features.IArduinoFeatureConstants
+import org.yakindu.sct.arduino.generator.cpp.timers.AbstractTimer
 
 class ArduinoCodeGenerator implements IExecutionFlowGenerator {
 
@@ -93,7 +93,7 @@ class ArduinoCodeGenerator implements IExecutionFlowGenerator {
 		configure(artifactName, IExecutionFlowGenerator.TARGET_FOLDER_OUTPUT, contentTemplate)
 	}
 
-	def private generateTimer(ExecutionFlow flow, GeneratorEntry entry, IFileSystemAccess fsa, AbstractTimerCodeGenerator it) {
+	def private generateTimer(ExecutionFlow flow, GeneratorEntry entry, IFileSystemAccess fsa, AbstractTimer it) {
 		fsa.generateFile(timerName.h, generateTimerHeader(flow, entry))
 		fsa.generateFile(timerName.cpp, generateTimer(flow, entry))
 	}

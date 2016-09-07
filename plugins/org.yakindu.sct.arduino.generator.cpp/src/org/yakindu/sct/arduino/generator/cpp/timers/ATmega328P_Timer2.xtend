@@ -8,24 +8,24 @@
  */
 package org.yakindu.sct.arduino.generator.cpp.timers
 
-class ATmega328P_Timer1 extends AbstractAVRTimer {
-	
+class ATmega328P_Timer2 extends AbstractAVRTimer {
+
 	override timerName() {
-		"ATmega328P_Timer1"
+		"ATmega328P_Timer2"
 	}
 
 	override protected ISR() '''
-		ISR(TIMER1_COMPA_vect) {
+		ISR(TIMER2_COMPA_vect) {
 			«IF useOverflows»
 			overflowCounter++;
 			
 			if (overflowCounter == overflows && moduloRest != 0) {
 				noInterrupts();
-				OCR1A = (moduloRest * 0.001f * (16000000 / 1024)) - 1;
+				OCR2A = (moduloRest * 0.001f * (16000000 / 1024)) - 1;
 				interrupts();
 			} else {
 				noInterrupts();
-				OCR1A = MAX_OVERFLOW_COUNTER;
+				OCR2A = MAX_OVERFLOW_COUNTER;
 				interrupts();
 			
 				runCycleFlag = true;
@@ -40,44 +40,45 @@ class ATmega328P_Timer1 extends AbstractAVRTimer {
 	override protected initBody() '''
 		// initialize Timer1
 		noInterrupts();
-		TCCR1A = 0;     // set entire TCCR1A register to 0
-		TCCR1B = 0;     // same for TCCR1B
+		TCCR2A = 0;     // set entire TCCR2A register to 0
+		TCCR2B = 0;     // same for TCCR2B
 		
 		«IF useOverflows»
 		overflows = this->period / MAX_PERIOD;
 		moduloRest = this->period % MAX_PERIOD;
 		
-		OCR1A = MAX_OVERFLOW_COUNTER;
+		OCR2A = MAX_OVERFLOW_COUNTER;
 		«ELSE»
 		// set compare match register to desired timer count
 		// period in ms, Arduino runs at 16 MHz, prescaler at 1024
-		OCR1A = (this->period * 0.001f * (16000000 / 1024)) - 1;
+		OCR2A = (this->period * 0.001f * (16000000 / 1024)) - 1;
 		«ENDIF»
 		
 		// turn on CTC mode
-		TCCR1B |= (1 << WGM12);
+		TCCR2B |= (1 << WGM22);
 		
-		// Set CS10 and CS12 bits for 1024 prescaler
-		TCCR1B |= (1 << CS10);
-		TCCR1B |= (1 << CS12);
+		// Set CS20, CS21, and CS22 bits for 1024 prescaler
+		TCCR2B |= (1 << CS20);
+		TCCR2B |= (1 << CS21);
+		TCCR2B |= (1 << CS22);
 		
 		// enable timer compare interrupt
-		TIMSK1 |= (1 << OCIE1A);
+		TIMSK2 |= (1 << OCIE2A);
 		
 		// enable global interrupts
 		interrupts();
 	'''
 
 	override protected cancelBody() '''
-		TCCR1B = 0; // turn off the timer
+		TCCR2B = 0; // turn off the timer
 	'''
 	
 	override protected maxPeriod() {
-		4192
+		16
 	}
 	
 	override protected maxOverflowCounter() {
-		65499
+		249
 	}
-
+	
 }

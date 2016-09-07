@@ -16,10 +16,10 @@ public class Timer extends AbstractNamedExtensionElement {
 
 	private final long maxCyclePeriod;
 
-	private final AbstractTimerCodeGenerator codeGenerator;
+	private final AbstractTimer codeGenerator;
 
 	public Timer(String id, String name, String description, long minCyclePeriod, long maxCyclePeriod,
-			AbstractTimerCodeGenerator codeGenerator) {
+			AbstractTimer codeGenerator) {
 		super(id, name);
 		this.description = description;
 		this.minCyclePeriod = minCyclePeriod;
@@ -39,7 +39,7 @@ public class Timer extends AbstractNamedExtensionElement {
 		return this.maxCyclePeriod;
 	}
 
-	public AbstractTimerCodeGenerator getCodeGenerator() {
+	public AbstractTimer getCodeGenerator() {
 		return this.codeGenerator;
 	}
 

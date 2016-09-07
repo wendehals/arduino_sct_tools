@@ -13,7 +13,7 @@ import org.yakindu.sct.arduino.generator.cpp.Naming
 import org.yakindu.sct.model.sexec.ExecutionFlow
 import org.yakindu.sct.model.sgen.GeneratorEntry
 
-abstract class AbstractTimerCodeGenerator {
+abstract class AbstractTimer {
 
 	@Inject extension Naming
 

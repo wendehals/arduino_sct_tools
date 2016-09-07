@@ -74,7 +74,7 @@ public class Architectures {
 										maxCyclePeriod = Long.parseLong(maxCyclePeriodString);
 									}
 
-									final AbstractTimerCodeGenerator codeGenerator = (AbstractTimerCodeGenerator) timerElement
+									final AbstractTimer codeGenerator = (AbstractTimer) timerElement
 											.createExecutableExtension(CPP_CODE_GENERATOR_ATTRIBUTE);
 
 									architecture.addTimer(new Timer(timerId, timerName, timerDescription,

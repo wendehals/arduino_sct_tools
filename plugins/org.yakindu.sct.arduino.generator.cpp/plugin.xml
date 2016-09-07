@@ -41,17 +41,12 @@
           id="org.yakindu.sct.arduino.generator.cpp.architecture.software"
           name="Software">
        <timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.SoftwareTimerCounter"
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.SoftwareTimer_Millis"
              description="Software Timer based on millis() functions."
              id="software.counter"
              minCyclePeriod="1"
              name="Milliseconds Counter">
        </timer>
-       <!--timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.SoftwareTimerProtoThreads"
-             id="org.yakindu.sct.arduino.generator.cpp.timer.software.protothreads"
-             name="Protothreads">
-       </timer-->
     </architecture>
     <architecture
           id="org.yakindu.sct.arduino.generator.cpp.architecture.atmega328p"
@@ -70,12 +65,14 @@
              minCyclePeriod="1"
              name="Timer/Counter1 (16 bit)">
        </timer>
-       <!--timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega168_328Timer2"
+       <timer
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega328P_Timer2"
              description="Hardware timer based on Timer/Counter2, puts microcontroller to sleep mode between cycles."
-             id="org.yakindu.sct.arduino.generator.cpp.timer.atmega168_328.timer2"
+             id="atmega328p.timer2"
+             maxCyclePeriod="1068959"
+             minCyclePeriod="1"
              name="Timer/Counter2 (8 bit)">
-       </timer-->
+       </timer>
     </architecture>
     <!--architecture
           id="org.yakindu.sct.arduino.generator.cpp.architecture.atmega2560"
