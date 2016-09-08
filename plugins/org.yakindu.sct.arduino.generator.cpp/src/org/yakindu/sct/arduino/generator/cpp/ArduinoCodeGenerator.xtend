@@ -94,8 +94,8 @@ class ArduinoCodeGenerator implements IExecutionFlowGenerator {
 	}
 
 	def private generateTimer(ExecutionFlow flow, GeneratorEntry entry, IFileSystemAccess fsa, AbstractTimer it) {
-		fsa.generateFile(timerName.h, generateTimerHeader(flow, entry))
-		fsa.generateFile(timerName.cpp, generateTimer(flow, entry))
+		fsa.generateFile(timerName.h, generateTimerHeader(entry, flow))
+		fsa.generateFile(timerName.cpp, generateTimer(entry, flow))
 	}
 
 }

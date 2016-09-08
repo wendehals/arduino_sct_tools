@@ -37,7 +37,7 @@ import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCo
 import org.eclipse.tools.templates.freemarker.FMProjectGenerator;
 import org.osgi.framework.Bundle;
 import org.yakindu.base.base.BasePackage;
-import org.yakindu.sct.arduino.generator.cpp.timers.Timer;
+import org.yakindu.sct.arduino.generator.cpp.extensions.TimerElement;
 import org.yakindu.sct.builder.nature.SCTNature;
 import org.yakindu.sct.model.sgraph.SGraphPackage;
 import org.yakindu.sct.model.sgraph.Statechart;
@@ -58,7 +58,7 @@ public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 
 	private int cyclePeriod = 10;
 
-	private Timer timer;
+	private TimerElement timer;
 
 	private IFile diagramFile;
 
@@ -83,7 +83,7 @@ public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 		this.cyclePeriod = cyclePeriod;
 	}
 
-	public void setTimer(Timer timer) {
+	public void setTimer(TimerElement timer) {
 		this.timer = timer;
 	}
 

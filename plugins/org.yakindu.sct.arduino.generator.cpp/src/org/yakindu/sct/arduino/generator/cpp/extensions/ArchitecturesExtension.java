@@ -6,7 +6,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package org.yakindu.sct.arduino.generator.cpp.timers;
+package org.yakindu.sct.arduino.generator.cpp.extensions;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,8 +19,9 @@ import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
 import org.yakindu.sct.arduino.generator.cpp.ArduinoGeneratorPlugin;
+import org.yakindu.sct.arduino.generator.cpp.timers.AbstractTimer;
 
-public class Architectures {
+public class ArchitecturesExtension {
 
 	private static final String ARCHITECTURES_EXTENSION = "architectures"; //$NON-NLS-1$
 
@@ -40,12 +41,12 @@ public class Architectures {
 
 	private static final String DESCRIPTION_ATTRIBUTE = "description"; //$NON-NLS-1$
 
-	private static List<Architecture> architectures;
+	private static List<ArchitectureElement> architectures;
 
 	/**
 	 * @return a collection of model traversals
 	 */
-	public static Collection<Architecture> getArchitectures() {
+	public static Collection<ArchitectureElement> getArchitectures() {
 		if (architectures == null) {
 			architectures = new ArrayList<>();
 
@@ -57,7 +58,7 @@ public class Architectures {
 						if (ARCHITECTURE_ELEMENT.equals(element.getName())) {
 							final String id = element.getAttribute(ID_ATTRIBUTE);
 							final String name = element.getAttribute(NAME_ATTRIBUTE);
-							final Architecture architecture = new Architecture(id, name);
+							final ArchitectureElement architecture = new ArchitectureElement(id, name);
 
 							for (final IConfigurationElement timerElement : element.getChildren(TIMER_ELEMENT)) {
 								try {
@@ -77,7 +78,7 @@ public class Architectures {
 									final AbstractTimer codeGenerator = (AbstractTimer) timerElement
 											.createExecutableExtension(CPP_CODE_GENERATOR_ATTRIBUTE);
 
-									architecture.addTimer(new Timer(timerId, timerName, timerDescription,
+									architecture.addTimer(new TimerElement(timerId, timerName, timerDescription,
 											minCyclePeriod, maxCyclePeriod, codeGenerator));
 								} catch (final CoreException | NumberFormatException exception) {
 									ArduinoGeneratorPlugin.logError(exception);
@@ -94,9 +95,9 @@ public class Architectures {
 		return Collections.unmodifiableCollection(architectures);
 	}
 
-	public static Timer getTimer(String id) {
-		for (final Architecture architecture : getArchitectures()) {
-			for (final Timer timer : architecture.timers) {
+	public static TimerElement getTimer(String id) {
+		for (final ArchitectureElement architecture : getArchitectures()) {
+			for (final TimerElement timer : architecture.timers) {
 				if (timer.getId().equals(id)) {
 					return timer;
 				}

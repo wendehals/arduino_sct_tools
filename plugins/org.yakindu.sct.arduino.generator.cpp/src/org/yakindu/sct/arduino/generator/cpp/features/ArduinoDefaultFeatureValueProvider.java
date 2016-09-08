@@ -11,8 +11,8 @@ package org.yakindu.sct.arduino.generator.cpp.features;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EObject;
-import org.yakindu.sct.arduino.generator.cpp.timers.Architectures;
-import org.yakindu.sct.arduino.generator.cpp.timers.Timer;
+import org.yakindu.sct.arduino.generator.cpp.extensions.ArchitecturesExtension;
+import org.yakindu.sct.arduino.generator.cpp.extensions.TimerElement;
 import org.yakindu.sct.generator.core.features.AbstractDefaultFeatureValueProvider;
 import org.yakindu.sct.model.sgen.FeatureParameterValue;
 import org.yakindu.sct.model.sgen.FeatureType;
@@ -53,14 +53,14 @@ public class ArduinoDefaultFeatureValueProvider extends AbstractDefaultFeatureVa
 		final String parameterName = parameterValue.getParameter().getName();
 
 		if (IArduinoFeatureConstants.PARAM_TIMER.equals(parameterName)) {
-			if (Architectures.getTimer(parameterValue.getStringValue()) == null) {
+			if (ArchitecturesExtension.getTimer(parameterValue.getStringValue()) == null) {
 				return error(String.format(Messages.ArduinoDefaultFeatureValueProvider_timerInvalid,
 						parameterValue.getExpression()));
 			}
 		} else if (IArduinoFeatureConstants.PARAM_CYCLE_PERIOD.equals(parameterName)) {
 			final FeatureParameterValue timerParamValue = parameterValue.getFeatureConfiguration()
 					.getParameterValue(IArduinoFeatureConstants.PARAM_TIMER);
-			final Timer timer = Architectures.getTimer(timerParamValue.getStringValue());
+			final TimerElement timer = ArchitecturesExtension.getTimer(timerParamValue.getStringValue());
 
 			try {
 				final int cyclePeriod = Integer.parseInt(parameterValue.getStringValue());

@@ -29,10 +29,10 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
-import org.yakindu.sct.arduino.generator.cpp.timers.AbstractNamedExtensionElement;
-import org.yakindu.sct.arduino.generator.cpp.timers.Architecture;
-import org.yakindu.sct.arduino.generator.cpp.timers.Architectures;
-import org.yakindu.sct.arduino.generator.cpp.timers.Timer;
+import org.yakindu.sct.arduino.generator.cpp.extensions.AbstractNamedElement;
+import org.yakindu.sct.arduino.generator.cpp.extensions.ArchitectureElement;
+import org.yakindu.sct.arduino.generator.cpp.extensions.ArchitecturesExtension;
+import org.yakindu.sct.arduino.generator.cpp.extensions.TimerElement;
 
 public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, ISelectionChangedListener {
 
@@ -112,7 +112,7 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 		this.architectureViewer.setContentProvider(provider);
 		this.architectureViewer.setLabelProvider(provider);
 
-		this.architectureViewer.setInput(Architectures.getArchitectures());
+		this.architectureViewer.setInput(ArchitecturesExtension.getArchitectures());
 		this.architectureViewer.getCombo().select(0);
 
 		label = new Label(group, SWT.NONE);
@@ -184,8 +184,8 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 		return Integer.parseInt(this.cyclePeriodText.getText());
 	}
 
-	public Timer getTimer() {
-		return (Timer) this.timerViewer.getStructuredSelection().getFirstElement();
+	public TimerElement getTimer() {
+		return (TimerElement) this.timerViewer.getStructuredSelection().getFirstElement();
 	}
 
 	private void initialize() {
@@ -197,7 +197,7 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 	}
 
 	private void updateArchitecture() {
-		final Architecture architecture = (Architecture) this.architectureViewer.getStructuredSelection()
+		final ArchitectureElement architecture = (ArchitectureElement) this.architectureViewer.getStructuredSelection()
 				.getFirstElement();
 		this.timerViewer.setInput(architecture.getTimers());
 		this.timerViewer.getCombo().select(0);
@@ -219,7 +219,7 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 
 		try {
 			final int cyclePeriod = Integer.parseInt(this.cyclePeriodText.getText());
-			final Timer timer = getTimer();
+			final TimerElement timer = getTimer();
 			if ((cyclePeriod < timer.getMinCyclePeriod()) || (cyclePeriod > timer.getMaxCyclePeriod())) {
 				setErrorMessage(String.format(Messages.ArduinoSCTWizardPage_cyclePeriodNotInIntervalMessage,
 						timer.getMinCyclePeriod(), timer.getMaxCyclePeriod()));
@@ -236,14 +236,14 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 
 	protected static class NamedExtensionElementsProvider extends LabelProvider implements IStructuredContentProvider {
 
-		private final Collection<AbstractNamedExtensionElement> namedExtensionElement = new TreeSet<>(
-				new Comparator<AbstractNamedExtensionElement>() {
+		private final Collection<AbstractNamedElement> namedExtensionElement = new TreeSet<>(
+				new Comparator<AbstractNamedElement>() {
 
 					/**
 					 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
 					 */
 					@Override
-					public int compare(AbstractNamedExtensionElement element1, AbstractNamedExtensionElement element2) {
+					public int compare(AbstractNamedElement element1, AbstractNamedElement element2) {
 						return element1.getName().compareTo(element2.getName());
 					}
 				});
@@ -256,7 +256,7 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 		@SuppressWarnings("unchecked")
 		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 			this.namedExtensionElement.clear();
-			this.namedExtensionElement.addAll((Collection<AbstractNamedExtensionElement>) newInput);
+			this.namedExtensionElement.addAll((Collection<AbstractNamedElement>) newInput);
 		}
 
 		/**
@@ -264,7 +264,7 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 		 */
 		@Override
 		public String getText(Object element) {
-			return ((AbstractNamedExtensionElement) element).getName();
+			return ((AbstractNamedElement) element).getName();
 		}
 
 		/**

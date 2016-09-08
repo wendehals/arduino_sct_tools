@@ -6,25 +6,25 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package org.yakindu.sct.arduino.generator.cpp.timers;
+package org.yakindu.sct.arduino.generator.cpp.extensions;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 
-public class Architecture extends AbstractNamedExtensionElement {
+public class ArchitectureElement extends AbstractNamedElement {
 
-	final Collection<Timer> timers = new HashSet<>();
+	final Collection<TimerElement> timers = new HashSet<>();
 
-	public Architecture(String id, String name) {
+	public ArchitectureElement(String id, String name) {
 		super(id, name);
 	}
 
-	protected void addTimer(Timer timer) {
+	protected void addTimer(TimerElement timer) {
 		this.timers.add(timer);
 	}
 
-	public Collection<Timer> getTimers() {
+	public Collection<TimerElement> getTimers() {
 		return Collections.unmodifiableCollection(this.timers);
 	}
 

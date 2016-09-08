@@ -6,15 +6,15 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package org.yakindu.sct.arduino.generator.cpp.timers;
+package org.yakindu.sct.arduino.generator.cpp.extensions;
 
-public abstract class AbstractNamedExtensionElement {
+public abstract class AbstractNamedElement {
 
 	private final String id;
 
 	private final String name;
 
-	public AbstractNamedExtensionElement(String id, String name) {
+	public AbstractNamedElement(String id, String name) {
 		this.id = id;
 		this.name = name;
 	}

@@ -8,73 +8,34 @@
  */
 package org.yakindu.sct.arduino.generator.cpp.timers
 
-import com.google.inject.Inject
-import org.yakindu.sct.model.sexec.ExecutionFlow
-import org.yakindu.sct.arduino.generator.cpp.Naming
 import org.yakindu.sct.model.sgen.GeneratorEntry
 
 class SoftwareTimer_Millis extends AbstractTimer {
-
-	@Inject extension Naming
 
 	override timerName() {
 		"SoftwareTimer_Millis"
 	}
 
-	override generateTimer(ExecutionFlow it, GeneratorEntry entry) '''
-		«header»
-		
-		#include "«timerName.h»"
-
-		«constructor»
-		
-		«start»
-		
-		«init»
-
-		«setTimer»
-		
-		«unsetTimer»
-
-		«runCycle»
-
-		«raiseTimeEvents»
-
-		«cancel»
-	'''
-
-	override protected headerIncludes(ExecutionFlow it) '''
-		#include <Arduino.h>
-		#include <stdio.h>
-		
-		#include "«typesModule.h»"
-		#include "«timerInterface.h»"
-		#include "«statemachineInterface.h»"
-		#include "«timedStatemachineInterface.h»"
-		#include "«timeEvent.h»"
-		#include "«hardwareConnector.h»"
-	'''
-
-	override protected privateHeaderPart() '''
-		«super.privateHeaderPart()»
+	override protected privateHeaderPart(GeneratorEntry it) '''
+		«super.privateHeaderPart(it)»
 		
 		unsigned long lastCycle;
 	'''
 
-	override protected constructorBody() '''
-		«super.constructorBody»
+	override protected constructorBody(GeneratorEntry it) '''
+		«super.constructorBody(it)»
 		
 		lastCycle = 0;
 	'''
 
-	override protected initBody() '''
+	override protected initBody(GeneratorEntry it) '''
 		lastCycle = millis();
 	'''
 
-	override protected runCycleBody() '''
+	override protected runCycleBody(GeneratorEntry it) '''
 		unsigned long current = millis();
 		if (current>=lastCycle+this->period){
-			«super.runCycleBody»
+			«super.runCycleBody(it)»
 			lastCycle = current;
 		}
 	'''

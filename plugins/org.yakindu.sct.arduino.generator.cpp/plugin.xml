@@ -51,25 +51,27 @@
     <architecture
           id="org.yakindu.sct.arduino.generator.cpp.architecture.atmega328p"
           name="ATmega328P">
-       <!--timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega168_328Timer0"
-             description="Hardware timer based on Timer/Counter0, puts microcontroller to sleep mode between cycles."
-             id="org.yakindu.sct.arduino.generator.cpp.timer.atmega168_328.timer0"
+       <timer
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega328P_Timer0"
+             description="Hardware timer based on Timer/Counter0, puts microcontroller into the idle sleep mode between cycles."
+             id="atmega328p.timer0"
+             maxCyclePeriod="1048560"
+             minCyclePeriod="1"
              name="Timer/Counter0 (8 bit)">
-       </timer-->
+       </timer>
        <timer
              cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega328P_Timer1"
              description="Hardware timer based on Timer/Counter1, puts microcontroller into the idle sleep mode between cycles."
              id="atmega328p.timer1"
-             maxCyclePeriod="1068959"
+             maxCyclePeriod="1068960"
              minCyclePeriod="1"
              name="Timer/Counter1 (16 bit)">
        </timer>
        <timer
              cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega328P_Timer2"
-             description="Hardware timer based on Timer/Counter2, puts microcontroller to sleep mode between cycles."
+             description="Hardware timer based on Timer/Counter2, puts microcontroller into the power save sleep mode between cycles."
              id="atmega328p.timer2"
-             maxCyclePeriod="1068959"
+             maxCyclePeriod="1048560"
              minCyclePeriod="1"
              name="Timer/Counter2 (8 bit)">
        </timer>

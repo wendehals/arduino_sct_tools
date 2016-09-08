@@ -15,20 +15,13 @@ import org.yakindu.sct.model.sexec.ExecutionFlow
 import org.yakindu.sct.model.sgen.GeneratorEntry
 
 abstract class AbstractAVRTimer extends AbstractTimer {
-	
+
 	@Inject extension Naming
+
 	@Inject extension GenmodelEntries
 
-	protected boolean useOverflows;
-	
-	override protected privateHeaderPart() '''
-		«super.privateHeaderPart()»
-		
-		void sleep();
-	'''
-
-	override generateTimer(ExecutionFlow it, GeneratorEntry entry) '''
-		«initUseOverflows(entry)»«header»
+	override generateTimer(GeneratorEntry it, ExecutionFlow flow) '''
+		«header»
 		
 		#include "«timerName.h»"
 		
@@ -55,47 +48,48 @@ abstract class AbstractAVRTimer extends AbstractTimer {
 		«cancel»
 	'''
 
-	protected def CharSequence variableDeclarations() '''
-		«IF useOverflows»
-		const int MAX_PERIOD = «maxPeriod»;
-		const int MAX_OVERFLOW_COUNTER = 249;
-		
-		bool runCycleFlag = false;
-		unsigned char overflows = 0;
-		unsigned char overflowCounter = 0;
-		unsigned int moduloRest = 0;
-		«ELSE»
-		bool runCycleFlag = false;
-		«ENDIF»
+	override protected headerIncludes(GeneratorEntry it, ExecutionFlow flow) '''
+		#include <avr/sleep.h>
+		«super.headerIncludes(it, flow)»
 	'''
-	
-	protected def CharSequence ISR()
-	
-	override protected runCycleBody() '''
+
+	override protected privateHeaderPart(GeneratorEntry it) '''
+		«super.privateHeaderPart(it)»
+		
+		void sleep();
+	'''
+
+	protected def CharSequence variableDeclarations(GeneratorEntry it)
+
+	protected def CharSequence ISR(GeneratorEntry it)
+
+	override protected runCycleBody(GeneratorEntry it) '''
 		if (runCycleFlag) {
-			«super.runCycleBody()»
+			«super.runCycleBody(it)»
 			runCycleFlag = false;
 		}
 		this->sleep();
 	'''
 
-	protected def sleep() '''
+	protected def sleep(GeneratorEntry it) '''
 		void «timerName»::sleep() {
-			set_sleep_mode(SLEEP_MODE_IDLE);
-			noInterrupts();
-			sleep_enable();
-			interrupts();
-			sleep_cpu();
-			sleep_disable();
+			«sleepBody»
 		}
 	'''
-	
+
+	protected def sleepBody(GeneratorEntry it) '''
+		set_sleep_mode(SLEEP_MODE_IDLE);
+		noInterrupts();
+		sleep_enable();
+		interrupts();
+		sleep_cpu();
+		sleep_disable();
+	'''
+
 	protected def int maxPeriod()
-	
-	protected def int maxOverflowCounter()
-	
-	protected def void initUseOverflows(GeneratorEntry entry) {
-		useOverflows = entry.cyclePeriod > maxPeriod;
+
+	protected def useOverflows(GeneratorEntry entry) {
+		entry.cyclePeriod > maxPeriod;
 	}
 
 }

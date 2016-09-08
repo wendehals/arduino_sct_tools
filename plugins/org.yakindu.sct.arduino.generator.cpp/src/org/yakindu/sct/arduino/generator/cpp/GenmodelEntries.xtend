@@ -9,9 +9,9 @@
 package org.yakindu.sct.arduino.generator.cpp
 
 import com.google.inject.Inject
+import org.yakindu.sct.arduino.generator.cpp.extensions.ArchitecturesExtension
+import org.yakindu.sct.arduino.generator.cpp.extensions.TimerElement
 import org.yakindu.sct.arduino.generator.cpp.features.IArduinoFeatureConstants
-import org.yakindu.sct.arduino.generator.cpp.timers.Architectures
-import org.yakindu.sct.arduino.generator.cpp.timers.Timer
 import org.yakindu.sct.generator.core.library.IOutletFeatureHelper
 import org.yakindu.sct.model.sgen.GeneratorEntry
 
@@ -31,9 +31,9 @@ class GenmodelEntries extends org.yakindu.sct.generator.c.GenmodelEntries {
 		outletFeatureHelper.getTargetFolderValue(it).stringValue
 	}
 
-	def Timer getTimer(GeneratorEntry it) {
+	def TimerElement getTimer(GeneratorEntry it) {
 		val timerId = generatorOptionsFeature?.getParameterValue(IArduinoFeatureConstants::PARAM_TIMER).stringValue
-		Architectures.getTimer(timerId)
+		ArchitecturesExtension.getTimer(timerId)
 	}
 
 	def cyclePeriod(GeneratorEntry it) {

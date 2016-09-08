@@ -8,50 +8,52 @@
  */
 package org.yakindu.sct.arduino.generator.cpp.timers
 
-class ATmega328P_Timer1 extends AbstractAVRTimer {
-	
+import org.yakindu.sct.model.sgen.GeneratorEntry
+
+class ATmega328P_Timer1 extends AbstractAVR16BitTimer {
+
 	override timerName() {
 		"ATmega328P_Timer1"
 	}
 
-	override protected ISR() '''
+	override protected ISR(GeneratorEntry it) '''
 		ISR(TIMER1_COMPA_vect) {
 			«IF useOverflows»
-			overflowCounter++;
-			
-			if (overflowCounter == overflows && moduloRest != 0) {
-				noInterrupts();
-				OCR1A = (moduloRest * 0.001f * (16000000 / 1024)) - 1;
-				interrupts();
-			} else {
-				noInterrupts();
-				OCR1A = MAX_OVERFLOW_COUNTER;
-				interrupts();
-			
-				runCycleFlag = true;
-				overflowCounter = 0;
-			}
+				overflowCounter++;
+				
+				if (overflowCounter == overflows && moduloRest != 0) {
+					noInterrupts();
+					OCR1A = (moduloRest * 0.001f * (16000000 / 1024)) - 1;
+					interrupts();
+				} else if (overflowCounter >= overflows) {
+					noInterrupts();
+					OCR1A = OVERFLOW_COMPARE_VALUE;
+					interrupts();
+				
+					runCycleFlag = true;
+					overflowCounter = 0;
+				}
 			«ELSE»
-			runCycleFlag = true;
+				runCycleFlag = true;
 			«ENDIF»
 		}
 	'''
 
-	override protected initBody() '''
+	override protected initBody(GeneratorEntry it) '''
 		// initialize Timer1
 		noInterrupts();
 		TCCR1A = 0;     // set entire TCCR1A register to 0
 		TCCR1B = 0;     // same for TCCR1B
 		
 		«IF useOverflows»
-		overflows = this->period / MAX_PERIOD;
-		moduloRest = this->period % MAX_PERIOD;
-		
-		OCR1A = MAX_OVERFLOW_COUNTER;
+			overflows = this->period / MAX_PERIOD;
+			moduloRest = this->period % MAX_PERIOD;
+			
+			OCR1A = OVERFLOW_COMPARE_VALUE;
 		«ELSE»
-		// set compare match register to desired timer count
-		// period in ms, Arduino runs at 16 MHz, prescaler at 1024
-		OCR1A = (this->period * 0.001f * (16000000 / 1024)) - 1;
+			// set compare match register to desired timer count
+			// period in ms, Arduino runs at 16 MHz, prescaler at 1024
+			OCR1A = (this->period * 0.001f * (16000000 / 1024)) - 1;
 		«ENDIF»
 		
 		// turn on CTC mode
@@ -68,16 +70,8 @@ class ATmega328P_Timer1 extends AbstractAVRTimer {
 		interrupts();
 	'''
 
-	override protected cancelBody() '''
+	override protected cancelBody(GeneratorEntry it) '''
 		TCCR1B = 0; // turn off the timer
 	'''
-	
-	override protected maxPeriod() {
-		4192
-	}
-	
-	override protected maxOverflowCounter() {
-		65499
-	}
 
 }

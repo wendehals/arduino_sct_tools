@@ -19,13 +19,13 @@ abstract class AbstractTimer {
 
 	public def String timerName()
 
-	public def generateTimerHeader(ExecutionFlow it, GeneratorEntry entry) '''
+	public def generateTimerHeader(GeneratorEntry it, ExecutionFlow flow) '''
 		«header»
 		
 		#ifndef «timerName.h.define»
 		#define «timerName.h.define»
 		
-		«headerIncludes»
+		«headerIncludes(flow)»
 		
 		class «timerName»: public «timerInterface» {
 		public:
@@ -42,15 +42,33 @@ abstract class AbstractTimer {
 		#endif /* «timerName.h.define» */
 	'''
 
+	public def generateTimer(GeneratorEntry it, ExecutionFlow flow) '''
+		«header»
+		
+		#include "«timerName.h»"
 
-	public def CharSequence generateTimer(ExecutionFlow it, GeneratorEntry entry)
+		«constructor»
+		
+		«start»
+		
+		«init»
 
-	protected def headerIncludes(ExecutionFlow it) '''
+		«setTimer»
+		
+		«unsetTimer»
+
+		«runCycle»
+
+		«raiseTimeEvents»
+
+		«cancel»
+	'''
+
+	protected def headerIncludes(GeneratorEntry it, ExecutionFlow flow) '''
 		#include <Arduino.h>
-		#include <avr/sleep.h>
 		#include <stdio.h>
 		
-		#include "«typesModule.h»"
+		#include "«flow.typesModule.h»"
 		#include "«timerInterface.h»"
 		#include "«statemachineInterface.h»"
 		#include "«timedStatemachineInterface.h»"
@@ -58,7 +76,7 @@ abstract class AbstractTimer {
 		#include "«hardwareConnector.h»"
 	'''
 
-	protected def publicHeaderPart() '''
+	protected def publicHeaderPart(GeneratorEntry it) '''
 		/* period in milliseconds */
 		«timerName»(«statemachineInterface»* statemachine, «hardwareConnector»* hardware,
 				unsigned char maxParallelTimeEvents, unsigned int period);
@@ -77,7 +95,7 @@ abstract class AbstractTimer {
 		void cancel();
 	'''
 
-	protected def privateHeaderPart() '''
+	protected def privateHeaderPart(GeneratorEntry it) '''
 		«statemachineInterface»* statemachine;
 		
 		«hardwareConnector»* hardware;
@@ -93,14 +111,14 @@ abstract class AbstractTimer {
 		void raiseTimeEvents();
 	'''
 
-	protected def constructor() '''
+	protected def constructor(GeneratorEntry it) '''
 		«timerName»::«timerName»(«statemachineInterface»* statemachine, «hardwareConnector»* hardware,
 				unsigned char maxParallelTimeEvents, unsigned int period) {
 			«constructorBody»
 		}
 	'''
 
-	protected def constructorBody() '''
+	protected def constructorBody(GeneratorEntry it) '''
 		this->statemachine = statemachine;
 		this->hardware = hardware;
 		this->maxParallelTimeEvents = maxParallelTimeEvents;
@@ -112,36 +130,36 @@ abstract class AbstractTimer {
 		}
 	'''
 
-	protected def start() '''
+	protected def start(GeneratorEntry it) '''
 		void «timerName»::start() {
 			«startBody»
 		}
 	'''
 
-	protected def startBody() '''
+	protected def startBody(GeneratorEntry it) '''
 		this->statemachine->init();
 		this->statemachine->enter();
 		this->hardware->init();
 		this->init();
 	'''
 
-	protected def init() '''
+	protected def init(GeneratorEntry it) '''
 		void «timerName»::init() {
 			«initBody»
 		}
 	'''
 
-	protected def initBody() '''
+	protected def initBody(GeneratorEntry it) '''
 	'''
 
-	protected def setTimer() '''
+	protected def setTimer(GeneratorEntry it) '''
 		void «timerName»::setTimer(«timedStatemachineInterface»* timedStatemachine, sc_eventid eventId, sc_integer duration,
 				sc_boolean isPeriodic) {
 			«setTimerBody»
 		}
 	'''
 
-	protected def setTimerBody() '''
+	protected def setTimerBody(GeneratorEntry it) '''
 		for (unsigned char i = 0; i < this->maxParallelTimeEvents; i++) {
 			if (events[i].eventId == NULL) {
 				events[i].timedStatemachine = timedStatemachine;
@@ -155,13 +173,13 @@ abstract class AbstractTimer {
 		}
 	'''
 
-	protected def unsetTimer() '''
+	protected def unsetTimer(GeneratorEntry it) '''
 		void «timerName»::unsetTimer(«timedStatemachineInterface»* timedStatemachine, sc_eventid eventId) {
 			«unsetTimerBody»
 		}
 	'''
-	
-	protected def unsetTimerBody() '''
+
+	protected def unsetTimerBody(GeneratorEntry it) '''
 		for (unsigned char i = 0; i < this->maxParallelTimeEvents; i++) {
 			if (events[i].eventId == eventId) {
 				events[i].eventId = NULL;
@@ -170,25 +188,25 @@ abstract class AbstractTimer {
 		}
 	'''
 
-	protected def runCycle() '''
+	protected def runCycle(GeneratorEntry it) '''
 		void «timerName»::runCycle() {
 			«runCycleBody»
 		}
 	'''
 
-	protected def runCycleBody() '''
+	protected def runCycleBody(GeneratorEntry it) '''
 		this->raiseTimeEvents();
 		this->statemachine->runCycle();
 		this->hardware->runCycle();
 	'''
 
-	protected def raiseTimeEvents() '''
+	protected def raiseTimeEvents(GeneratorEntry it) '''
 		void «timerName»::raiseTimeEvents() {
 			«raiseTimeEventsBody»
 		}
 	'''
 
-	protected def raiseTimeEventsBody() '''
+	protected def raiseTimeEventsBody(GeneratorEntry it) '''
 		for (unsigned char i = 0; i < this->maxParallelTimeEvents; i++) {
 			if (events[i].eventId == NULL) {
 				continue;
@@ -207,13 +225,13 @@ abstract class AbstractTimer {
 		}
 	'''
 
-	protected def cancel() '''
+	protected def cancel(GeneratorEntry it) '''
 		void «timerName»::cancel() {
 			«cancelBody»
 		}
 	'''
 
-	protected def cancelBody() '''
+	protected def cancelBody(GeneratorEntry it) '''
 	'''
 
 }

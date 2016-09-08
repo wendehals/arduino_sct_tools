@@ -6,9 +6,11 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package org.yakindu.sct.arduino.generator.cpp.timers;
+package org.yakindu.sct.arduino.generator.cpp.extensions;
 
-public class Timer extends AbstractNamedExtensionElement {
+import org.yakindu.sct.arduino.generator.cpp.timers.AbstractTimer;
+
+public class TimerElement extends AbstractNamedElement {
 
 	private final String description;
 
@@ -18,7 +20,7 @@ public class Timer extends AbstractNamedExtensionElement {
 
 	private final AbstractTimer codeGenerator;
 
-	public Timer(String id, String name, String description, long minCyclePeriod, long maxCyclePeriod,
+	public TimerElement(String id, String name, String description, long minCyclePeriod, long maxCyclePeriod,
 			AbstractTimer codeGenerator) {
 		super(id, name);
 		this.description = description;
