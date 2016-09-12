@@ -78,7 +78,7 @@
     </architecture>
     <architecture
           id="org.yakindu.sct.arduino.generator.cpp.architecture.atmega2560"
-          name="Atmel ATmega640/V-1280/V-1281/V-2560/V-2561/V">
+          name="Atmel ATmega640/1280/1281/2560/2561">
        <timer
              cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_Timer0"
              description="Hardware timer based on Timer/Counter0, puts microcontroller into the idle sleep mode between cycles."
