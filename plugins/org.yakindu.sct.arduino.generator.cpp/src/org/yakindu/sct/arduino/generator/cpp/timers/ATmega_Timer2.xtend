@@ -10,10 +10,10 @@ package org.yakindu.sct.arduino.generator.cpp.timers
 
 import org.yakindu.sct.model.sgen.GeneratorEntry
 
-class ATmega328P_Timer2 extends AbstractAVR8BitTimer {
+class ATmega_Timer2 extends AbstractATmega8BitTimer {
 
 	override timerName() {
-		"ATmega328P_Timer2"
+		"ATmega_Timer2"
 	}
 
 	override protected ISR(GeneratorEntry it) '''
@@ -59,10 +59,10 @@ class ATmega328P_Timer2 extends AbstractAVR8BitTimer {
 		// turn on CTC mode
 		TCCR2B |= (1 << WGM22);
 		
-		// Set CS20, CS21, and CS22 bits for 1024 prescaler
-		TCCR2B |= (1 << CS20);
-		TCCR2B |= (1 << CS21);
+		// Set CS22, CS21, and CS20 bits for 1024 prescaler
 		TCCR2B |= (1 << CS22);
+		TCCR2B |= (1 << CS21);
+		TCCR2B |= (1 << CS20);
 		
 		// enable timer compare interrupt
 		TIMSK2 |= (1 << OCIE2A);

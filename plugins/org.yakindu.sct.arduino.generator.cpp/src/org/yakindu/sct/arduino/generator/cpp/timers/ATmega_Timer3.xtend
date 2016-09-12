@@ -10,24 +10,24 @@ package org.yakindu.sct.arduino.generator.cpp.timers
 
 import org.yakindu.sct.model.sgen.GeneratorEntry
 
-class ATmega328P_Timer1 extends AbstractAVR16BitTimer {
+class ATmega_Timer3 extends AbstractATmega16BitTimer {
 
 	override timerName() {
-		"ATmega328P_Timer1"
+		"ATmega_Timer3"
 	}
 
 	override protected ISR(GeneratorEntry it) '''
-		ISR(TIMER1_COMPA_vect) {
+		ISR(TIMER3_COMPA_vect) {
 			«IF useOverflows»
 				overflowCounter++;
 				
 				if (overflowCounter == overflows && moduloRest != 0) {
 					noInterrupts();
-					OCR1A = (moduloRest * 0.001f * (16000000 / 1024)) - 1;
+					OCR3A = (moduloRest * 0.001f * (16000000 / 1024)) - 1;
 					interrupts();
 				} else if (overflowCounter >= overflows) {
 					noInterrupts();
-					OCR1A = OVERFLOW_COMPARE_VALUE;
+					OCR3A = OVERFLOW_COMPARE_VALUE;
 					interrupts();
 				
 					runCycleFlag = true;
@@ -40,38 +40,38 @@ class ATmega328P_Timer1 extends AbstractAVR16BitTimer {
 	'''
 
 	override protected initBody(GeneratorEntry it) '''
-		// initialize Timer1
+		// initialize Timer3
 		noInterrupts();
-		TCCR1A = 0;     // set entire TCCR1A register to 0
-		TCCR1B = 0;     // same for TCCR1B
+		TCCR3A = 0;     // set entire TCCR3A register to 0
+		TCCR3B = 0;     // same for TCCR3B
 		
 		«IF useOverflows»
 			overflows = this->period / MAX_PERIOD;
 			moduloRest = this->period % MAX_PERIOD;
 			
-			OCR1A = OVERFLOW_COMPARE_VALUE;
+			OCR3A = OVERFLOW_COMPARE_VALUE;
 		«ELSE»
 			// set compare match register to desired timer count
 			// period in ms, Arduino runs at 16 MHz, prescaler at 1024
-			OCR1A = (this->period * 0.001f * (16000000 / 1024)) - 1;
+			OCR3A = (this->period * 0.001f * (16000000 / 1024)) - 1;
 		«ENDIF»
 		
 		// turn on CTC mode
-		TCCR1B |= (1 << WGM12);
+		TCCR3B |= (1 << WGM32);
 		
-		// Set CS10 and CS12 bits for 1024 prescaler
-		TCCR1B |= (1 << CS10);
-		TCCR1B |= (1 << CS12);
+		// Set CS32 and CS30 bits for 1024 prescaler
+		TCCR3B |= (1 << CS32);
+		TCCR3B |= (1 << CS30);
 		
 		// enable timer compare interrupt
-		TIMSK1 |= (1 << OCIE1A);
+		TIMSK3 |= (1 << OCIE3A);
 		
 		// enable global interrupts
 		interrupts();
 	'''
 
 	override protected cancelBody(GeneratorEntry it) '''
-		TCCR1B = 0; // turn off the timer
+		TCCR3B = 0; // turn off the timer
 	'''
 
 }

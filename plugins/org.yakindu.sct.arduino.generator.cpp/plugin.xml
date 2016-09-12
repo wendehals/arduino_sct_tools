@@ -50,9 +50,9 @@
     </architecture>
     <architecture
           id="org.yakindu.sct.arduino.generator.cpp.architecture.atmega328p"
-          name="ATmega328P">
+          name="Atmel ATmega48P/88P/168P/328P">
        <timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega328P_Timer0"
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_Timer0"
              description="Hardware timer based on Timer/Counter0, puts microcontroller into the idle sleep mode between cycles."
              id="atmega328p.timer0"
              maxCyclePeriod="1048560"
@@ -60,7 +60,7 @@
              name="Timer/Counter0 (8 bit)">
        </timer>
        <timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega328P_Timer1"
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_Timer1"
              description="Hardware timer based on Timer/Counter1, puts microcontroller into the idle sleep mode between cycles."
              id="atmega328p.timer1"
              maxCyclePeriod="1068960"
@@ -68,7 +68,7 @@
              name="Timer/Counter1 (16 bit)">
        </timer>
        <timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega328P_Timer2"
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_Timer2"
              description="Hardware timer based on Timer/Counter2, puts microcontroller into the power save sleep mode between cycles."
              id="atmega328p.timer2"
              maxCyclePeriod="1048560"
@@ -76,45 +76,57 @@
              name="Timer/Counter2 (8 bit)">
        </timer>
     </architecture>
-    <!--architecture
+    <architecture
           id="org.yakindu.sct.arduino.generator.cpp.architecture.atmega2560"
-          name="ATmega 640/1280/2560">
+          name="Atmel ATmega640/V-1280/V-1281/V-2560/V-2561/V">
        <timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega2560Timer0"
-             description="Hardware timer based on Timer/Counter0, puts microcontroller to sleep mode between cycles."
-             id="org.yakindu.sct.arduino.generator.cpp.timer.atmega2560.timer0"
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_Timer0"
+             description="Hardware timer based on Timer/Counter0, puts microcontroller into the idle sleep mode between cycles."
+             id="atmega2560.timer0"
+             maxCyclePeriod="1048560"
+             minCyclePeriod="1"
              name="Timer/Counter0 (8 bit)">
        </timer>
        <timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega2560Timer1"
-             description="Hardware timer based on Timer/Counter1, puts microcontroller to sleep mode between cycles."
-             id="org.yakindu.sct.arduino.generator.cpp.timer.atmega2560.timer1"
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_Timer1"
+             description="Hardware timer based on Timer/Counter1, puts microcontroller into the idle sleep mode between cycles."
+             id="atmega2560.timer1"
+             maxCyclePeriod="1068960"
+             minCyclePeriod="1"
              name="Timer/Counter1 (16 bit)">
        </timer>
        <timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega2560Timer2"
-             description="Hardware timer based on Timer/Counter2, puts microcontroller to sleep mode between cycles."
-             id="org.yakindu.sct.arduino.generator.cpp.timer.atmega2560.timer2"
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_Timer2"
+             description="Hardware timer based on Timer/Counter2, puts microcontroller into the power save sleep mode between cycles."
+             id="atmega2560.timer2"
+             maxCyclePeriod="1048560"
+             minCyclePeriod="1"
              name="Timer/Counter2 (8 bit)">
        </timer>
        <timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega2560Timer3"
-             description="Hardware timer based on Timer/Counter3, puts microcontroller to sleep mode between cycles."
-             id="org.yakindu.sct.arduino.generator.cpp.timer.atmega2560.timer3"
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_Timer3"
+             description="Hardware timer based on Timer/Counter3, puts microcontroller into the idle sleep mode between cycles."
+             id="atmega2560.timer3"
+             maxCyclePeriod="1068960"
+             minCyclePeriod="1"
              name="Timer/Counter3 (16 bit)">
        </timer>
        <timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega2560Timer4"
-             description="Hardware timer based on Timer/Counter4, puts microcontroller to sleep mode between cycles."
-             id="org.yakindu.sct.arduino.generator.cpp.timer.atmega2560.timer4"
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_Timer4"
+             description="Hardware timer based on Timer/Counter4, puts microcontroller into the idle sleep mode between cycles."
+             id="atmega2560.timer4"
+             maxCyclePeriod="1068960"
+             minCyclePeriod="1"
              name="Timer/Counter4 (16 bit)">
        </timer>
        <timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega2560Timer5"
-             description="Hardware timer based on Timer/Counter5, puts microcontroller to sleep mode between cycles."
-             id="org.yakindu.sct.arduino.generator.cpp.timer.atmega2560.timer5"
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_Timer5"
+             description="Hardware timer based on Timer/Counter5, puts microcontroller into the idle sleep mode between cycles."
+             id="atmega2560.timer5"
+             maxCyclePeriod="1068960"
+             minCyclePeriod="1"
              name="Timer/Counter5 (16 bit)">
        </timer>
-    </architecture-->
+    </architecture>
  </extension>
 </plugin>

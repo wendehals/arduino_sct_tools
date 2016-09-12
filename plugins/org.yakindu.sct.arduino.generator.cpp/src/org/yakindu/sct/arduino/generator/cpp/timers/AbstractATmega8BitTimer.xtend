@@ -10,7 +10,7 @@ package org.yakindu.sct.arduino.generator.cpp.timers
 
 import org.yakindu.sct.model.sgen.GeneratorEntry
 
-abstract class AbstractAVR8BitTimer extends AbstractAVRTimer {
+abstract class AbstractATmega8BitTimer extends AbstractATmegaTimer {
 
 	protected final static int MAX_PERIOD = 16;
 
