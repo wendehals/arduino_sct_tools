@@ -14,7 +14,7 @@
 	<name>YAKINDU Statechart Tools for Arduino</name>
 
 	<properties>
-		<tycho.version>0.25.0</tycho.version>
+		<tycho.version>0.26.0</tycho.version>
 		<build-helper.version>1.9.1</build-helper.version>
 		<org.jboss.tools.tycho-plugins.version>0.23.2</org.jboss.tools.tycho-plugins.version>
 		<xtextVersion>2.10.0</xtextVersion>

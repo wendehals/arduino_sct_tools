@@ -128,5 +128,16 @@
              name="Timer/Counter5 (16 bit)">
        </timer>
     </architecture>
+     <architecture
+          id="org.yakindu.sct.arduino.generator.cpp.architecture.esp8266"
+          name="ESP8266">
+       <timer
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ESP8266_Timer"
+             description="Software Timer (OS) of the ESP8266."
+             id="esp8266.ostimer"
+             minCyclePeriod="3"
+             name="OS Software Timer">
+       </timer>
+    </architecture>
  </extension>
 </plugin>
