@@ -30,12 +30,24 @@ class StatemachineConnector implements IContentTemplate {
 		
 		void «module.connector»::init() {
 			// put your code here to initialize the hardware
+
 			// pinMode(LED_BUILTIN, OUTPUT);
-			// digitalWrite(LED_BUILTIN, statemachine->getXXX());
+
+
+			// The state machine has already been initialized and started before.
+			// If the cycle period is very high (let's say >> 1s), it takes some
+			// time until runCycle() is called the first time. During that time,
+			// the hardware is not in sync with the state machine. So it might be
+			// better to call runCycle() once manually, to get in sync with the
+			// initial state of the state machine.
+
+			// runCycle();
 		}
 		
 		void «module.connector»::runCycle() {
-			// put your code here to update the hardware depending on the statechart's state
+			// put your code here to update the hardware depending on the state
+			// machine's state
+
 			// digitalWrite(LED_BUILTIN, statemachine->getXXX());
 		}
 	'''

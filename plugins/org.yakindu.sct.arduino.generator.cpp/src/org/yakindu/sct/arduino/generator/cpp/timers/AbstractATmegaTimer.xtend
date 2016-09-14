@@ -17,11 +17,10 @@ import org.yakindu.sct.model.sgen.GeneratorEntry
 abstract class AbstractATmegaTimer extends AbstractTimer {
 
 	@Inject extension Naming
-
 	@Inject extension GenmodelEntries
 
 	override generateTimer(GeneratorEntry it, ExecutionFlow flow) '''
-		«header»
+		«licenseText»
 		
 		#include "«timerName.h»"
 		

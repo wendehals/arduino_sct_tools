@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2016 by Lothar Wendehals.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -17,9 +17,10 @@ import org.yakindu.sct.model.sgen.GeneratorEntry
 class TimeEventHeader implements IContentTemplate {
 
 	@Inject extension Naming
+	@Inject extension GenmodelEntries
 
 	override content(ExecutionFlow it, GeneratorEntry entry, IGenArtifactConfigurations locations) '''
-		«header»
+		«entry.licenseText»
 		
 		#ifndef «timeEvent.h.define»
 		#define «timeEvent.h.define»
@@ -39,5 +40,5 @@ class TimeEventHeader implements IContentTemplate {
 		
 		#endif /* «timeEvent.h.define» */
 	'''
-	
+
 }

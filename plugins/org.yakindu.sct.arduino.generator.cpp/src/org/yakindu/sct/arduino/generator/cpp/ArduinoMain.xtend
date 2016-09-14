@@ -22,7 +22,7 @@ class ArduinoMain implements IContentTemplate {
 	@Inject extension MaxParallelTimers
 
 	override content(ExecutionFlow it, GeneratorEntry entry, IGenArtifactConfigurations locations) '''
-		«header»
+		«entry.licenseText»
 		
 		#include "«arduinoMain.h»"
 		#include "«entry.timerClassName.h»"

@@ -1,21 +1,22 @@
 package org.yakindu.sct.arduino.generator.cpp.timers
 
-import org.yakindu.sct.arduino.generator.cpp.timers.AbstractTimer
-import org.yakindu.sct.model.sgen.GeneratorEntry
-import org.yakindu.sct.model.sexec.ExecutionFlow
 import com.google.inject.Inject
+import org.yakindu.sct.arduino.generator.cpp.GenmodelEntries
 import org.yakindu.sct.arduino.generator.cpp.Naming
+import org.yakindu.sct.model.sexec.ExecutionFlow
+import org.yakindu.sct.model.sgen.GeneratorEntry
 
 class ESP8266_Timer extends AbstractTimer {
 
 	@Inject extension Naming
+	@Inject extension GenmodelEntries
 
 	override timerName() {
 		"ESP8266_Timer"
 	}
 
 	override generateTimer(GeneratorEntry it, ExecutionFlow flow) '''
-		«header»
+		«licenseText»
 		
 		#include "«timerName.h»"
 		
@@ -68,6 +69,10 @@ class ESP8266_Timer extends AbstractTimer {
 			runCycleFlag = false;
 		}
 		yield();
+	'''
+
+	override protected cancelBody(GeneratorEntry it) '''
+		os_timer_disarm (&osTimer);
 	'''
 
 }

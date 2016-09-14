@@ -9,6 +9,7 @@
 package org.yakindu.sct.arduino.generator.cpp.timers
 
 import com.google.inject.Inject
+import org.yakindu.sct.arduino.generator.cpp.GenmodelEntries
 import org.yakindu.sct.arduino.generator.cpp.Naming
 import org.yakindu.sct.model.sexec.ExecutionFlow
 import org.yakindu.sct.model.sgen.GeneratorEntry
@@ -16,11 +17,12 @@ import org.yakindu.sct.model.sgen.GeneratorEntry
 abstract class AbstractTimer {
 
 	@Inject extension Naming
+	@Inject extension GenmodelEntries
 
 	public def String timerName()
 
 	public def generateTimerHeader(GeneratorEntry it, ExecutionFlow flow) '''
-		«header»
+		«licenseText»
 		
 		#ifndef «timerName.h.define»
 		#define «timerName.h.define»
@@ -43,24 +45,24 @@ abstract class AbstractTimer {
 	'''
 
 	public def generateTimer(GeneratorEntry it, ExecutionFlow flow) '''
-		«header»
+		«licenseText»
 		
 		#include "«timerName.h»"
-
+		
 		«constructor»
 		
 		«start»
 		
 		«init»
-
+		
 		«setTimer»
 		
 		«unsetTimer»
-
+		
 		«runCycle»
-
+		
 		«raiseTimeEvents»
-
+		
 		«cancel»
 	'''
 

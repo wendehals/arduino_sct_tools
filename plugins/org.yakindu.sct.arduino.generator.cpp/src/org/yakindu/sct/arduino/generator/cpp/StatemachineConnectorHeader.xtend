@@ -20,7 +20,6 @@ class StatemachineConnectorHeader implements IContentTemplate {
 	@Inject extension GenmodelEntries
 
 	override content(ExecutionFlow it, GeneratorEntry entry, IGenArtifactConfigurations locations) '''
-		«header»
 		«entry.licenseText»
 		
 		#ifndef «module.connector.h.define»

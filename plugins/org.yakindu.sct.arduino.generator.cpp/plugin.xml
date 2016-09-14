@@ -135,7 +135,8 @@
              cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ESP8266_Timer"
              description="Software Timer (OS) of the ESP8266."
              id="esp8266.ostimer"
-             minCyclePeriod="3"
+             minCyclePeriod="5"
+             maxCyclePeriod="6870947"
              name="OS Software Timer">
        </timer>
     </architecture>

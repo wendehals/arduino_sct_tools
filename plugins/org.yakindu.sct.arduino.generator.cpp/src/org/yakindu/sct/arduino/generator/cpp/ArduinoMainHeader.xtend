@@ -17,9 +17,10 @@ import org.yakindu.sct.model.sgen.GeneratorEntry
 class ArduinoMainHeader implements IContentTemplate {
 
 	@Inject extension Naming
+	@Inject extension GenmodelEntries
 
 	override content(ExecutionFlow it, GeneratorEntry entry, IGenArtifactConfigurations locations) '''
-		«header»
+		«entry.licenseText»
 		
 		#ifndef «arduinoMain.h.define»
 		#define «arduinoMain.h.define»
