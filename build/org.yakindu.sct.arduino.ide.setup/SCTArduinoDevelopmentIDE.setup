@@ -108,18 +108,24 @@
             name="org.yakindu.sct.feature.group"/>
         <requirement
             name="org.yakindu.sct.generator.feature.group"/>
+        <requirement
+            name="org.eclipse.paho.client.mqttv3"/>
+        <requirement
+            name="org.eclipse.paho.client.eclipse.view"/>
         <repositoryList
             name="Neon">
           <repository
               url="http://download.eclipse.org/eclipse/updates/4.6"/>
           <repository
-              url="http://download.eclipse.org/tools/cdt/releases/9.0"/>
+              url="http://download.eclipse.org/tools/cdt/releases/9.1"/>
           <repository
               url="http://download.eclipse.org/releases/neon/"/>
           <repository
               url="http://download.eclipse.org/cbi/updates/license"/>
           <repository
               url="http://updates.yakindu.org/sct/neon/releases"/>
+          <repository
+              url="http://download.eclipse.org/paho"/>
         </repositoryList>
       </targlet>
       <description>YAKINDU Statechart Tools for Arduino</description>
