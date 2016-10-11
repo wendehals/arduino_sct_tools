@@ -70,6 +70,8 @@
           name="org.eclipse.paho.client.mqttv3"/>
       <requirement
           name="org.eclipse.paho.client.eclipse.view"/>
+      <requirement
+          name="com.google.eclipse.protobuf.feature.group"/>
       <repository
           url="http://download.eclipse.org/releases/neon"/>
       <repository
@@ -82,6 +84,8 @@
           url="https://wendehals.github.io/arduino_sct_tools/releases/"/>
       <repository
           url="http://download.eclipse.org/paho"/>
+      <repository
+          url="http://google.github.io/protobuf-dt/updates/latest/"/>
     </setupTask>
     <description>YAKINDU Statechart Tools for Arduino</description>
   </version>
