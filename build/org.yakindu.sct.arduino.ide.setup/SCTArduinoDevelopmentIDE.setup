@@ -110,10 +110,6 @@
             name="org.yakindu.sct.feature.group"/>
         <requirement
             name="org.yakindu.sct.generator.feature.group"/>
-        <requirement
-            name="org.eclipse.paho.client.mqttv3"/>
-        <requirement
-            name="org.eclipse.paho.client.eclipse.view"/>
         <repositoryList
             name="Neon">
           <repository
@@ -126,8 +122,6 @@
               url="http://download.eclipse.org/cbi/updates/license"/>
           <repository
               url="http://updates.yakindu.org/sct/neon/releases"/>
-          <repository
-              url="http://download.eclipse.org/paho"/>
         </repositoryList>
       </targlet>
       <description>YAKINDU Statechart Tools for Arduino</description>
@@ -143,7 +137,7 @@
               nature="org.eclipse.pde.PluginNature"/>
           <operand
               xsi:type="predicates:NamePredicate"
-              pattern=".*yakindu.*arduino.*"/>
+              pattern="org\.yakindu\.sct\.arduino.*"/>
         </predicate>
       </workingSet>
       <workingSet
@@ -155,7 +149,7 @@
               nature="org.eclipse.pde.FeatureNature"/>
           <operand
               xsi:type="predicates:NamePredicate"
-              pattern=".*yakindu.*arduino.*"/>
+              pattern="org\.yakindu\.sct\.arduino.*"/>
         </predicate>
       </workingSet>
       <workingSet
@@ -176,7 +170,7 @@
           </operand>
           <operand
               xsi:type="predicates:NamePredicate"
-              pattern=".*yakindu.*arduino.*"/>
+              pattern="org\.yakindu\.sct\.arduino.*"/>
         </predicate>
       </workingSet>
       <workingSet
@@ -190,7 +184,7 @@
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern=".*arduino.*"/>
+                pattern="org\.yakindu\.sct\.arduino.*"/>
           </operand>
         </predicate>
       </workingSet>
