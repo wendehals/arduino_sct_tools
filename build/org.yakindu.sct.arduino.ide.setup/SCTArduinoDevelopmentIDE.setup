@@ -69,6 +69,8 @@
         xsi:type="projects:ProjectsImportTask">
       <sourceLocator
           rootFolder="${git.clone.arduino_sct_tools.location}"/>
+      <sourceLocator
+          rootFolder="${git.clone.statecharts.location}"/>
     </setupTask>
     <setupTask
         xsi:type="setup.targlets:TargletTask"
@@ -175,6 +177,21 @@
           <operand
               xsi:type="predicates:NamePredicate"
               pattern=".*yakindu.*arduino.*"/>
+        </predicate>
+      </workingSet>
+      <workingSet
+          name="Yakindu SCT">
+        <predicate
+            xsi:type="predicates:AndPredicate">
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern="org\.yakindu\.sct.*"/>
+          <operand
+              xsi:type="predicates:NotPredicate">
+            <operand
+                xsi:type="predicates:NamePredicate"
+                pattern=".*arduino.*"/>
+          </operand>
         </predicate>
       </workingSet>
     </setupTask>
