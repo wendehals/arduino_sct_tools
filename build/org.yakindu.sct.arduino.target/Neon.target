@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="Neon.1" sequenceNumber="17">
+<?pde version="3.8"?><target name="Neon.1" sequenceNumber="19">
 <locations>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.yakindu.sct.feature.group" version="2.7.1.201608080852"/>
-<unit id="org.yakindu.sct.generator.feature.group" version="2.7.1.201608080852"/>
-<repository location="http://updates.yakindu.org/sct/neon/releases"/>
-</location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.cdt.arduino.feature.group" version="9.1.0.201609121658"/>
 <unit id="org.eclipse.cdt.feature.group" version="9.1.0.201609121658"/>
@@ -22,6 +17,11 @@
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.xtext.sdk.feature.group" version="2.10.0.v201605250459"/>
 <repository location="http://download.eclipse.org/releases/neon"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.yakindu.sct.feature.group" version="2.8.1.201611031156"/>
+<unit id="org.yakindu.sct.generator.feature.group" version="2.8.1.201611031156"/>
+<repository location="http://updates.yakindu.org/sct/neon/releases"/>
 </location>
 </locations>
 </target>

@@ -38,7 +38,7 @@ import org.eclipse.tools.templates.freemarker.FMProjectGenerator;
 import org.osgi.framework.Bundle;
 import org.yakindu.base.base.BasePackage;
 import org.yakindu.sct.arduino.generator.cpp.extensions.TimerElement;
-import org.yakindu.sct.builder.nature.SCTNature;
+import org.yakindu.sct.generator.builder.nature.SCTNature;
 import org.yakindu.sct.model.sgraph.SGraphPackage;
 import org.yakindu.sct.model.sgraph.Statechart;
 import org.yakindu.sct.ui.editor.DiagramActivator;

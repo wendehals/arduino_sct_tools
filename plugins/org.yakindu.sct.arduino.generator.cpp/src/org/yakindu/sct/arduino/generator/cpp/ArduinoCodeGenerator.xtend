@@ -11,9 +11,13 @@ package org.yakindu.sct.arduino.generator.cpp
 import com.google.inject.Inject
 import com.google.inject.Injector
 import org.eclipse.xtext.generator.IFileSystemAccess
-import org.yakindu.sct.generator.c.GenArtifactConfigurations.GenArtifactConfiguration
+import org.yakindu.sct.arduino.generator.cpp.features.IArduinoFeatureConstants
+import org.yakindu.sct.arduino.generator.cpp.timers.AbstractTimer
+import org.yakindu.sct.generator.c.IContentTemplate
 import org.yakindu.sct.generator.c.IGenArtifactConfigurations
-import org.yakindu.sct.generator.core.impl.IExecutionFlowGenerator
+import org.yakindu.sct.generator.c.IGenArtifactConfigurations.GenArtifactConfiguration
+import org.yakindu.sct.generator.core.IExecutionFlowGenerator
+import org.yakindu.sct.generator.core.filesystem.ISCTFileSystemAccess
 import org.yakindu.sct.generator.cpp.StatemachineHeader
 import org.yakindu.sct.generator.cpp.StatemachineImplementation
 import org.yakindu.sct.generator.cpp.StatemachineInterface
@@ -22,9 +26,6 @@ import org.yakindu.sct.generator.cpp.TimerInterface
 import org.yakindu.sct.generator.cpp.Types
 import org.yakindu.sct.model.sexec.ExecutionFlow
 import org.yakindu.sct.model.sgen.GeneratorEntry
-import org.yakindu.sct.generator.c.IContentTemplate
-import org.yakindu.sct.arduino.generator.cpp.features.IArduinoFeatureConstants
-import org.yakindu.sct.arduino.generator.cpp.timers.AbstractTimer
 
 class ArduinoCodeGenerator implements IExecutionFlowGenerator {
 
@@ -42,15 +43,13 @@ class ArduinoCodeGenerator implements IExecutionFlowGenerator {
 	@Inject HardwareConnectorHeader hardwareConnectorHeaderContent
 	@Inject StatemachineConnectorHeader statemachineConnectorHeaderContent
 	@Inject StatemachineConnector statemachineConnectorContent
+	
+	@Inject	IGenArtifactConfigurations locations
 
 	@Inject extension Naming
 	@Inject extension GenmodelEntries
 
-	override generate(ExecutionFlow flow, GeneratorEntry entry, IFileSystemAccess fsa) {
-		throw new UnsupportedOperationException("deprecated")
-	}
-
-	def generate(ExecutionFlow it, GeneratorEntry entry, IFileSystemAccess fsa, IGenArtifactConfigurations locations) {
+	override generate(ExecutionFlow it, GeneratorEntry entry, IFileSystemAccess fsa) {
 		initGenerationArtifacts(locations, it, entry)
 
 		for (GenArtifactConfiguration genArtifactConfig : locations.configurations) {
@@ -90,7 +89,7 @@ class ArduinoCodeGenerator implements IExecutionFlowGenerator {
 	}
 
 	def private configure(IGenArtifactConfigurations it, String artifactName, IContentTemplate contentTemplate) {
-		configure(artifactName, IExecutionFlowGenerator.TARGET_FOLDER_OUTPUT, contentTemplate)
+		configure(artifactName, ISCTFileSystemAccess.TARGET_FOLDER_OUTPUT, contentTemplate)
 	}
 
 	def private generateTimer(ExecutionFlow flow, GeneratorEntry entry, IFileSystemAccess fsa, AbstractTimer it) {

@@ -4,12 +4,14 @@
    <extension-point id="org.yakindu.sct.arduino.generator.cpp.architectures" name="C++ Generators Target Architectures" schema="schema/org.yakindu.sct.arduino.generator.cpp.architectures.exsd"/>
    <extension
          point="org.yakindu.sct.generator.core.generator">
-      <SCTGenerator class="org.yakindu.sct.arduino.generator.cpp.ArduinoCppCodeGenerator"
-            description="YAKINDU Statechart Tools for Arduino C++ Code Generator"
-            id="yakindu::arduino_cpp"
-            name="YAKINDU Statechart Tools for Arduino C++ Code Generator"
+      <SCTGenerator
+            bindings="org.yakindu.sct.arduino.generator.cpp.ArduinoCppCodeGeneratorModule"
             contentType="statechart"
-            elementRefType="org.yakindu.sct.model.sgraph.Statechart">
+            description="YAKINDU Statechart Tools for Arduino C++ Code Generator"
+            elementRefType="org.yakindu.sct.model.sgraph.Statechart"
+            executor="org.yakindu.sct.arduino.generator.cpp.ArduinoCppCodeGenerator"
+            id="yakindu::arduino_cpp"
+            name="YAKINDU Statechart Tools for Arduino C++ Code Generator">
             <FeatureLibrary
             	library_id="org.yakindu.generator.core.features.adapted">
             </FeatureLibrary>

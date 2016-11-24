@@ -12,12 +12,12 @@ import com.google.inject.Inject
 import org.yakindu.sct.arduino.generator.cpp.extensions.ArchitecturesExtension
 import org.yakindu.sct.arduino.generator.cpp.extensions.TimerElement
 import org.yakindu.sct.arduino.generator.cpp.features.IArduinoFeatureConstants
-import org.yakindu.sct.generator.core.library.IOutletFeatureHelper
 import org.yakindu.sct.model.sgen.GeneratorEntry
+import org.yakindu.sct.generator.core.library.ICoreLibraryHelper
 
 class GenmodelEntries extends org.yakindu.sct.generator.c.GenmodelEntries {
 
-	@Inject extension IOutletFeatureHelper outletFeatureHelper
+	@Inject extension ICoreLibraryHelper coreLibraryHelper
 
 	def private getGeneratorOptionsFeature(GeneratorEntry it) {
 		getFeatureConfiguration(IArduinoFeatureConstants::FEATURE_NAME)
@@ -28,7 +28,7 @@ class GenmodelEntries extends org.yakindu.sct.generator.c.GenmodelEntries {
 	}
 
 	def getSrcGenFolder(GeneratorEntry it) {
-		outletFeatureHelper.getTargetFolderValue(it).stringValue
+		coreLibraryHelper.getTargetFolderValue(it).stringValue
 	}
 
 	def TimerElement getTimer(GeneratorEntry it) {
