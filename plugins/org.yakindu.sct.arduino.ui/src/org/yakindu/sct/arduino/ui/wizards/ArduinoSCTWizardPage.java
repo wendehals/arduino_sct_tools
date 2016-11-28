@@ -256,7 +256,9 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 		@SuppressWarnings("unchecked")
 		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 			this.namedExtensionElement.clear();
-			this.namedExtensionElement.addAll((Collection<AbstractNamedElement>) newInput);
+			if (newInput != null) {
+				this.namedExtensionElement.addAll((Collection<AbstractNamedElement>) newInput);
+			}
 		}
 
 		/**
