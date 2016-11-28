@@ -16,7 +16,7 @@
    </copyright>
 
    <url>
-      <discovery label="CDT 9.0.0" url="http://download.eclipse.org/tools/cdt/releases/9.0"/>
+      <discovery label="CDT 9.1.0" url="http://download.eclipse.org/tools/cdt/releases/9.1"/>
    </url>
 
    <requires>
@@ -33,7 +33,7 @@
       <import plugin="org.eclipse.cdt.ui"/>
       <import plugin="org.eclipse.tools.templates.freemarker"/>
       <import plugin="org.eclipse.tools.templates.ui"/>
-      <import plugin="org.yakindu.sct.ui"/>
+      <import plugin="org.yakindu.sct.ui" version="2.8.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.cdt.core"/>
       <import plugin="org.eclipse.emf.transaction"/>
       <import plugin="org.eclipse.emf.workspace"/>
