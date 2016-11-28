@@ -16,9 +16,12 @@ import java.util.Map;
 import org.eclipse.cdt.core.CCProjectNature;
 import org.eclipse.cdt.core.CProjectNature;
 import org.eclipse.cdt.core.build.CBuilder;
+import org.eclipse.cdt.core.model.CoreModel;
+import org.eclipse.cdt.core.model.IPathEntry;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
@@ -100,7 +103,13 @@ public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 		model.put("cyclePeriod", Integer.toString(this.cyclePeriod)); //$NON-NLS-1$
 
 		final SubMonitor subMonitor = SubMonitor.convert(monitor, 100);
-		super.generate(model, subMonitor.split(80));
+
+		super.generate(model, subMonitor.split(70));
+
+		final IProject project = getProject();
+		CoreModel.getDefault().create(project).setRawPathEntries(
+				new IPathEntry[] { CoreModel.newSourceEntry(project.getFullPath()) }, subMonitor.split(10));
+
 		createDiagram(subMonitor.split(20));
 	}
 
