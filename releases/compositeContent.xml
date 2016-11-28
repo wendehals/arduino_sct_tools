@@ -8,7 +8,9 @@
   <children size='4'>
     <child location='0.1.0'/>
     <child location='0.2.0'/>
+    <child location='0.3.0'/>
     <child location='http://download.eclipse.org/releases/neon'/>
     <child location='http://download.eclipse.org/tools/cdt/releases/9.0'/>
+    <child location='http://download.eclipse.org/tools/cdt/releases/9.1'/>
   </children>
 </repository>
