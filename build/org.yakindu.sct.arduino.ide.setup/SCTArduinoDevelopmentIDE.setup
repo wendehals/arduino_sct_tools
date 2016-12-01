@@ -110,10 +110,10 @@
             versionRange="[9.1.0,9.2.0)"/>
         <requirement
             name="org.yakindu.sct.feature.group"
-            versionRange="[2.8.0,2.9.0)"/>
+            versionRange="[2.9.0,2.10.0)"/>
         <requirement
             name="org.yakindu.sct.generator.feature.group"
-            versionRange="[2.8.0,2.9.0)"/>
+            versionRange="[2.9.0,2.10.0)"/>
         <repositoryList
             name="Neon">
           <repository

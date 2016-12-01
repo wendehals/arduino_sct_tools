@@ -62,12 +62,13 @@
           name="org.eclipse.cdt.arduino.feature.group"/>
       <requirement
           name="org.yakindu.sct.feature.group"
-          versionRange="[2.8.0,2.9.0)"/>
+          versionRange="[2.9.0,2.10.0)"/>
       <requirement
-          name="org.yakindu.sct.generator.feature.group"/>
+          name="org.yakindu.sct.generator.feature.group"
+          versionRange="[2.9.0,2.10.0)"/>
       <requirement
           name="org.yakindu.sct.arduino.feature.group"
-          versionRange="[0.3.0,0.4.0)"/>
+          versionRange="[0.4.0,0.5.0)"/>
       <requirement
           name="org.eclipse.paho.client.mqttv3"/>
       <requirement

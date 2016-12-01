@@ -2,5 +2,5 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: YAKINDU Statechart Tools for Arduino Help
 Bundle-SymbolicName: org.yakindu.sct.arduino.help;singleton:=true
-Bundle-Version: 0.3.0.qualifier
+Bundle-Version: 0.4.0.qualifier
 Bundle-Vendor: Lothar Wendehals
