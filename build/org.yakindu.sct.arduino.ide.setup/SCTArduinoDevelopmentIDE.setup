@@ -103,13 +103,17 @@
         <requirement
             name="org.eclipse.egit.feature.group"/>
         <requirement
-            name="org.eclipse.cdt.feature.group"/>
+            name="org.eclipse.cdt.feature.group"
+            versionRange="[9.1.0,9.2.0)"/>
         <requirement
-            name="org.eclipse.cdt.arduino.feature.group"/>
+            name="org.eclipse.cdt.arduino.feature.group"
+            versionRange="[9.1.0,9.2.0)"/>
         <requirement
-            name="org.yakindu.sct.feature.group"/>
+            name="org.yakindu.sct.feature.group"
+            versionRange="[2.8.0,2.9.0)"/>
         <requirement
-            name="org.yakindu.sct.generator.feature.group"/>
+            name="org.yakindu.sct.generator.feature.group"
+            versionRange="[2.8.0,2.9.0)"/>
         <repositoryList
             name="Neon">
           <repository
