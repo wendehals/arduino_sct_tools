@@ -1,6 +1,6 @@
 /**
-O * Copyright (c) 2016 by Lothar Wendehals.
- *
+ * O * Copyright (c) 2016 by Lothar Wendehals.
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -31,16 +31,26 @@ class StatemachineConnector implements IContentTemplate {
 		
 		void «module.connector»::prepareSleepMode() {
 			// Put your code here to optimize power consumption by turning off
-			// microprocessor modules that are not needed.
-			// Only called when using a hardware timer.
+			// microprocessor modules that you don't need. Also, some of the
+			// functions of <avr/power.h> may not be supported by the actual
+			// microprocessor you are using.
+			// This method is only called in case you are using a hardware timer.
 			// e.g.
+			//	power_adc_disable();
+			//	power_spi_disable();
+			//	power_timer0_disable();
+			//	power_timer1_disable() ;
+			//	power_timer2_disable() ;
+			//	power_timer3_disable() ;
+			//	power_twi_disable();
+			//	power_usart0_disable();
 			// power_usb_disable();
 		}
 		
 		void «module.connector»::init() {
 			// Put your code here to initialize the hardware.
 			// pinMode(LED_BUILTIN, OUTPUT);
-
+		
 			// The state machine has already been initialized and started before
 			// this method is called. Until runCycle() is called the first time
 			// by the state machine, the hardware is not in sync with the state
