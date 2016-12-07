@@ -33,11 +33,13 @@ class StatemachineConnectorHeader implements IContentTemplate {
 		public:
 			«module.connector»(«module»* statemachine);
 		
-			inline virtual ~«module.connector»();
+			inline ~«module.connector»();
 		
-			virtual void init();
+			void prepareSleepMode();
 		
-			virtual void runCycle();
+			void init();
+		
+			void runCycle();
 		
 		private:
 			«module»* statemachine;

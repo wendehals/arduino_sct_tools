@@ -23,26 +23,35 @@ class StatemachineConnector implements IContentTemplate {
 		«entry.licenseText»
 		
 		#include "«module.connector.h»"
+		// #include <avr/power.h>
 		
 		«module.connector»::«module.connector»(«module»* statemachine) {
 			this->statemachine = statemachine;
 		}
 		
+		void «module.connector»::prepareSleepMode() {
+			// Put your code here to optimize power consumption by turning off
+			// microprocessor modules that are not needed.
+			// Only called when using a hardware timer.
+			// e.g.
+			// power_usb_disable();
+		}
+		
 		void «module.connector»::init() {
-			// put your code here to initialize the hardware
+			// Put your code here to initialize the hardware.
 			// pinMode(LED_BUILTIN, OUTPUT);
 
-			// The state machine has already been initialized and started before.
-			// If the cycle period is very high (let's say >> 1s), it takes some
-			// time until runCycle() is called the first time. During that time,
-			// the hardware is not in sync with the state machine. So it might be
-			// better to call runCycle() once manually, to get in sync with the
-			// initial state of the state machine.
+			// The state machine has already been initialized and started before
+			// this method is called. Until runCycle() is called the first time
+			// by the state machine, the hardware is not in sync with the state
+			// machine. If the cycle period is very high (let's say >> 1s), it
+			// might be better to call runCycle() once manually, to get in sync
+			// with the initial state of the state machine.
 			// runCycle();
 		}
 		
 		void «module.connector»::runCycle() {
-			// put your code here to update the hardware depending on the state machine's state
+			// Put your code here to update the hardware depending on the state machine's state.
 			// digitalWrite(LED_BUILTIN, statemachine->getXXX());
 		}
 	'''

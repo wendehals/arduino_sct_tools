@@ -72,6 +72,8 @@ class ATmega_Timer2 extends AbstractATmega8BitTimer {
 	'''
 
 	override protected sleepBody(GeneratorEntry it) '''
+		hardware->prepareSleepMode();
+		
 		set_sleep_mode(SLEEP_MODE_PWR_SAVE);
 		noInterrupts();
 		sleep_enable();

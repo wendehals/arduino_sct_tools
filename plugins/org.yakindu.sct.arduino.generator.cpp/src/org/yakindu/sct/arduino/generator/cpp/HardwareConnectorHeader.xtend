@@ -30,6 +30,8 @@ class HardwareConnectorHeader implements IContentTemplate {
 		public:
 			inline virtual ~«hardwareConnector»();
 		
+			virtual void prepareSleepMode() = 0;
+		
 			virtual void init() = 0;
 		
 			virtual void runCycle() = 0;

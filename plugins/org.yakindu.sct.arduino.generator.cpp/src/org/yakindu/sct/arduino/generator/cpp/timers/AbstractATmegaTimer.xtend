@@ -77,6 +77,8 @@ abstract class AbstractATmegaTimer extends AbstractTimer {
 	'''
 
 	protected def sleepBody(GeneratorEntry it) '''
+		hardware->prepareSleepMode();
+		
 		set_sleep_mode(SLEEP_MODE_IDLE);
 		noInterrupts();
 		sleep_enable();
