@@ -30,11 +30,30 @@ class HardwareConnectorHeader implements IContentTemplate {
 		public:
 			inline virtual ~«hardwareConnector»();
 		
-			virtual void prepareSleepMode() = 0;
-		
+			/*
+			 * Initialize the hardware.
+			 */
 			virtual void init() = 0;
 		
-			virtual void runCycle() = 0;
+			/*
+			 * Raise state machine events before processing them in the state machine's runCycle().
+			 */
+			virtual void raiseEvents() = 0;
+		
+			/*
+			 * Update the hardware depending on the state machine's state.
+			 */
+			virtual void syncState() = 0;
+		
+			/*
+			 * Optimize power consumption by turning off hardware modules that are not needed.
+			 * Return one of the following sleep states:
+			 * SLEEP_MODE_IDLE, SLEEP_MODE_ADC, SLEEP_MODE_PWR_DOWN, SLEEP_MODE_PWR_SAVE,
+			 * SLEEP_MODE_STANDBY, SLEEP_MODE_EXT_STANDBY
+			 * The returned sleep mode is just a recommendation, the actual timer implementation
+			 * may not support the given sleep mode.
+			 */
+			virtual uint8_t prepareSleepMode() = 0;
 		};
 		
 		«hardwareConnector»::~«hardwareConnector»() {

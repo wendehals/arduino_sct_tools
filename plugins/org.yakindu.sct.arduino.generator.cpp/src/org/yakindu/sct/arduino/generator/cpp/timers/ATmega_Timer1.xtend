@@ -46,14 +46,14 @@ class ATmega_Timer1 extends AbstractATmega16BitTimer {
 		TCCR1B = 0;     // same for TCCR1B
 		
 		«IF useOverflows»
-			overflows = this->period / MAX_PERIOD;
-			moduloRest = this->period % MAX_PERIOD;
+			overflows = period / MAX_PERIOD;
+			moduloRest = period % MAX_PERIOD;
 			
 			OCR1A = OVERFLOW_COMPARE_VALUE;
 		«ELSE»
 			// set compare match register to desired timer count
 			// period in ms, Arduino runs at 16 MHz, prescaler at 1024
-			OCR1A = (this->period * 0.001f * (16000000 / 1024)) - 1;
+			OCR1A = (period * 0.001f * (16000000 / 1024)) - 1;
 		«ENDIF»
 		
 		// turn on CTC mode

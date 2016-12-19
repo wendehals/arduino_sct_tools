@@ -60,7 +60,7 @@ class ESP8266_Timer extends AbstractTimer {
 
 	override protected initBody(GeneratorEntry it) '''
 		os_timer_setfn(&osTimer, timerCallback, NULL);
-		os_timer_arm(&osTimer, this->period, true);
+		os_timer_arm(&osTimer, period, true);
 	'''
 
 	override protected runCycleBody(GeneratorEntry it) '''

@@ -67,7 +67,7 @@ abstract class AbstractATmegaTimer extends AbstractTimer {
 			«super.runCycleBody(it)»
 			runCycleFlag = false;
 		}
-		this->sleep();
+		sleep();
 	'''
 
 	protected def sleep(GeneratorEntry it) '''

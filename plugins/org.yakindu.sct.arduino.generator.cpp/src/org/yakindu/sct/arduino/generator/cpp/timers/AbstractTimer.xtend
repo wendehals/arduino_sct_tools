@@ -38,7 +38,7 @@ abstract class AbstractTimer {
 		};
 		
 		«timerName»::~«timerName»() {
-			delete this->events;
+			delete events;
 		}
 		
 		#endif /* «timerName.h.define» */
@@ -68,7 +68,6 @@ abstract class AbstractTimer {
 
 	protected def headerIncludes(GeneratorEntry it, ExecutionFlow flow) '''
 		#include <Arduino.h>
-		#include <stdio.h>
 		
 		#include "«flow.typesModule.h»"
 		#include "«timerInterface.h»"
@@ -126,9 +125,9 @@ abstract class AbstractTimer {
 		this->maxParallelTimeEvents = maxParallelTimeEvents;
 		this->period = period;
 		
-		this->events = new «timeEvent»[this->maxParallelTimeEvents];
-		for (unsigned char i = 0; i < this->maxParallelTimeEvents; i++) {
-			this->events[i].eventId = NULL;
+		events = new «timeEvent»[maxParallelTimeEvents];
+		for (unsigned char i = 0; i < maxParallelTimeEvents; i++) {
+			events[i].eventId = NULL;
 		}
 	'''
 
@@ -139,10 +138,10 @@ abstract class AbstractTimer {
 	'''
 
 	protected def startBody(GeneratorEntry it) '''
-		this->statemachine->init();
-		this->statemachine->enter();
-		this->hardware->init();
-		this->init();
+		statemachine->init();
+		statemachine->enter();
+		hardware->init();
+		init();
 	'''
 
 	protected def init(GeneratorEntry it) '''
@@ -162,11 +161,11 @@ abstract class AbstractTimer {
 	'''
 
 	protected def setTimerBody(GeneratorEntry it) '''
-		for (unsigned char i = 0; i < this->maxParallelTimeEvents; i++) {
+		for (unsigned char i = 0; i < maxParallelTimeEvents; i++) {
 			if (events[i].eventId == NULL) {
 				events[i].timedStatemachine = timedStatemachine;
 				events[i].eventId = eventId;
-				events[i].overflows = duration / this->period;
+				events[i].overflows = duration / period;
 				events[i].periodic = isPeriodic;
 				events[i].overflowCounter = 0;
 				events[i].eventRaised = false;
@@ -182,7 +181,7 @@ abstract class AbstractTimer {
 	'''
 
 	protected def unsetTimerBody(GeneratorEntry it) '''
-		for (unsigned char i = 0; i < this->maxParallelTimeEvents; i++) {
+		for (unsigned char i = 0; i < maxParallelTimeEvents; i++) {
 			if (events[i].eventId == eventId) {
 				events[i].eventId = NULL;
 				break;
@@ -197,9 +196,10 @@ abstract class AbstractTimer {
 	'''
 
 	protected def runCycleBody(GeneratorEntry it) '''
-		this->raiseTimeEvents();
-		this->statemachine->runCycle();
-		this->hardware->runCycle();
+		raiseTimeEvents();
+		hardware->raiseEvents();
+		statemachine->runCycle();
+		hardware->syncState();
 	'''
 
 	protected def raiseTimeEvents(GeneratorEntry it) '''
@@ -209,7 +209,7 @@ abstract class AbstractTimer {
 	'''
 
 	protected def raiseTimeEventsBody(GeneratorEntry it) '''
-		for (unsigned char i = 0; i < this->maxParallelTimeEvents; i++) {
+		for (unsigned char i = 0; i < maxParallelTimeEvents; i++) {
 			if (events[i].eventId == NULL) {
 				continue;
 			}

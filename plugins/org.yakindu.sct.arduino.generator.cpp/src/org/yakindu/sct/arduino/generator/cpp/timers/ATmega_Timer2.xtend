@@ -46,14 +46,14 @@ class ATmega_Timer2 extends AbstractATmega8BitTimer {
 		TCCR2B = 0;     // same for TCCR2B
 		
 		«IF useOverflows»
-			overflows = this->period / MAX_PERIOD;
-			moduloRest = this->period % MAX_PERIOD;
+			overflows = period / MAX_PERIOD;
+			moduloRest = period % MAX_PERIOD;
 			
 			OCR2A = OVERFLOW_COMPARE_VALUE;
 		«ELSE»
 			// set compare match register to desired timer count
 			// period in ms, Arduino runs at 16 MHz, prescaler at 1024
-			OCR2A = (this->period * 0.001f * (16000000 / 1024)) - 1;
+			OCR2A = (period * 0.001f * (16000000 / 1024)) - 1;
 		«ENDIF»
 		
 		// turn on CTC mode
@@ -72,12 +72,31 @@ class ATmega_Timer2 extends AbstractATmega8BitTimer {
 	'''
 
 	override protected sleepBody(GeneratorEntry it) '''
-		hardware->prepareSleepMode();
-		
-		set_sleep_mode(SLEEP_MODE_PWR_SAVE);
+		uint8_t sleepMode = hardware->prepareSleepMode();
+
+		switch (sleepMode) {
+		case SLEEP_MODE_IDLE:
+		case SLEEP_MODE_ADC:
+			set_sleep_mode(SLEEP_MODE_IDLE);
+			break;
+		case SLEEP_MODE_PWR_SAVE:
+		case SLEEP_MODE_PWR_DOWN:
+		case SLEEP_MODE_STANDBY:
+		case SLEEP_MODE_EXT_STANDBY:
+			set_sleep_mode(SLEEP_MODE_PWR_SAVE);
+			break;
+		}
+
 		noInterrupts();
 		sleep_enable();
 		interrupts();
+
+		if (sleepMode == SLEEP_MODE_PWR_DOWN || sleepMode == SLEEP_MODE_PWR_SAVE
+				|| sleepMode == SLEEP_MODE_STANDBY
+				|| sleepMode == SLEEP_MODE_EXT_STANDBY) {
+			sleep_bod_disable();
+		}
+
 		sleep_cpu();
 		sleep_disable();
 	'''
