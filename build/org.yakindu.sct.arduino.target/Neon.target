@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="Neon.1" sequenceNumber="20">
+<?pde version="3.8"?><target name="Neon.2" sequenceNumber="22">
 <locations>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.cdt.arduino.feature.group" version="9.1.0.201609121658"/>
-<unit id="org.eclipse.cdt.feature.group" version="9.1.0.201609121658"/>
-<repository location="http://download.eclipse.org/tools/cdt/releases/9.1"/>
-</location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.license.feature.group" version="1.0.1.v20140414-1359"/>
 <repository location="http://download.eclipse.org/cbi/updates/license"/>
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.platform.sdk" version="4.6.1.M20160907-1200"/>
-<repository location="http://download.eclipse.org/eclipse/updates/4.6"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.xtext.sdk.feature.group" version="2.10.0.v201605250459"/>
@@ -22,6 +13,15 @@
 <unit id="org.yakindu.sct.feature.group" version="2.9.0.201611281434"/>
 <unit id="org.yakindu.sct.generator.feature.group" version="2.9.0.201611281434"/>
 <repository location="http://updates.yakindu.org/sct/neon/releases"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.cdt.feature.group" version="9.2.0.201612061315"/>
+<unit id="org.eclipse.cdt.arduino.feature.group" version="9.2.0.201612061315"/>
+<repository location="http://download.eclipse.org/tools/cdt/releases/9.2"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.platform.sdk" version="4.6.2.M20161124-1400"/>
+<repository location="http://download.eclipse.org/eclipse/updates/4.6"/>
 </location>
 </locations>
 </target>
