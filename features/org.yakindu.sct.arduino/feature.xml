@@ -33,7 +33,7 @@
       <import plugin="org.eclipse.cdt.ui"/>
       <import plugin="org.eclipse.tools.templates.freemarker"/>
       <import plugin="org.eclipse.tools.templates.ui"/>
-      <import plugin="org.yakindu.sct.ui" version="2.8.0" match="greaterOrEqual"/>
+      <import plugin="org.yakindu.sct.ui" version="2.9.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.cdt.core"/>
       <import plugin="org.eclipse.emf.transaction"/>
       <import plugin="org.eclipse.emf.workspace"/>
