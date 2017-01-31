@@ -34,7 +34,7 @@ class SoftwareTimer_Millis extends AbstractTimer {
 
 	override protected runCycleBody(GeneratorEntry it) '''
 		unsigned long current = millis();
-		if (current>=lastCycle+period){
+		if (current >= lastCycle + CYCLE_PERIOD){
 			«super.runCycleBody(it)»
 			lastCycle = current;
 		}

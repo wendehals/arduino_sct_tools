@@ -8,6 +8,7 @@
  */
 package org.yakindu.sct.arduino.generator.cpp.timers
 
+import org.yakindu.sct.model.sexec.ExecutionFlow
 import org.yakindu.sct.model.sgen.GeneratorEntry
 
 abstract class AbstractATmega16BitTimer extends AbstractATmegaTimer {
@@ -16,7 +17,8 @@ abstract class AbstractATmega16BitTimer extends AbstractATmegaTimer {
 
 	protected final static int OVERFLOW_COMPARE_VALUE = 65499;
 
-	override protected variableDeclarations(GeneratorEntry it) '''
+	override protected variableDeclarations(GeneratorEntry it, ExecutionFlow flow) '''
+		«super.variableDeclarations(it, flow)»
 		«IF useOverflows»
 			const unsigned int MAX_PERIOD = «MAX_PERIOD»;
 			const unsigned int OVERFLOW_COMPARE_VALUE = «OVERFLOW_COMPARE_VALUE»;

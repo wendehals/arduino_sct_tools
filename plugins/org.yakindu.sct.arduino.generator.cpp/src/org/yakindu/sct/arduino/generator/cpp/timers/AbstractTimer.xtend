@@ -10,14 +10,17 @@ package org.yakindu.sct.arduino.generator.cpp.timers
 
 import com.google.inject.Inject
 import org.yakindu.sct.arduino.generator.cpp.GenmodelEntries
+import org.yakindu.sct.arduino.generator.cpp.MaxParallelTimers
 import org.yakindu.sct.arduino.generator.cpp.Naming
 import org.yakindu.sct.model.sexec.ExecutionFlow
 import org.yakindu.sct.model.sgen.GeneratorEntry
+import org.yakindu.sct.model.sgraph.Statechart
 
 abstract class AbstractTimer {
 
 	@Inject extension Naming
 	@Inject extension GenmodelEntries
+	@Inject extension MaxParallelTimers
 
 	public def String timerName()
 
@@ -49,6 +52,8 @@ abstract class AbstractTimer {
 		
 		#include "«timerName.h»"
 		
+		«variableDeclarations(flow)»
+		
 		«constructor»
 		
 		«start»
@@ -78,16 +83,13 @@ abstract class AbstractTimer {
 	'''
 
 	protected def publicHeaderPart(GeneratorEntry it) '''
-		/* period in milliseconds */
-		«timerName»(«statemachineInterface»* statemachine, «hardwareConnector»* hardware,
-				unsigned char maxParallelTimeEvents, unsigned int period);
+		«timerName»(«statemachineInterface»* statemachine, «hardwareConnector»* hardware);
 		
 		inline ~«timerName»();
 		
 		void start();
 		
-		void setTimer(«timedStatemachineInterface»* timedStatemachine, sc_eventid eventId, sc_integer time,
-				sc_boolean isPeriodic);
+		void setTimer(«timedStatemachineInterface»* timedStatemachine, sc_eventid eventId, sc_integer time, sc_boolean isPeriodic);
 		
 		void unsetTimer(«timedStatemachineInterface»* timedStatemachine, sc_eventid eventId);
 		
@@ -103,18 +105,18 @@ abstract class AbstractTimer {
 		
 		«timeEvent»* events;
 		
-		unsigned int period;
-		
-		unsigned char maxParallelTimeEvents;
-		
 		void init();
 		
 		void raiseTimeEvents();
 	'''
 
+	protected def CharSequence variableDeclarations(GeneratorEntry it, ExecutionFlow flow) '''
+		const unsigned int CYCLE_PERIOD = «cyclePeriod»;
+		const unsigned char MAX_PARALLEL_TIME_EVENTS = «maxParallelTimers(flow.sourceElement as Statechart)»;
+	'''
+
 	protected def constructor(GeneratorEntry it) '''
-		«timerName»::«timerName»(«statemachineInterface»* statemachine, «hardwareConnector»* hardware,
-				unsigned char maxParallelTimeEvents, unsigned int period) {
+		«timerName»::«timerName»(«statemachineInterface»* statemachine, «hardwareConnector»* hardware) {
 			«constructorBody»
 		}
 	'''
@@ -122,11 +124,9 @@ abstract class AbstractTimer {
 	protected def constructorBody(GeneratorEntry it) '''
 		this->statemachine = statemachine;
 		this->hardware = hardware;
-		this->maxParallelTimeEvents = maxParallelTimeEvents;
-		this->period = period;
 		
-		events = new «timeEvent»[maxParallelTimeEvents];
-		for (unsigned char i = 0; i < maxParallelTimeEvents; i++) {
+		events = new «timeEvent»[MAX_PARALLEL_TIME_EVENTS];
+		for (unsigned char i = 0; i < MAX_PARALLEL_TIME_EVENTS; i++) {
 			events[i].eventId = NULL;
 		}
 	'''
@@ -154,18 +154,17 @@ abstract class AbstractTimer {
 	'''
 
 	protected def setTimer(GeneratorEntry it) '''
-		void «timerName»::setTimer(«timedStatemachineInterface»* timedStatemachine, sc_eventid eventId, sc_integer duration,
-				sc_boolean isPeriodic) {
+		void «timerName»::setTimer(«timedStatemachineInterface»* timedStatemachine, sc_eventid eventId, sc_integer duration, sc_boolean isPeriodic) {
 			«setTimerBody»
 		}
 	'''
 
 	protected def setTimerBody(GeneratorEntry it) '''
-		for (unsigned char i = 0; i < maxParallelTimeEvents; i++) {
+		for (unsigned char i = 0; i < MAX_PARALLEL_TIME_EVENTS; i++) {
 			if (events[i].eventId == NULL) {
 				events[i].timedStatemachine = timedStatemachine;
 				events[i].eventId = eventId;
-				events[i].overflows = duration / period;
+				events[i].overflows = duration / CYCLE_PERIOD;
 				events[i].periodic = isPeriodic;
 				events[i].overflowCounter = 0;
 				events[i].eventRaised = false;
@@ -181,7 +180,7 @@ abstract class AbstractTimer {
 	'''
 
 	protected def unsetTimerBody(GeneratorEntry it) '''
-		for (unsigned char i = 0; i < maxParallelTimeEvents; i++) {
+		for (unsigned char i = 0; i < MAX_PARALLEL_TIME_EVENTS; i++) {
 			if (events[i].eventId == eventId) {
 				events[i].eventId = NULL;
 				break;
@@ -209,7 +208,7 @@ abstract class AbstractTimer {
 	'''
 
 	protected def raiseTimeEventsBody(GeneratorEntry it) '''
-		for (unsigned char i = 0; i < maxParallelTimeEvents; i++) {
+		for (unsigned char i = 0; i < MAX_PARALLEL_TIME_EVENTS; i++) {
 			if (events[i].eventId == NULL) {
 				continue;
 			}

@@ -46,14 +46,14 @@ class ATmega_Timer0 extends AbstractATmega8BitTimer {
 		TCCR0B = 0;     // same for TCCR0B
 		
 		«IF useOverflows»
-			overflows = period / MAX_PERIOD;
-			moduloRest = period % MAX_PERIOD;
+			overflows = CYCLE_PERIOD / MAX_PERIOD;
+			moduloRest = CYCLE_PERIOD % MAX_PERIOD;
 			
 			OCR0A = OVERFLOW_COMPARE_VALUE;
 		«ELSE»
 			// set compare match register to desired timer count
 			// period in ms, Arduino runs at 16 MHz, prescaler at 1024
-			OCR0A = (period * 0.001f * (16000000 / 1024)) - 1;
+			OCR0A = (CYCLE_PERIOD * 0.001f * (16000000 / 1024)) - 1;
 		«ENDIF»
 		
 		// turn on CTC mode

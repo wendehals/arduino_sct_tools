@@ -11,6 +11,7 @@ package org.yakindu.sct.arduino.generator.cpp.timers
 import org.yakindu.sct.model.sgen.GeneratorEntry
 import com.google.inject.Inject
 import org.yakindu.sct.arduino.generator.cpp.GenmodelEntries
+import org.yakindu.sct.model.sexec.ExecutionFlow
 
 class ATmega_WDT extends AbstractATmegaTimer {
 
@@ -20,101 +21,74 @@ class ATmega_WDT extends AbstractATmegaTimer {
 		"ATmega_WDT"
 	}
 
-	override protected variableDeclarations(GeneratorEntry it) '''
-		«IF useOverflows»
-			bool runCycleFlag = false;
-			unsigned char overflows = 0;
-			unsigned char overflowCounter = 0;
-		«ELSE»
-			bool runCycleFlag = false;
-		«ENDIF»
+	override protected variableDeclarations(GeneratorEntry it, ExecutionFlow flow) '''
+		«super.variableDeclarations(it, flow)»
+		
+		bool runCycleFlag = false;
 	'''
 
 	override protected ISR(GeneratorEntry it) '''
 		ISR(WDT_vect) {
-			«IF useOverflows»
-				overflowCounter++;
-				
-				if (overflowCounter >= overflows) {
-					runCycleFlag = true;
-					overflowCounter = 0;
-				}
-			«ELSE»
-				runCycleFlag = true;
-			«ENDIF»
+			runCycleFlag = true;
 		}
 	'''
 
 	override protected initBody(GeneratorEntry it) '''
-		«IF useOverflows»
-			overflows = period / MAX_PERIOD;
-			
-		«ENDIF»
 		// disable global interrupts
 		noInterrupts();
 		
 		// Clear the reset flag
 		MCUSR &= ~(1 << WDRF);
 		
-		«IF cyclePeriod <= 16»
+		«IF cyclePeriod == 16»
 			// enable watchdog interrupt with 16ms period
 			WDTCSR |= (1 << WDCE) | (1 << WDE);
-			WDTCSR |= 1 << WDIE;
-			period = 16;
-		«ELSEIF cyclePeriod <= 32»
+			WDTCSR |= (1 << WDIE);
+		«ELSEIF cyclePeriod == 32»
 			// enable watchdog interrupt with 32ms period
 			WDTCSR |= (1 << WDCE) | (1 << WDE);
 			WDTCSR = (1 << WDP0);
-			WDTCSR |= 1 << WDIE;
-			period = 32;
-		«ELSEIF cyclePeriod <= 64»
+			WDTCSR |= (1 << WDIE);
+		«ELSEIF cyclePeriod == 64»
 			// enable watchdog interrupt with 64ms period
 			WDTCSR |= (1 << WDCE) | (1 << WDE);
 			WDTCSR = (1 << WDP1);
-			WDTCSR |= 1 << WDIE;
-			period = 64;
-		«ELSEIF cyclePeriod <= 125»
+			WDTCSR |= (1 << WDIE);
+		«ELSEIF cyclePeriod == 125»
 			// enable watchdog interrupt with 125ms period
 			WDTCSR |= (1 << WDCE) | (1 << WDE);
 			WDTCSR = (1 << WDP1) | (1 << WDP0);
-			WDTCSR |= 1 << WDIE;
-			period = 125;
-		«ELSEIF cyclePeriod <= 250»
+			WDTCSR |= (1 << WDIE);
+		«ELSEIF cyclePeriod == 250»
 			// enable watchdog interrupt with 250ms period
 			WDTCSR |= (1 << WDCE) | (1 << WDE);
 			WDTCSR = (1 << WDP2);
-			WDTCSR |= 1 << WDIE;
-			period = 250;
-		«ELSEIF cyclePeriod <= 500»
+			WDTCSR |= (1 << WDIE);
+		«ELSEIF cyclePeriod == 500»
 			// enable watchdog interrupt with 500ms period
 			WDTCSR |= (1 << WDCE) | (1 << WDE);
 			WDTCSR = (1 << WDP2) | (1 << WDP0);
-			WDTCSR |= 1 << WDIE;
-			period = 500;
-		«ELSEIF cyclePeriod <= 1000»
+			WDTCSR |= (1 << WDIE);
+		«ELSEIF cyclePeriod == 1000»
 			// enable watchdog interrupt with 1s period
 			WDTCSR |= (1 << WDCE) | (1 << WDE);
 			WDTCSR = (1 << WDP2) | (1 << WDP1);
-			WDTCSR |= 1 << WDIE;
-			period = 1000;
-		«ELSEIF cyclePeriod <= 2000»
+			WDTCSR |= (1 << WDIE);
+		«ELSEIF cyclePeriod == 2000»
 			// enable watchdog interrupt with 2s period
 			WDTCSR |= (1 << WDCE) | (1 << WDE);
 			WDTCSR = (1 << WDP2) | (1 << WDP1) | (1 << WDP0);
-			WDTCSR |= 1 << WDIE;
-			period = 2000;
-		«ELSEIF cyclePeriod <= 4000»
+			WDTCSR |= (1 << WDIE);
+		«ELSEIF cyclePeriod == 4000»
 			// enable watchdog interrupt with 4s period
 			WDTCSR |= (1 << WDCE) | (1 << WDE);
 			WDTCSR = (1 << WDP3);
-			WDTCSR |= 1 << WDIE;
-			period = 4000;
+			WDTCSR |= (1 << WDIE);
 		«ELSE»
 			// enable watchdog interrupt with 8s period
 			WDTCSR |= (1 << WDCE) | (1 << WDE);
 			WDTCSR = (1 << WDP3) | (1 << WDP0);
-			WDTCSR |= 1 << WDIE;
-			period = 8000;
+			WDTCSR |= (1 << WDIE);
 		«ENDIF»		
 		
 		// enable global interrupts

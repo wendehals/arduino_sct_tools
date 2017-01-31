@@ -13,13 +13,11 @@ import org.yakindu.sct.generator.c.IContentTemplate
 import org.yakindu.sct.generator.c.IGenArtifactConfigurations
 import org.yakindu.sct.model.sexec.ExecutionFlow
 import org.yakindu.sct.model.sgen.GeneratorEntry
-import org.yakindu.sct.model.sgraph.Statechart
 
 class ArduinoMain implements IContentTemplate {
 
 	@Inject extension Naming
 	@Inject extension GenmodelEntries
-	@Inject extension MaxParallelTimers
 
 	override content(ExecutionFlow it, GeneratorEntry entry, IGenArtifactConfigurations locations) '''
 		«entry.licenseText»
@@ -27,9 +25,6 @@ class ArduinoMain implements IContentTemplate {
 		#include "«arduinoMain.h»"
 		#include "«entry.timerClassName.h»"
 		#include "«entry.userSrcFolderRelativeToSrcGen»«module.connector.h»"
-		
-		#define CYCLE_PERIOD «cyclePeriod(entry)»
-		#define MAX_PARALLEL_TIMERS «maxParallelTimers(it.sourceElement as Statechart)»
 		
 		«module»* statemachine;
 		«module.connector»* connector;
@@ -42,7 +37,7 @@ class ArduinoMain implements IContentTemplate {
 		void setup() {
 			statemachine = new «module»();
 			connector = new «module.connector»(statemachine);
-			timer = new «entry.timerClassName»(statemachine, connector, MAX_PARALLEL_TIMERS, CYCLE_PERIOD);
+			timer = new «entry.timerClassName»(statemachine, connector);
 		
 			statemachine->setTimer(timer);
 			timer->start();

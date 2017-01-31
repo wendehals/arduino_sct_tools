@@ -24,7 +24,7 @@ abstract class AbstractATmegaTimer extends AbstractTimer {
 		
 		#include "«timerName.h»"
 		
-		«variableDeclarations»
+		«variableDeclarations(flow)»
 		
 		«ISR»
 		
@@ -57,8 +57,6 @@ abstract class AbstractATmegaTimer extends AbstractTimer {
 		
 		void sleep();
 	'''
-
-	protected def CharSequence variableDeclarations(GeneratorEntry it)
 
 	protected def CharSequence ISR(GeneratorEntry it)
 
