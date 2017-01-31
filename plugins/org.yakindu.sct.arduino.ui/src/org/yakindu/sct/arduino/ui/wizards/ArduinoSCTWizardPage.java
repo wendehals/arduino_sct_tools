@@ -20,6 +20,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
@@ -42,13 +43,19 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 
 	private Text srcGenFolderText;
 
-	private Text cyclePeriodText;
-
 	private Text timerImplDescText;
 
 	private ComboViewer architectureViewer;
 
 	private ComboViewer timerViewer;
+
+	private StackLayout cyclePeriodLayout;
+
+	private Text cyclePeriodText;
+
+	private ComboViewer cyclePeriodViewer;
+
+	private Composite cyclePeriodComposite;
 
 	public ArduinoSCTWizardPage() {
 		super("arduinoSCTWizardPage"); //$NON-NLS-1$
@@ -84,15 +91,6 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 		this.srcGenFolderText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		this.srcGenFolderText.addModifyListener(this);
 
-		label = new Label(composite, SWT.NONE);
-		label.setText(Messages.ArduinoSCTWizardPage_cyclePeriodLabel);
-		label.setToolTipText(Messages.ArduinoSCTWizardPage_cyclePeriodToolTip);
-
-		this.cyclePeriodText = new Text(composite, SWT.SINGLE | SWT.BORDER);
-		this.cyclePeriodText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		this.cyclePeriodText.addModifyListener(this);
-		this.cyclePeriodText.setToolTipText(Messages.ArduinoSCTWizardPage_cyclePeriodToolTip);
-
 		final Group group = new Group(composite, SWT.SHADOW_NONE);
 		group.setText(Messages.ArduinoSCTWizardPage_timerImplLabel);
 		group.setLayout(new GridLayout(2, false));
@@ -125,6 +123,27 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 		provider = new NamedExtensionElementsProvider();
 		this.timerViewer.setContentProvider(provider);
 		this.timerViewer.setLabelProvider(provider);
+
+		label = new Label(group, SWT.NONE);
+		label.setText(Messages.ArduinoSCTWizardPage_cyclePeriodLabel);
+		label.setToolTipText(Messages.ArduinoSCTWizardPage_cyclePeriodToolTip);
+
+		this.cyclePeriodLayout = new StackLayout();
+
+		this.cyclePeriodComposite = new Composite(group, SWT.NONE);
+		this.cyclePeriodComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		this.cyclePeriodComposite.setLayout(this.cyclePeriodLayout);
+
+		this.cyclePeriodText = new Text(this.cyclePeriodComposite, SWT.SINGLE | SWT.BORDER);
+		this.cyclePeriodText.addModifyListener(this);
+		this.cyclePeriodText.setToolTipText(Messages.ArduinoSCTWizardPage_cyclePeriodToolTip);
+
+		this.cyclePeriodViewer = new ComboViewer(this.cyclePeriodComposite, SWT.READ_ONLY | SWT.DROP_DOWN);
+		this.cyclePeriodViewer.getCombo().addModifyListener(this);
+
+		final CyclePeriodsProvider cyclePeriodsProvider = new CyclePeriodsProvider();
+		this.cyclePeriodViewer.setContentProvider(cyclePeriodsProvider);
+		this.cyclePeriodViewer.setLabelProvider(cyclePeriodsProvider);
 
 		gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gridData.horizontalSpan = 2;
@@ -180,8 +199,11 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 		return this.srcGenFolderText.getText().trim();
 	}
 
-	public int getCyclePeriod() {
-		return Integer.parseInt(this.cyclePeriodText.getText());
+	public int getCyclePeriod() throws NumberFormatException {
+		if (this.cyclePeriodLayout.topControl == this.cyclePeriodText) {
+			return Integer.parseInt(this.cyclePeriodText.getText());
+		}
+		return Integer.parseInt(this.cyclePeriodViewer.getCombo().getText());
 	}
 
 	public TimerElement getTimer() {
@@ -191,7 +213,6 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 	private void initialize() {
 		this.srcFolderText.setText("src"); //$NON-NLS-1$
 		this.srcGenFolderText.setText("src-gen"); //$NON-NLS-1$
-		this.cyclePeriodText.setText("10"); //$NON-NLS-1$
 
 		updateArchitecture();
 	}
@@ -207,6 +228,15 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 
 	private void updateTimer() {
 		this.timerImplDescText.setText(getTimer().getDescription());
+		if (getTimer().getPreDefinedCyclePeriods().isEmpty()) {
+			this.cyclePeriodLayout.topControl = this.cyclePeriodText;
+			this.cyclePeriodText.setText("100"); //$NON-NLS-1$
+		} else {
+			this.cyclePeriodLayout.topControl = this.cyclePeriodViewer.getCombo();
+			this.cyclePeriodViewer.setInput(getTimer().getPreDefinedCyclePeriods());
+			this.cyclePeriodViewer.getCombo().select(0);
+		}
+		this.cyclePeriodComposite.layout();
 		checkPageComplete();
 	}
 
@@ -218,8 +248,8 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 		}
 
 		try {
-			final int cyclePeriod = Integer.parseInt(this.cyclePeriodText.getText());
 			final TimerElement timer = getTimer();
+			final int cyclePeriod = getCyclePeriod();
 			if ((cyclePeriod < timer.getMinCyclePeriod()) || (cyclePeriod > timer.getMaxCyclePeriod())) {
 				setErrorMessage(String.format(Messages.ArduinoSCTWizardPage_cyclePeriodNotInIntervalMessage,
 						timer.getMinCyclePeriod(), timer.getMaxCyclePeriod()));
@@ -275,6 +305,41 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 		@Override
 		public Object[] getElements(Object inputElement) {
 			return this.namedExtensionElement.toArray();
+		}
+
+	}
+
+	protected static class CyclePeriodsProvider extends LabelProvider implements IStructuredContentProvider {
+
+		private final Collection<Integer> cyclePeriods = new TreeSet<>();
+
+		/**
+		 * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface.viewers.Viewer,
+		 *      java.lang.Object, java.lang.Object)
+		 */
+		@Override
+		@SuppressWarnings("unchecked")
+		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+			this.cyclePeriods.clear();
+			if (newInput != null) {
+				this.cyclePeriods.addAll((Collection<Integer>) newInput);
+			}
+		}
+
+		/**
+		 * @see org.eclipse.jface.viewers.LabelProvider#getText(java.lang.Object)
+		 */
+		@Override
+		public String getText(Object element) {
+			return ((Integer) element).toString();
+		}
+
+		/**
+		 * @see org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java.lang.Object)
+		 */
+		@Override
+		public Object[] getElements(Object inputElement) {
+			return this.cyclePeriods.toArray();
 		}
 
 	}

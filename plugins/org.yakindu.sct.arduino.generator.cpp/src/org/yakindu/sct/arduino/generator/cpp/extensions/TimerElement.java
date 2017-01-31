@@ -8,6 +8,10 @@
  */
 package org.yakindu.sct.arduino.generator.cpp.extensions;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.TreeSet;
+
 import org.yakindu.sct.arduino.generator.cpp.timers.AbstractTimer;
 
 public class TimerElement extends AbstractNamedElement {
@@ -18,15 +22,18 @@ public class TimerElement extends AbstractNamedElement {
 
 	private final long maxCyclePeriod;
 
+	private final Collection<Integer> preDefinedCyclePeriods = new TreeSet<>();
+
 	private final AbstractTimer codeGenerator;
 
 	public TimerElement(String id, String name, String description, long minCyclePeriod, long maxCyclePeriod,
-			AbstractTimer codeGenerator) {
+			AbstractTimer codeGenerator, Collection<Integer> preDefinedCyclePeriods) {
 		super(id, name);
 		this.description = description;
 		this.minCyclePeriod = minCyclePeriod;
 		this.maxCyclePeriod = maxCyclePeriod;
 		this.codeGenerator = codeGenerator;
+		this.preDefinedCyclePeriods.addAll(preDefinedCyclePeriods);
 	}
 
 	public String getDescription() {
@@ -47,6 +54,10 @@ public class TimerElement extends AbstractNamedElement {
 
 	public boolean isValidCyclePeriod(long cyclePeriod) {
 		return (cyclePeriod >= this.minCyclePeriod) && (cyclePeriod <= this.maxCyclePeriod);
+	}
+
+	public Collection<Integer> getPreDefinedCyclePeriods() {
+		return Collections.unmodifiableCollection(this.preDefinedCyclePeriods);
 	}
 
 }

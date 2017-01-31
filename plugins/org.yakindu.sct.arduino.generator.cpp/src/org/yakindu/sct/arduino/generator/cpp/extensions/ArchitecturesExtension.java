@@ -11,7 +11,10 @@ package org.yakindu.sct.arduino.generator.cpp.extensions;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Scanner;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -36,6 +39,8 @@ public class ArchitecturesExtension {
 	private static final String MIN_CYCLE_PERIOD_ATTRIBUTE = "minCyclePeriod"; //$NON-NLS-1$
 
 	private static final String MAX_CYCLE_PERIOD_ATTRIBUTE = "maxCyclePeriod"; //$NON-NLS-1$
+
+	private static final String PRE_DEFINED_CYCLE_PERIODS_ATTRIBUTE = "preDefinedCyclePeriods"; //$NON-NLS-1$
 
 	private static final String CPP_CODE_GENERATOR_ATTRIBUTE = "cppCodeGenerator"; //$NON-NLS-1$
 
@@ -75,11 +80,25 @@ public class ArchitecturesExtension {
 										maxCyclePeriod = Long.parseLong(maxCyclePeriodString);
 									}
 
+									final String preDefinedCyclePeriodsString = timerElement
+											.getAttribute(PRE_DEFINED_CYCLE_PERIODS_ATTRIBUTE);
+									final HashSet<Integer> preDefinedCyclePeriods = new HashSet<>();
+									if (preDefinedCyclePeriodsString != null) {
+										try (final Scanner scanner = new Scanner(preDefinedCyclePeriodsString)
+												.useDelimiter("\\s*,\\s*")) {
+											while (scanner.hasNextInt()) {
+												preDefinedCyclePeriods.add(scanner.nextInt());
+											}
+										} catch (final InputMismatchException exception) {
+											ArduinoGeneratorPlugin.logError(exception);
+										}
+									}
+
 									final AbstractTimer codeGenerator = (AbstractTimer) timerElement
 											.createExecutableExtension(CPP_CODE_GENERATOR_ATTRIBUTE);
 
 									architecture.addTimer(new TimerElement(timerId, timerName, timerDescription,
-											minCyclePeriod, maxCyclePeriod, codeGenerator));
+											minCyclePeriod, maxCyclePeriod, codeGenerator, preDefinedCyclePeriods));
 								} catch (final CoreException | NumberFormatException exception) {
 									ArduinoGeneratorPlugin.logError(exception);
 								}

@@ -97,16 +97,6 @@
                </appinfo>
             </annotation>
          </attribute>
-         <attribute name="cppCodeGenerator" type="string" use="required">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-               <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.yakindu.sct.arduino.generator.cpp.timers.AbstractTimerCodeGenerator"/>
-               </appinfo>
-            </annotation>
-         </attribute>
          <attribute name="description" type="string">
             <annotation>
                <documentation>
@@ -129,6 +119,23 @@
                <documentation>
                   Maximum cycle period in milliseconds.
                </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="preDefinedCyclePeriods" type="string">
+            <annotation>
+               <documentation>
+                  Comma separated list of pre-defined cycle periods.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="cppCodeGenerator" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn=":org.yakindu.sct.arduino.generator.cpp.timers.AbstractTimerCodeGenerator"/>
+               </appinfo>
             </annotation>
          </attribute>
       </complexType>
