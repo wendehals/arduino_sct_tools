@@ -16,6 +16,8 @@ import org.yakindu.sct.arduino.generator.cpp.timers.AbstractTimer;
 
 public class TimerElement extends AbstractNamedElement {
 
+	private final ArchitectureElement architecture;
+
 	private final String description;
 
 	private final long minCyclePeriod;
@@ -26,14 +28,20 @@ public class TimerElement extends AbstractNamedElement {
 
 	private final AbstractTimer codeGenerator;
 
-	public TimerElement(String id, String name, String description, long minCyclePeriod, long maxCyclePeriod,
-			AbstractTimer codeGenerator, Collection<Integer> preDefinedCyclePeriods) {
+	public TimerElement(ArchitectureElement architecture, String id, String name, String description,
+			long minCyclePeriod, long maxCyclePeriod, AbstractTimer codeGenerator,
+			Collection<Integer> preDefinedCyclePeriods) {
 		super(id, name);
+		this.architecture = architecture;
 		this.description = description;
 		this.minCyclePeriod = minCyclePeriod;
 		this.maxCyclePeriod = maxCyclePeriod;
 		this.codeGenerator = codeGenerator;
 		this.preDefinedCyclePeriods.addAll(preDefinedCyclePeriods);
+	}
+
+	public ArchitectureElement getArchitecture() {
+		return this.architecture;
 	}
 
 	public String getDescription() {

@@ -44,7 +44,7 @@
           name="Software">
        <timer
              cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.SoftwareTimer_Millis"
-             description="Software Timer based on millis() functions. Does not support any sleep mode."
+             description="Software Timer based on millis() function. Does not support any sleep mode."
              id="software.counter"
              minCyclePeriod="1"
              name="Milliseconds Counter">

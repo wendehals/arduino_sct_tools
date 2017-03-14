@@ -8,16 +8,9 @@
  */
 package org.yakindu.sct.arduino.ui.wizards;
 
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.TreeSet;
-
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
@@ -30,7 +23,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
-import org.yakindu.sct.arduino.generator.cpp.extensions.AbstractNamedElement;
 import org.yakindu.sct.arduino.generator.cpp.extensions.ArchitectureElement;
 import org.yakindu.sct.arduino.generator.cpp.extensions.ArchitecturesExtension;
 import org.yakindu.sct.arduino.generator.cpp.extensions.TimerElement;
@@ -262,86 +254,6 @@ public class ArduinoSCTWizardPage extends WizardPage implements ModifyListener, 
 
 		setErrorMessage(null);
 		setPageComplete(true);
-	}
-
-	protected static class NamedExtensionElementsProvider extends LabelProvider implements IStructuredContentProvider {
-
-		private final Collection<AbstractNamedElement> namedExtensionElement = new TreeSet<>(
-				new Comparator<AbstractNamedElement>() {
-
-					/**
-					 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
-					 */
-					@Override
-					public int compare(AbstractNamedElement element1, AbstractNamedElement element2) {
-						return element1.getName().compareTo(element2.getName());
-					}
-				});
-
-		/**
-		 * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface.viewers.Viewer,
-		 *      java.lang.Object, java.lang.Object)
-		 */
-		@Override
-		@SuppressWarnings("unchecked")
-		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-			this.namedExtensionElement.clear();
-			if (newInput != null) {
-				this.namedExtensionElement.addAll((Collection<AbstractNamedElement>) newInput);
-			}
-		}
-
-		/**
-		 * @see org.eclipse.jface.viewers.LabelProvider#getText(java.lang.Object)
-		 */
-		@Override
-		public String getText(Object element) {
-			return ((AbstractNamedElement) element).getName();
-		}
-
-		/**
-		 * @see org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java.lang.Object)
-		 */
-		@Override
-		public Object[] getElements(Object inputElement) {
-			return this.namedExtensionElement.toArray();
-		}
-
-	}
-
-	protected static class CyclePeriodsProvider extends LabelProvider implements IStructuredContentProvider {
-
-		private final Collection<Integer> cyclePeriods = new TreeSet<>();
-
-		/**
-		 * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface.viewers.Viewer,
-		 *      java.lang.Object, java.lang.Object)
-		 */
-		@Override
-		@SuppressWarnings("unchecked")
-		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-			this.cyclePeriods.clear();
-			if (newInput != null) {
-				this.cyclePeriods.addAll((Collection<Integer>) newInput);
-			}
-		}
-
-		/**
-		 * @see org.eclipse.jface.viewers.LabelProvider#getText(java.lang.Object)
-		 */
-		@Override
-		public String getText(Object element) {
-			return ((Integer) element).toString();
-		}
-
-		/**
-		 * @see org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java.lang.Object)
-		 */
-		@Override
-		public Object[] getElements(Object inputElement) {
-			return this.cyclePeriods.toArray();
-		}
-
 	}
 
 }

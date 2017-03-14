@@ -97,8 +97,9 @@ public class ArchitecturesExtension {
 									final AbstractTimer codeGenerator = (AbstractTimer) timerElement
 											.createExecutableExtension(CPP_CODE_GENERATOR_ATTRIBUTE);
 
-									architecture.addTimer(new TimerElement(timerId, timerName, timerDescription,
-											minCyclePeriod, maxCyclePeriod, codeGenerator, preDefinedCyclePeriods));
+									architecture.addTimer(new TimerElement(architecture, timerId, timerName,
+											timerDescription, minCyclePeriod, maxCyclePeriod, codeGenerator,
+											preDefinedCyclePeriods));
 								} catch (final CoreException | NumberFormatException exception) {
 									ArduinoGeneratorPlugin.logError(exception);
 								}
