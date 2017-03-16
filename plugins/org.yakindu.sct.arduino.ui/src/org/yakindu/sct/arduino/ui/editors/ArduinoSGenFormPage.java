@@ -8,12 +8,18 @@
  */
 package org.yakindu.sct.arduino.ui.editors;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.ModifyEvent;
@@ -26,6 +32,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormPage;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
+import org.eclipse.ui.forms.widgets.Form;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
@@ -39,9 +46,11 @@ import org.yakindu.sct.arduino.generator.cpp.extensions.ArchitectureElement;
 import org.yakindu.sct.arduino.generator.cpp.extensions.ArchitecturesExtension;
 import org.yakindu.sct.arduino.generator.cpp.extensions.TimerElement;
 import org.yakindu.sct.arduino.generator.cpp.features.IArduinoFeatureConstants;
+import org.yakindu.sct.arduino.ui.SCTArduinoUIImages;
 import org.yakindu.sct.arduino.ui.wizards.CyclePeriodsProvider;
 import org.yakindu.sct.arduino.ui.wizards.Messages;
 import org.yakindu.sct.arduino.ui.wizards.NamedExtensionElementsProvider;
+import org.yakindu.sct.generator.builder.action.GenerateModelAction;
 import org.yakindu.sct.model.sgen.FeatureConfiguration;
 import org.yakindu.sct.model.sgen.FeatureParameterValue;
 import org.yakindu.sct.model.sgen.GeneratorModel;
@@ -72,7 +81,13 @@ public class ArduinoSGenFormPage extends FormPage
 
 		final ScrolledForm scrolledForm = managedForm.getForm();
 		scrolledForm.setText(Messages.ArduinoSGenFormPage_formHeader);
-		this.toolkit.decorateFormHeading(scrolledForm.getForm());
+
+		final Form form = scrolledForm.getForm();
+		this.toolkit.decorateFormHeading(form);
+
+		final IToolBarManager toolBarManager = form.getToolBarManager();
+		toolBarManager.add(createGenerateAction());
+		form.updateToolBar();
 
 		final Composite body = scrolledForm.getBody();
 		body.setLayout(new TableWrapLayout());
@@ -372,6 +387,26 @@ public class ArduinoSGenFormPage extends FormPage
 		}
 
 		this.cyclePeriodComposite.layout();
+	}
+
+	private IAction createGenerateAction() {
+		final IAction action = new Action() {
+			/**
+			 * @see org.eclipse.jface.action.Action#run()
+			 */
+			@Override
+			public void run() {
+				final GenerateModelAction generateModelAction = new GenerateModelAction();
+				final ISelection selection = new StructuredSelection(
+						getEditor().getEditorInput().getAdapter(IFile.class));
+				generateModelAction.selectionChanged(this, selection);
+				generateModelAction.run(this);
+			}
+		};
+		action.setImageDescriptor(SCTArduinoUIImages.GENERATOR_MODEL.descriptor());
+		action.setToolTipText(Messages.ArduinoSGenFormPage_generateActionTooltip);
+
+		return action;
 	}
 
 }

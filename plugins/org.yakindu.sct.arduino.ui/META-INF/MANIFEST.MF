@@ -16,9 +16,10 @@ Require-Bundle: org.eclipse.cdt.ui,
  org.eclipse.ui.ide,
  org.eclipse.xtext.ui,
  org.yakindu.sct.ui,
+ org.yakindu.sct.generator.builder,
+ org.yakindu.sct.generator.genmodel.ui,
  org.yakindu.sct.arduino.core,
- org.yakindu.sct.arduino.generator.cpp,
- org.yakindu.sct.generator.genmodel.ui
+ org.yakindu.sct.arduino.generator.cpp
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.xtext.ui.editor

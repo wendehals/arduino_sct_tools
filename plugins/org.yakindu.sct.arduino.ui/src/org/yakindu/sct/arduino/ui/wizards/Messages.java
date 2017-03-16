@@ -34,6 +34,8 @@ public class Messages extends NLS {
 
 	public static String ArduinoSGenFormPage_formPageName;
 
+	public static String ArduinoSGenFormPage_generateActionTooltip;
+
 	public static String ArduinoSGenFormPage_timerLabel;
 
 	public static String ArduinoSGenFormPage_timerSectionHeader;
