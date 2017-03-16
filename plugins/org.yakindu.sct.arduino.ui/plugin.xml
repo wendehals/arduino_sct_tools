@@ -23,7 +23,7 @@
       <editor
             class="org.yakindu.sct.arduino.ui.SCTArduinoUIExecutableExtensionFactory:org.yakindu.sct.arduino.ui.editors.ArduinoSGenEditor"
             contributorClass="org.yakindu.sct.arduino.ui.editors.ArduinoSGenEditorContributor"
-            icon="icons/yakindu16.png"
+            icon="icons/GeneratorModel.gif"
             id="org.yakindu.sct.arduino.ui.editors.ArduinoSGenEditor"
             name="YAKINDU SGen for Arduino Editor">
          <contentTypeBinding
