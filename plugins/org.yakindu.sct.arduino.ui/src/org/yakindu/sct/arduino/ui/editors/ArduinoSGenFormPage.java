@@ -99,6 +99,7 @@ public class ArduinoSGenFormPage extends FormPage
 		NamedExtensionElementsProvider provider = new NamedExtensionElementsProvider();
 		this.architectureViewer.setContentProvider(provider);
 		this.architectureViewer.setLabelProvider(provider);
+		this.architectureViewer.addSelectionChangedListener(this);
 
 		label = this.toolkit.createLabel(composite, ""); //$NON-NLS-1$
 		label.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.FILL));
@@ -114,6 +115,7 @@ public class ArduinoSGenFormPage extends FormPage
 		provider = new NamedExtensionElementsProvider();
 		this.timerViewer.setContentProvider(provider);
 		this.timerViewer.setLabelProvider(provider);
+		this.timerViewer.addSelectionChangedListener(this);
 
 		label = this.toolkit.createLabel(composite, ""); //$NON-NLS-1$
 		label.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.FILL));
@@ -129,6 +131,7 @@ public class ArduinoSGenFormPage extends FormPage
 
 		this.cyclePeriodText = new Text(this.cyclePeriodComposite, SWT.SINGLE | SWT.BORDER);
 		this.cyclePeriodText.setToolTipText(Messages.ArduinoSCTWizardPage_cyclePeriodToolTip);
+		this.cyclePeriodText.addModifyListener(this);
 
 		this.cyclePeriodViewer = new ComboViewer(this.cyclePeriodComposite, SWT.READ_ONLY | SWT.DROP_DOWN);
 		combo = this.cyclePeriodViewer.getCombo();
@@ -137,6 +140,7 @@ public class ArduinoSGenFormPage extends FormPage
 		final CyclePeriodsProvider cyclePeriodsProvider = new CyclePeriodsProvider();
 		this.cyclePeriodViewer.setContentProvider(cyclePeriodsProvider);
 		this.cyclePeriodViewer.setLabelProvider(cyclePeriodsProvider);
+		this.cyclePeriodViewer.addSelectionChangedListener(this);
 
 		label = this.toolkit.createLabel(composite, ""); //$NON-NLS-1$
 		label.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.FILL));
@@ -148,12 +152,6 @@ public class ArduinoSGenFormPage extends FormPage
 		label.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.FILL_GRAB));
 
 		updateArchitectureViewer();
-
-		this.architectureViewer.addSelectionChangedListener(this);
-		this.timerViewer.addSelectionChangedListener(this);
-		this.cyclePeriodViewer.addSelectionChangedListener(this);
-		this.cyclePeriodText.addModifyListener(this);
-
 		startListeningToModelChanges();
 	}
 
@@ -311,8 +309,8 @@ public class ArduinoSGenFormPage extends FormPage
 	}
 
 	protected void updateArchitectureViewer() {
+		this.architectureViewer.removeSelectionChangedListener(this);
 		this.architectureViewer.setInput(ArchitecturesExtension.getArchitectures());
-		this.architectureViewer.getCombo().select(0);
 
 		final String timerId = getParameterValue(IArduinoFeatureConstants.PARAM_TIMER);
 		final TimerElement timer = ArchitecturesExtension.getTimer(timerId);
@@ -323,7 +321,10 @@ public class ArduinoSGenFormPage extends FormPage
 			if (index >= 0) {
 				this.architectureViewer.getCombo().select(index);
 			}
+		} else {
+			this.architectureViewer.getCombo().select(0);
 		}
+		this.architectureViewer.addSelectionChangedListener(this);
 
 		updateTimerViewer(timer);
 	}
@@ -331,8 +332,9 @@ public class ArduinoSGenFormPage extends FormPage
 	private void updateTimerViewer(TimerElement timer) {
 		final ArchitectureElement architecture = (ArchitectureElement) this.architectureViewer.getStructuredSelection()
 				.getFirstElement();
+
+		this.timerViewer.removeSelectionChangedListener(this);
 		this.timerViewer.setInput(architecture.getTimers());
-		this.timerViewer.getCombo().select(0);
 
 		if (timer != null) {
 			final NamedExtensionElementsProvider provider = (NamedExtensionElementsProvider) this.timerViewer
@@ -341,7 +343,10 @@ public class ArduinoSGenFormPage extends FormPage
 			if (index >= 0) {
 				this.timerViewer.getCombo().select(index);
 			}
+		} else {
+			this.timerViewer.getCombo().select(0);
 		}
+		this.timerViewer.addSelectionChangedListener(this);
 
 		updateCyclePeriodControls();
 	}
@@ -353,13 +358,19 @@ public class ArduinoSGenFormPage extends FormPage
 		this.timerImplDescText.setText(timer.getDescription());
 		if (timer.getPreDefinedCyclePeriods().isEmpty()) {
 			this.cyclePeriodLayout.topControl = this.cyclePeriodText;
+
+			this.cyclePeriodText.removeModifyListener(this);
 			this.cyclePeriodText.setText(cyclePeriod);
+			this.cyclePeriodText.addModifyListener(this);
 		} else {
 			this.cyclePeriodLayout.topControl = this.cyclePeriodViewer.getCombo();
+
+			this.cyclePeriodViewer.removeSelectionChangedListener(this);
 			this.cyclePeriodViewer.setInput(timer.getPreDefinedCyclePeriods());
 			this.cyclePeriodViewer.getCombo().select(0);
+			this.cyclePeriodViewer.addSelectionChangedListener(this);
 		}
-		
+
 		this.cyclePeriodComposite.layout();
 	}
 
