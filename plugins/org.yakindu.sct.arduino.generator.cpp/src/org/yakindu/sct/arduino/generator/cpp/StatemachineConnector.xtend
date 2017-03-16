@@ -23,7 +23,9 @@ class StatemachineConnector implements IContentTemplate {
 		«entry.licenseText»
 		
 		#include "«module.connector.h»"
+		«IF entry.timer.architecture.kind.equals("atmega")»
 		// #include <avr/power.h>
+		«ENDIF»
 		
 		«module.connector»::«module.connector»(«module»* statemachine) {
 			this->statemachine = statemachine;
@@ -65,6 +67,7 @@ class StatemachineConnector implements IContentTemplate {
 		 * Optimize power consumption by turning off hardware modules that are not needed.
 		 */
 		uint8_t «module.connector»::prepareSleepMode() {
+			«IF entry.timer.architecture.kind.equals("atmega")»
 			// Some of the functions of <avr/power.h> may not be supported by the
 			// actual microprocessor you are using.
 			// This method is only called in case you are using an AVR hardware timer.
@@ -80,6 +83,9 @@ class StatemachineConnector implements IContentTemplate {
 			// power_usb_disable();
 			
 			return SLEEP_MODE_IDLE;
+			«ELSE»
+			return 0;
+			«ENDIF»
 		}
 	'''
 

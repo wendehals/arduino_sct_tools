@@ -14,10 +14,17 @@ import java.util.HashSet;
 
 public class ArchitectureElement extends AbstractNamedElement {
 
+	private final String kind;
+
 	final Collection<TimerElement> timers = new HashSet<>();
 
-	public ArchitectureElement(String id, String name) {
+	public ArchitectureElement(String id, String name, String kind) {
 		super(id, name);
+		this.kind = kind;
+	}
+
+	public String getKind() {
+		return this.kind;
 	}
 
 	protected void addTimer(TimerElement timer) {

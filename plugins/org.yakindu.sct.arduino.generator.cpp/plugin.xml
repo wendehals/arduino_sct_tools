@@ -41,6 +41,7 @@
        point="org.yakindu.sct.arduino.generator.cpp.architectures">
     <architecture
           id="org.yakindu.sct.arduino.generator.cpp.architecture.software"
+          kind="software"
           name="Software">
        <timer
              cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.SoftwareTimer_Millis"
@@ -52,6 +53,7 @@
     </architecture>
     <architecture
           id="org.yakindu.sct.arduino.generator.cpp.architecture.atmega328p"
+          kind="atmega"
           name="Atmel ATmega48P/88P/168P/328P">
        <timer
              cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_Timer0"
@@ -89,6 +91,7 @@
     </architecture>
     <architecture
           id="org.yakindu.sct.arduino.generator.cpp.architecture.atmega2560"
+          kind="atmega"
           name="Atmel ATmega640/1280/1281/2560/2561">
        <timer
              cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_Timer0"
@@ -150,6 +153,7 @@
     </architecture>
     <architecture
           id="org.yakindu.sct.arduino.generator.cpp.architecture.atmega32u4"
+          kind="atmega"
           name="Atmel ATmega16u4/32u4">
        <timer
              cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_Timer0"
@@ -186,8 +190,9 @@
        </timer>
     </architecture>
      <architecture
-          id="org.yakindu.sct.arduino.generator.cpp.architecture.esp8266"
-          name="ESP8266">
+           id="org.yakindu.sct.arduino.generator.cpp.architecture.esp8266"
+           kind="esp8266"
+           name="ESP8266">
        <timer
              cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ESP8266_Timer"
              description="Software Timer (OS) of the ESP8266. Does not support any sleep modes."

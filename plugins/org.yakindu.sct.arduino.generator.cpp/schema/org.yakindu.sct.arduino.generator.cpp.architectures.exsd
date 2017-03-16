@@ -72,6 +72,13 @@
                </appinfo>
             </annotation>
          </attribute>
+         <attribute name="kind" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
       </complexType>
    </element>
 

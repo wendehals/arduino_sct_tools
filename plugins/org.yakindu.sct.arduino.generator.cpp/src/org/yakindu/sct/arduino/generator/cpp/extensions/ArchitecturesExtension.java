@@ -36,6 +36,8 @@ public class ArchitecturesExtension {
 
 	private static final String NAME_ATTRIBUTE = "name"; //$NON-NLS-1$
 
+	private static final String KIND_ATTRIBUTE = "kind"; //$NON-NLS-1$
+
 	private static final String MIN_CYCLE_PERIOD_ATTRIBUTE = "minCyclePeriod"; //$NON-NLS-1$
 
 	private static final String MAX_CYCLE_PERIOD_ATTRIBUTE = "maxCyclePeriod"; //$NON-NLS-1$
@@ -63,7 +65,8 @@ public class ArchitecturesExtension {
 						if (ARCHITECTURE_ELEMENT.equals(element.getName())) {
 							final String id = element.getAttribute(ID_ATTRIBUTE);
 							final String name = element.getAttribute(NAME_ATTRIBUTE);
-							final ArchitectureElement architecture = new ArchitectureElement(id, name);
+							final String kind = element.getAttribute(KIND_ATTRIBUTE);
+							final ArchitectureElement architecture = new ArchitectureElement(id, name, kind);
 
 							for (final IConfigurationElement timerElement : element.getChildren(TIMER_ELEMENT)) {
 								try {
