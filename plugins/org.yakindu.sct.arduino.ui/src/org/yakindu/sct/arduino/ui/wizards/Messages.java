@@ -26,19 +26,6 @@ public class Messages extends NLS {
 	public static String ArduinoSCTWizardPage_statechartLabel;
 	public static String ArduinoSCTWizardPage_timerImplLabel;
 	public static String ArduinoSCTWizardPage_timerLabel;
-	public static String ArduinoSGenFormPage_architectureLabel;
-
-	public static String ArduinoSGenFormPage_cyclePeriodLabel;
-
-	public static String ArduinoSGenFormPage_formHeader;
-
-	public static String ArduinoSGenFormPage_formPageName;
-
-	public static String ArduinoSGenFormPage_generateActionTooltip;
-
-	public static String ArduinoSGenFormPage_timerLabel;
-
-	public static String ArduinoSGenFormPage_timerSectionHeader;
 
 	public static String NewArduinoSCTProjectWizard_description;
 	public static String NewArduinoSCTProjectWizard_title;

@@ -48,7 +48,6 @@ import org.yakindu.sct.arduino.generator.cpp.extensions.TimerElement;
 import org.yakindu.sct.arduino.generator.cpp.features.IArduinoFeatureConstants;
 import org.yakindu.sct.arduino.ui.SCTArduinoUIImages;
 import org.yakindu.sct.arduino.ui.wizards.CyclePeriodsProvider;
-import org.yakindu.sct.arduino.ui.wizards.Messages;
 import org.yakindu.sct.arduino.ui.wizards.NamedExtensionElementsProvider;
 import org.yakindu.sct.generator.builder.action.GenerateModelAction;
 import org.yakindu.sct.model.sgen.FeatureConfiguration;
@@ -58,7 +57,6 @@ import org.yakindu.sct.model.sgen.GeneratorModel;
 public class ArduinoSGenFormPage extends FormPage
 		implements ModifyListener, ISelectionChangedListener, IXtextModelListener {
 
-	private FormToolkit toolkit;
 	private Text timerImplDescText;
 	private ComboViewer architectureViewer;
 	private ComboViewer timerViewer;
@@ -67,7 +65,7 @@ public class ArduinoSGenFormPage extends FormPage
 	private Composite cyclePeriodComposite;
 	private Text cyclePeriodText;
 
-	public ArduinoSGenFormPage(ArduinoSGenEditor editor) {
+	public ArduinoSGenFormPage(final SGenMultiPageEditor editor) {
 		super(editor, "org.yakindu.sct.arduino.ui.editors.ArduinoSGenFormPage", //$NON-NLS-1$
 				Messages.ArduinoSGenFormPage_formPageName);
 	}
@@ -76,14 +74,14 @@ public class ArduinoSGenFormPage extends FormPage
 	 * @see org.eclipse.ui.forms.editor.FormPage#createFormContent(org.eclipse.ui.forms.IManagedForm)
 	 */
 	@Override
-	protected void createFormContent(IManagedForm managedForm) {
-		this.toolkit = managedForm.getToolkit();
+	protected void createFormContent(final IManagedForm managedForm) {
+		final FormToolkit toolkit = managedForm.getToolkit();
 
 		final ScrolledForm scrolledForm = managedForm.getForm();
 		scrolledForm.setText(Messages.ArduinoSGenFormPage_formHeader);
 
 		final Form form = scrolledForm.getForm();
-		this.toolkit.decorateFormHeading(form);
+		toolkit.decorateFormHeading(form);
 
 		final IToolBarManager toolBarManager = form.getToolBarManager();
 		toolBarManager.add(createGenerateAction());
@@ -92,23 +90,23 @@ public class ArduinoSGenFormPage extends FormPage
 		final Composite body = scrolledForm.getBody();
 		body.setLayout(new TableWrapLayout());
 
-		final Section section = this.toolkit.createSection(body, ExpandableComposite.TITLE_BAR);
+		final Section section = toolkit.createSection(body, ExpandableComposite.TITLE_BAR);
 		section.setText(Messages.ArduinoSGenFormPage_timerSectionHeader);
 		section.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.FILL_GRAB));
 
-		final Composite composite = this.toolkit.createComposite(section);
+		final Composite composite = toolkit.createComposite(section);
 		final TableWrapLayout layout = new TableWrapLayout();
 		layout.numColumns = 3;
 		composite.setLayout(layout);
 
 		section.setClient(composite);
 
-		Label label = this.toolkit.createLabel(composite, Messages.ArduinoSGenFormPage_architectureLabel);
+		Label label = toolkit.createLabel(composite, Messages.ArduinoSGenFormPage_architectureLabel);
 		label.setLayoutData(new TableWrapData(TableWrapData.FILL, TableWrapData.FILL));
 
 		this.architectureViewer = new ComboViewer(composite, SWT.READ_ONLY | SWT.DROP_DOWN);
 		Combo combo = this.architectureViewer.getCombo();
-		this.toolkit.adapt(combo);
+		toolkit.adapt(combo);
 		combo.setLayoutData(new TableWrapData(TableWrapData.FILL, TableWrapData.FILL));
 
 		NamedExtensionElementsProvider provider = new NamedExtensionElementsProvider();
@@ -116,15 +114,15 @@ public class ArduinoSGenFormPage extends FormPage
 		this.architectureViewer.setLabelProvider(provider);
 		this.architectureViewer.addSelectionChangedListener(this);
 
-		label = this.toolkit.createLabel(composite, ""); //$NON-NLS-1$
+		label = toolkit.createLabel(composite, ""); //$NON-NLS-1$
 		label.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.FILL));
 
-		label = this.toolkit.createLabel(composite, Messages.ArduinoSGenFormPage_timerLabel);
+		label = toolkit.createLabel(composite, Messages.ArduinoSGenFormPage_timerLabel);
 		label.setLayoutData(new TableWrapData(TableWrapData.FILL, TableWrapData.FILL));
 
 		this.timerViewer = new ComboViewer(composite, SWT.READ_ONLY | SWT.DROP_DOWN);
 		combo = this.timerViewer.getCombo();
-		this.toolkit.adapt(combo);
+		toolkit.adapt(combo);
 		combo.setLayoutData(new TableWrapData(TableWrapData.FILL, TableWrapData.FILL));
 
 		provider = new NamedExtensionElementsProvider();
@@ -132,10 +130,10 @@ public class ArduinoSGenFormPage extends FormPage
 		this.timerViewer.setLabelProvider(provider);
 		this.timerViewer.addSelectionChangedListener(this);
 
-		label = this.toolkit.createLabel(composite, ""); //$NON-NLS-1$
+		label = toolkit.createLabel(composite, ""); //$NON-NLS-1$
 		label.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.FILL));
 
-		label = this.toolkit.createLabel(composite, Messages.ArduinoSGenFormPage_cyclePeriodLabel);
+		label = toolkit.createLabel(composite, Messages.ArduinoSGenFormPage_cyclePeriodLabel);
 		label.setLayoutData(new TableWrapData(TableWrapData.FILL, TableWrapData.FILL));
 
 		this.cyclePeriodLayout = new StackLayout();
@@ -144,26 +142,26 @@ public class ArduinoSGenFormPage extends FormPage
 		this.cyclePeriodComposite.setLayoutData(new TableWrapData(TableWrapData.FILL, TableWrapData.FILL));
 		this.cyclePeriodComposite.setLayout(this.cyclePeriodLayout);
 
-		this.cyclePeriodText = new Text(this.cyclePeriodComposite, SWT.SINGLE | SWT.BORDER);
-		this.cyclePeriodText.setToolTipText(Messages.ArduinoSCTWizardPage_cyclePeriodToolTip);
+		this.cyclePeriodText = toolkit.createText(this.cyclePeriodComposite, "", SWT.SINGLE | SWT.BORDER); //$NON-NLS-1$
+		this.cyclePeriodText.setToolTipText(Messages.ArduinoSGenFormPage_cyclePeriodToolTip);
 		this.cyclePeriodText.addModifyListener(this);
 
 		this.cyclePeriodViewer = new ComboViewer(this.cyclePeriodComposite, SWT.READ_ONLY | SWT.DROP_DOWN);
 		combo = this.cyclePeriodViewer.getCombo();
-		this.toolkit.adapt(combo);
+		toolkit.adapt(combo);
 
 		final CyclePeriodsProvider cyclePeriodsProvider = new CyclePeriodsProvider();
 		this.cyclePeriodViewer.setContentProvider(cyclePeriodsProvider);
 		this.cyclePeriodViewer.setLabelProvider(cyclePeriodsProvider);
 		this.cyclePeriodViewer.addSelectionChangedListener(this);
 
-		label = this.toolkit.createLabel(composite, ""); //$NON-NLS-1$
+		label = toolkit.createLabel(composite, ""); //$NON-NLS-1$
 		label.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.FILL));
 
-		this.timerImplDescText = this.toolkit.createText(composite, "", SWT.READ_ONLY | SWT.MULTI | SWT.BORDER); //$NON-NLS-1$
+		this.timerImplDescText = toolkit.createText(composite, "", SWT.READ_ONLY | SWT.MULTI | SWT.BORDER); //$NON-NLS-1$
 		this.timerImplDescText.setLayoutData(new TableWrapData(TableWrapData.FILL, TableWrapData.FILL_GRAB, 1, 2));
 
-		label = this.toolkit.createLabel(composite, ""); //$NON-NLS-1$
+		label = toolkit.createLabel(composite, ""); //$NON-NLS-1$
 		label.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.FILL_GRAB));
 
 		updateArchitectureViewer();
@@ -174,15 +172,15 @@ public class ArduinoSGenFormPage extends FormPage
 	 * @see org.eclipse.ui.forms.editor.FormPage#getEditor()
 	 */
 	@Override
-	public ArduinoSGenEditor getEditor() {
-		return (ArduinoSGenEditor) super.getEditor();
+	public SGenMultiPageEditor getEditor() {
+		return (SGenMultiPageEditor) super.getEditor();
 	}
 
 	/**
 	 * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
 	 */
 	@Override
-	public void modifyText(ModifyEvent event) {
+	public void modifyText(final ModifyEvent event) {
 		updateModel(this.cyclePeriodText.getText());
 	}
 
@@ -190,7 +188,7 @@ public class ArduinoSGenFormPage extends FormPage
 	 * @see org.eclipse.jface.viewers.ISelectionChangedListener#selectionChanged(org.eclipse.jface.viewers.SelectionChangedEvent)
 	 */
 	@Override
-	public void selectionChanged(SelectionChangedEvent event) {
+	public void selectionChanged(final SelectionChangedEvent event) {
 		final Object source = event.getSource();
 
 		if (source == this.architectureViewer) {
@@ -208,7 +206,7 @@ public class ArduinoSGenFormPage extends FormPage
 		}
 	}
 
-	private void updateModel(TimerElement timer) {
+	private void updateModel(final TimerElement timer) {
 		stopListeningToModelChanges();
 
 		Display.getDefault().syncExec(new Runnable() {
@@ -225,7 +223,7 @@ public class ArduinoSGenFormPage extends FormPage
 		startListeningToModelChanges();
 	}
 
-	private void updateModel(String cyclePeriod) {
+	private void updateModel(final String cyclePeriod) {
 		stopListeningToModelChanges();
 
 		Display.getDefault().syncExec(new Runnable() {
@@ -259,6 +257,15 @@ public class ArduinoSGenFormPage extends FormPage
 		});
 	}
 
+	/**
+	 * @see org.eclipse.ui.forms.editor.FormPage#dispose()
+	 */
+	@Override
+	public void dispose() {
+		stopListeningToModelChanges();
+		super.dispose();
+	}
+
 	protected void startListeningToModelChanges() {
 		getEditor().getXtextDocument().addModelListener(this);
 	}
@@ -270,32 +277,28 @@ public class ArduinoSGenFormPage extends FormPage
 	protected String getParameterValue(final String param) {
 		final IXtextDocument xtextDocument = getEditor().getXtextDocument();
 		return xtextDocument.readOnly(new IUnitOfWork<String, XtextResource>() {
-
 			/**
 			 * @see org.eclipse.xtext.util.concurrent.IUnitOfWork#exec(java.lang.Object)
 			 */
 			@Override
-			public String exec(XtextResource resource) throws Exception {
+			public String exec(final XtextResource resource) throws Exception {
 				final FeatureParameterValue parameterValue = findFeatureParameterValue(resource, param);
 				if (parameterValue != null) {
 					return parameterValue.getStringValue();
 				}
 				return ""; //$NON-NLS-1$
 			}
-
 		});
-
 	}
 
 	protected boolean setParameterValue(final String param, final String value) {
 		final IXtextDocument xtextDocument = getEditor().getXtextDocument();
 		return xtextDocument.modify(new IUnitOfWork<Boolean, XtextResource>() {
-
 			/**
 			 * @see org.eclipse.xtext.util.concurrent.IUnitOfWork#exec(java.lang.Object)
 			 */
 			@Override
-			public Boolean exec(XtextResource resource) throws Exception {
+			public Boolean exec(final XtextResource resource) throws Exception {
 				final FeatureParameterValue parameterValue = findFeatureParameterValue(resource, param);
 				if (parameterValue != null) {
 					parameterValue.setValue(value);
@@ -303,11 +306,10 @@ public class ArduinoSGenFormPage extends FormPage
 				}
 				return Boolean.FALSE;
 			}
-
 		});
 	}
 
-	protected FeatureParameterValue findFeatureParameterValue(XtextResource resource, String param) {
+	protected FeatureParameterValue findFeatureParameterValue(final XtextResource resource, final String param) {
 		final GeneratorModel generatorModel = (GeneratorModel) resource.getParseResult().getRootASTElement();
 		final TreeIterator<EObject> iterator = generatorModel.eResource().getAllContents();
 		while (iterator.hasNext()) {
@@ -344,7 +346,7 @@ public class ArduinoSGenFormPage extends FormPage
 		updateTimerViewer(timer);
 	}
 
-	private void updateTimerViewer(TimerElement timer) {
+	private void updateTimerViewer(final TimerElement timer) {
 		final ArchitectureElement architecture = (ArchitectureElement) this.architectureViewer.getStructuredSelection()
 				.getFirstElement();
 

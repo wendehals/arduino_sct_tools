@@ -21,14 +21,12 @@
    <extension
          point="org.eclipse.ui.editors">
       <editor
-            class="org.yakindu.sct.arduino.ui.SCTArduinoUIExecutableExtensionFactory:org.yakindu.sct.arduino.ui.editors.ArduinoSGenEditor"
+            class="org.yakindu.sct.arduino.ui.SCTArduinoUIExecutableExtensionFactory:org.yakindu.sct.arduino.ui.editors.SGenMultiPageEditor"
             contributorClass="org.yakindu.sct.arduino.ui.editors.ArduinoSGenEditorContributor"
+            extensions="sgen"
             icon="icons/GeneratorModel.gif"
             id="org.yakindu.sct.arduino.ui.editors.ArduinoSGenEditor"
             name="YAKINDU SGen for Arduino Editor">
-         <contentTypeBinding
-               contentTypeId="org.yakindu.sct.arduino.ui.contentType.sgen">
-         </contentTypeBinding>
       </editor>
    </extension>
    <extension
