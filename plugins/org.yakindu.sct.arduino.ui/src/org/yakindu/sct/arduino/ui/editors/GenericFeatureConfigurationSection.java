@@ -29,6 +29,7 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
+import org.yakindu.sct.model.sgen.FeatureConfiguration;
 import org.yakindu.sct.model.sgen.FeatureParameter;
 import org.yakindu.sct.model.sgen.FeatureType;
 import org.yakindu.sct.model.sgen.ParameterTypes;
@@ -38,11 +39,15 @@ public class GenericFeatureConfigurationSection
 
 	private static final String CAMEL_CASE_PATTERN = "(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])"; //$NON-NLS-1$
 
-	private final GeneratorEntryFormPage generatorEntryFormPage;
+	protected final GeneratorEntryFormPage generatorEntryFormPage;
 
-	private final Map<String, Control> controls = new HashMap<>();
+	protected final Map<FeatureParameter, Control> controls = new HashMap<>();
 
-	private final FeatureType featureType;
+	protected final FeatureType featureType;
+
+	protected Section section;
+
+	private boolean updating;
 
 	public GenericFeatureConfigurationSection(final GeneratorEntryFormPage generatorEntryFormPage,
 			final FeatureType featureType) {
@@ -55,24 +60,23 @@ public class GenericFeatureConfigurationSection
 	 */
 	@Override
 	public Section createSection(final FormToolkit toolkit, final Composite parent) {
-		final Section section = toolkit.createSection(parent,
-				ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE);
-		section.setText(convertCamelCaseName(this.featureType.getName(), !this.featureType.isOptional()));
-		section.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.FILL_GRAB));
+		this.section = toolkit.createSection(parent, ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE);
+		this.section.setText(convertCamelCaseName(this.featureType.getName(), !this.featureType.isOptional()));
+		this.section.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.FILL_GRAB));
 
-		final Composite composite = toolkit.createComposite(section);
+		final Composite composite = toolkit.createComposite(this.section);
 		final TableWrapLayout layout = new TableWrapLayout();
 		layout.numColumns = 2;
 		composite.setLayout(layout);
 
 		for (final FeatureParameter parameter : this.featureType.getParameters()) {
 			final Control control = createParameterControl(toolkit, composite, parameter);
-			this.controls.put(parameter.getName(), control);
+			this.controls.put(parameter, control);
 		}
 
-		section.setClient(composite);
+		this.section.setClient(composite);
 
-		return section;
+		return this.section;
 	}
 
 	private Control createParameterControl(final FormToolkit toolkit, final Composite composite,
@@ -106,6 +110,7 @@ public class GenericFeatureConfigurationSection
 	 */
 	@Override
 	public void initialize(final IXtextDocument xtextDocument) {
+		modelChanged(xtextDocument);
 	}
 
 	/**
@@ -113,14 +118,50 @@ public class GenericFeatureConfigurationSection
 	 */
 	@Override
 	public void modelChanged(final IXtextDocument xtextDocument) {
+		this.updating = true;
+
 		xtextDocument.readOnly(new IUnitOfWork.Void<XtextResource>() {
 			/**
 			 * @see org.eclipse.xtext.util.concurrent.IUnitOfWork.Void#process(java.lang.Object)
 			 */
 			@Override
 			public void process(final XtextResource resource) throws Exception {
+				final FeatureConfiguration featureConfiguration = SGenModelUtil.getFeatureConfiguration(resource,
+						GenericFeatureConfigurationSection.this.generatorEntryFormPage.getStatechartName(),
+						GenericFeatureConfigurationSection.this.featureType);
+				if (featureConfiguration == null) {
+					GenericFeatureConfigurationSection.this.section.setExpanded(false);
+
+					for (final Control control : GenericFeatureConfigurationSection.this.controls.values()) {
+						if (control instanceof Text) {
+							((Text) control).setText(""); //$NON-NLS-1$
+						} else if (control instanceof Button) {
+							((Button) control).setSelection(false);
+						}
+					}
+				} else {
+					GenericFeatureConfigurationSection.this.section.setExpanded(true);
+
+					for (final FeatureParameter parameter : GenericFeatureConfigurationSection.this.featureType
+							.getParameters()) {
+						final Control control = GenericFeatureConfigurationSection.this.controls.get(parameter);
+						if (control instanceof Text) {
+							final String value = SGenModelUtil.getStringParameterValue(resource,
+									GenericFeatureConfigurationSection.this.generatorEntryFormPage.getStatechartName(),
+									parameter);
+							((Text) control).setText(value);
+						} else if (control instanceof Button) {
+							final boolean value = SGenModelUtil.getBooleanParameterValue(resource,
+									GenericFeatureConfigurationSection.this.generatorEntryFormPage.getStatechartName(),
+									parameter);
+							((Button) control).setSelection(value);
+						}
+					}
+				}
 			}
 		});
+
+		this.updating = false;
 	}
 
 	/**
@@ -128,10 +169,12 @@ public class GenericFeatureConfigurationSection
 	 */
 	@Override
 	public void modifyText(final ModifyEvent event) {
-		final Text text = (Text) event.getSource();
-		final FeatureParameter parameter = (FeatureParameter) text.getData();
+		if (!this.updating) {
+			final Text text = (Text) event.getSource();
+			final FeatureParameter parameter = (FeatureParameter) text.getData();
 
-		this.generatorEntryFormPage.updateModel(parameter, text.getText());
+			this.generatorEntryFormPage.updateModel(parameter, text.getText());
+		}
 	}
 
 	/**
@@ -139,10 +182,12 @@ public class GenericFeatureConfigurationSection
 	 */
 	@Override
 	public void widgetSelected(final SelectionEvent event) {
-		final Button button = (Button) event.getSource();
-		final FeatureParameter parameter = (FeatureParameter) button.getData();
+		if (!this.updating) {
+			final Button button = (Button) event.getSource();
+			final FeatureParameter parameter = (FeatureParameter) button.getData();
 
-		this.generatorEntryFormPage.updateModel(parameter, button.getSelection());
+			this.generatorEntryFormPage.updateModel(parameter, button.getSelection());
+		}
 	}
 
 	/**
@@ -158,6 +203,7 @@ public class GenericFeatureConfigurationSection
 	 */
 	@Override
 	public void dispose() {
+		// nothing to do
 	}
 
 	private String convertCamelCaseName(final String name, final boolean mandatory) {

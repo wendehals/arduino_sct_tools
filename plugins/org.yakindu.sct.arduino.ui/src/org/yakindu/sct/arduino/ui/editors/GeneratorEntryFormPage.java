@@ -8,19 +8,16 @@
  */
 package org.yakindu.sct.arduino.ui.editors;
 
-import java.util.ArrayList;
+import static org.yakindu.sct.arduino.ui.editors.SGenModelUtil.createFeatureConfiguration;
+import static org.yakindu.sct.arduino.ui.editors.SGenModelUtil.createFeatureParameterValue;
+import static org.yakindu.sct.arduino.ui.editors.SGenModelUtil.getFeatureConfiguration;
+import static org.yakindu.sct.arduino.ui.editors.SGenModelUtil.getFeatureTypes;
+
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.emf.common.util.TreeIterator;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
@@ -42,20 +39,10 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 import org.yakindu.sct.arduino.ui.SCTArduinoUIImages;
 import org.yakindu.sct.generator.builder.action.GenerateModelAction;
 import org.yakindu.sct.generator.core.extensions.GeneratorExtensions;
-import org.yakindu.sct.generator.core.extensions.IGeneratorDescriptor;
-import org.yakindu.sct.generator.core.extensions.ILibraryDescriptor;
-import org.yakindu.sct.generator.core.extensions.LibraryExtensions;
 import org.yakindu.sct.model.sgen.FeatureConfiguration;
 import org.yakindu.sct.model.sgen.FeatureParameter;
 import org.yakindu.sct.model.sgen.FeatureParameterValue;
 import org.yakindu.sct.model.sgen.FeatureType;
-import org.yakindu.sct.model.sgen.FeatureTypeLibrary;
-import org.yakindu.sct.model.sgen.GeneratorEntry;
-import org.yakindu.sct.model.sgen.GeneratorModel;
-import org.yakindu.sct.model.sgen.SGenFactory;
-import org.yakindu.sct.model.sgraph.Statechart;
-
-import com.google.common.collect.Lists;
 
 public class GeneratorEntryFormPage extends FormPage implements IXtextModelListener {
 
@@ -80,7 +67,7 @@ public class GeneratorEntryFormPage extends FormPage implements IXtextModelListe
 		final FormToolkit toolkit = managedForm.getToolkit();
 
 		final ScrolledForm scrolledForm = managedForm.getForm();
-		scrolledForm.setText(Messages.GeneratorEntryFormPage_formPageHeaderPrefix + this.statechartName);
+		scrolledForm.setText(Messages.GeneratorEntryFormPage_formPageHeaderPrefix + getStatechartName());
 
 		final Form form = scrolledForm.getForm();
 		toolkit.decorateFormHeading(form);
@@ -94,8 +81,7 @@ public class GeneratorEntryFormPage extends FormPage implements IXtextModelListe
 
 		final Collection<FeatureType> featureTypes = getFeatureTypes(
 				GeneratorExtensions.getGeneratorDescriptor(this.generatorId));
-		final Collection<FeatureConfiguration> featureConfigurations = getFeatureConfigurations(
-				getEditor().getXtextDocument(), this.statechartName);
+		final Collection<FeatureConfiguration> featureConfigurations = getFeatureConfigurations();
 
 		for (final FeatureType featureType : featureTypes) {
 			final IFeatureConfigurationSection featureConfigurationSection = new GenericFeatureConfigurationSection(
@@ -111,26 +97,16 @@ public class GeneratorEntryFormPage extends FormPage implements IXtextModelListe
 		startListeningToModelChanges();
 	}
 
-	private static List<FeatureType> getFeatureTypes(final IGeneratorDescriptor descriptor) {
-		final ArrayList<FeatureType> featureTypes = Lists.newArrayList();
-		final Iterable<ILibraryDescriptor> libraryDescriptors = LibraryExtensions
-				.getLibraryDescriptors(descriptor.getLibraryIDs());
-		for (final ILibraryDescriptor libraryDescriptor : libraryDescriptors) {
-			final ResourceSet set = new ResourceSetImpl();
-			final Resource resource = set.getResource(libraryDescriptor.getURI(), true);
-			final FeatureTypeLibrary featureTypeLibrary = (FeatureTypeLibrary) resource.getContents().get(0);
-			featureTypes.addAll(featureTypeLibrary.getTypes());
-		}
-
-		return featureTypes;
-	}
-
 	/**
 	 * @see org.eclipse.ui.forms.editor.FormPage#getEditor()
 	 */
 	@Override
 	public SGenMultiPageEditor getEditor() {
 		return (SGenMultiPageEditor) super.getEditor();
+	}
+
+	public String getStatechartName() {
+		return this.statechartName;
 	}
 
 	/**
@@ -144,7 +120,6 @@ public class GeneratorEntryFormPage extends FormPage implements IXtextModelListe
 			 */
 			@Override
 			public void run() {
-				updateSectionsVisibility();
 				GeneratorEntryFormPage.this.sections.values()
 						.forEach(section -> section.modelChanged(getEditor().getXtextDocument()));
 			}
@@ -181,9 +156,16 @@ public class GeneratorEntryFormPage extends FormPage implements IXtextModelListe
 					 */
 					@Override
 					public void process(final XtextResource resource) throws Exception {
-						FeatureParameterValue parameterValue = findFeatureParameterValue(resource, parameter);
+						FeatureConfiguration featureConfiguration = getFeatureConfiguration(resource,
+								getStatechartName(), parameter.getFeatureType());
+						if (featureConfiguration == null) {
+							featureConfiguration = createFeatureConfiguration(resource, getStatechartName(),
+									parameter.getFeatureType());
+						}
+						FeatureParameterValue parameterValue = featureConfiguration
+								.getParameterValue(parameter.getName());
 						if (parameterValue == null) {
-							parameterValue = createFeatureParameterValue(resource, parameter);
+							parameterValue = createFeatureParameterValue(resource, featureConfiguration, parameter);
 						}
 						parameterValue.setValue(value);
 					}
@@ -210,9 +192,16 @@ public class GeneratorEntryFormPage extends FormPage implements IXtextModelListe
 					 */
 					@Override
 					public void process(final XtextResource resource) throws Exception {
-						FeatureParameterValue parameterValue = findFeatureParameterValue(resource, parameter);
+						FeatureConfiguration featureConfiguration = getFeatureConfiguration(resource,
+								getStatechartName(), parameter.getFeatureType());
+						if (featureConfiguration == null) {
+							featureConfiguration = createFeatureConfiguration(resource, getStatechartName(),
+									parameter.getFeatureType());
+						}
+						FeatureParameterValue parameterValue = featureConfiguration
+								.getParameterValue(parameter.getName());
 						if (parameterValue == null) {
-							parameterValue = createFeatureParameterValue(resource, parameter);
+							parameterValue = createFeatureParameterValue(resource, featureConfiguration, parameter);
 						}
 						parameterValue.setValue(value);
 					}
@@ -234,118 +223,6 @@ public class GeneratorEntryFormPage extends FormPage implements IXtextModelListe
 		}
 	}
 
-	protected static Collection<FeatureConfiguration> getFeatureConfigurations(final IXtextDocument xtextDocument,
-			final String statechartName) {
-		return xtextDocument.readOnly(new IUnitOfWork<Collection<FeatureConfiguration>, XtextResource>() {
-			/**
-			 * @see org.eclipse.xtext.util.concurrent.IUnitOfWork#exec(java.lang.Object)
-			 */
-			@Override
-			public Collection<FeatureConfiguration> exec(final XtextResource resource) throws Exception {
-				final GeneratorEntry generatorEntry = getGeneratorEntry(resource, statechartName);
-				if (generatorEntry != null) {
-					return generatorEntry.getFeatures();
-				}
-
-				return Collections.emptyList();
-			}
-		});
-	}
-
-	protected static String getStringParameterValue(final IXtextDocument xtextDocument,
-			final FeatureParameter parameter) {
-		return xtextDocument.readOnly(new IUnitOfWork<String, XtextResource>() {
-			/**
-			 * @see org.eclipse.xtext.util.concurrent.IUnitOfWork#exec(java.lang.Object)
-			 */
-			@Override
-			public String exec(final XtextResource resource) throws Exception {
-				final FeatureParameterValue parameterValue = findFeatureParameterValue(resource, parameter);
-				if (parameterValue != null) {
-					return parameterValue.getStringValue();
-				}
-				return ""; //$NON-NLS-1$
-			}
-		});
-	}
-
-	protected static boolean getBooleanParameterValue(final IXtextDocument xtextDocument,
-			final FeatureParameter parameter) {
-		return xtextDocument.readOnly(new IUnitOfWork<Boolean, XtextResource>() {
-			/**
-			 * @see org.eclipse.xtext.util.concurrent.IUnitOfWork#exec(java.lang.Object)
-			 */
-			@Override
-			public Boolean exec(final XtextResource resource) throws Exception {
-				final FeatureParameterValue parameterValue = findFeatureParameterValue(resource, parameter);
-				if (parameterValue != null) {
-					return Boolean.valueOf(parameterValue.getBooleanValue());
-				}
-				return Boolean.FALSE;
-			}
-		});
-	}
-
-	protected static GeneratorEntry getGeneratorEntry(final XtextResource resource, final String name) {
-		final GeneratorModel generatorModel = (GeneratorModel) resource.getContents().get(0);
-		for (final GeneratorEntry generatorEntry : generatorModel.getEntries()) {
-			if (generatorEntry.getElementRef() instanceof Statechart) {
-				final Statechart statechart = (Statechart) generatorEntry.getElementRef();
-				if (name.equals(statechart.getName())) {
-					return generatorEntry;
-				}
-			}
-		}
-
-		return null;
-	}
-
-	protected static FeatureParameterValue findFeatureParameterValue(final XtextResource resource,
-			final FeatureParameter parameter) {
-		final GeneratorModel generatorModel = (GeneratorModel) resource.getParseResult().getRootASTElement();
-		final TreeIterator<EObject> iterator = generatorModel.eResource().getAllContents();
-		while (iterator.hasNext()) {
-			final EObject eObject = iterator.next();
-			if (eObject instanceof FeatureConfiguration) {
-				final FeatureConfiguration featureConfiguration = (FeatureConfiguration) eObject;
-				if (parameter.getFeatureType().equals(featureConfiguration.getType())) {
-					for (final FeatureParameterValue parameterValue : featureConfiguration.getParameterValues()) {
-						if (parameter.equals(parameterValue.getParameter())) {
-							return parameterValue;
-						}
-					}
-				}
-			}
-		}
-
-		return null;
-	}
-
-	protected static FeatureParameterValue createFeatureParameterValue(final XtextResource resource,
-			final FeatureParameter parameter) {
-		final GeneratorModel generatorModel = (GeneratorModel) resource.getParseResult().getRootASTElement();
-		final TreeIterator<EObject> iterator = generatorModel.eResource().getAllContents();
-		while (iterator.hasNext()) {
-			final EObject eObject = iterator.next();
-			if (eObject instanceof FeatureConfiguration) {
-				final FeatureConfiguration featureConfiguration = (FeatureConfiguration) eObject;
-				if (parameter.getFeatureType().equals(featureConfiguration.getType())) {
-					final FeatureParameterValue parameterValue = SGenFactory.eINSTANCE.createFeatureParameterValue();
-					parameterValue.setParameter(parameter);
-					featureConfiguration.getParameterValues().add(parameterValue);
-
-					return parameterValue;
-				}
-			}
-		}
-
-		return null;
-	}
-
-	protected void updateSectionsVisibility() {
-
-	}
-
 	private IAction createGenerateAction() {
 		final IAction action = new Action() {
 			/**
@@ -364,6 +241,17 @@ public class GeneratorEntryFormPage extends FormPage implements IXtextModelListe
 		action.setToolTipText(Messages.ArduinoSGenFormPage_generateActionTooltip);
 
 		return action;
+	}
+
+	private Collection<FeatureConfiguration> getFeatureConfigurations() {
+		final IXtextDocument xtextDocument = getEditor().getXtextDocument();
+		return xtextDocument.readOnly(new IUnitOfWork<Collection<FeatureConfiguration>, XtextResource>() {
+			@Override
+			public Collection<FeatureConfiguration> exec(final XtextResource resource) throws Exception {
+				return SGenModelUtil.getFeatureConfigurations(resource,
+						GeneratorEntryFormPage.this.getStatechartName());
+			}
+		});
 	}
 
 	private boolean configurationsContainsType(final Collection<FeatureConfiguration> featureConfigurations,
