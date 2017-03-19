@@ -8,14 +8,19 @@
  */
 package org.yakindu.sct.arduino.ui.editors;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
@@ -37,15 +42,20 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 import org.yakindu.sct.arduino.ui.SCTArduinoUIImages;
 import org.yakindu.sct.generator.builder.action.GenerateModelAction;
 import org.yakindu.sct.generator.core.extensions.GeneratorExtensions;
-import org.yakindu.sct.generator.genmodel.ui.wizard.ModelCreator;
+import org.yakindu.sct.generator.core.extensions.IGeneratorDescriptor;
+import org.yakindu.sct.generator.core.extensions.ILibraryDescriptor;
+import org.yakindu.sct.generator.core.extensions.LibraryExtensions;
 import org.yakindu.sct.model.sgen.FeatureConfiguration;
 import org.yakindu.sct.model.sgen.FeatureParameter;
 import org.yakindu.sct.model.sgen.FeatureParameterValue;
 import org.yakindu.sct.model.sgen.FeatureType;
+import org.yakindu.sct.model.sgen.FeatureTypeLibrary;
 import org.yakindu.sct.model.sgen.GeneratorEntry;
 import org.yakindu.sct.model.sgen.GeneratorModel;
 import org.yakindu.sct.model.sgen.SGenFactory;
 import org.yakindu.sct.model.sgraph.Statechart;
+
+import com.google.common.collect.Lists;
 
 public class GeneratorEntryFormPage extends FormPage implements IXtextModelListener {
 
@@ -82,8 +92,8 @@ public class GeneratorEntryFormPage extends FormPage implements IXtextModelListe
 		final Composite body = scrolledForm.getBody();
 		body.setLayout(new TableWrapLayout());
 
-		final Collection<FeatureType> featureTypes = ModelCreator
-				.getFeatureTypes(GeneratorExtensions.getGeneratorDescriptor(this.generatorId));
+		final Collection<FeatureType> featureTypes = getFeatureTypes(
+				GeneratorExtensions.getGeneratorDescriptor(this.generatorId));
 		final Collection<FeatureConfiguration> featureConfigurations = getFeatureConfigurations(
 				getEditor().getXtextDocument(), this.statechartName);
 
@@ -91,14 +101,28 @@ public class GeneratorEntryFormPage extends FormPage implements IXtextModelListe
 			final IFeatureConfigurationSection featureConfigurationSection = new GenericFeatureConfigurationSection(
 					this, featureType);
 			final Section section = featureConfigurationSection.createSection(toolkit, body);
-			if (!configurationsContainsType(featureConfigurations, featureType)) {
-				section.setVisible(false);
+			if (configurationsContainsType(featureConfigurations, featureType)) {
+				section.setExpanded(true);
 			}
 			this.sections.put(featureType.getName(), featureConfigurationSection);
 		}
 
 		initialize();
 		startListeningToModelChanges();
+	}
+
+	private static List<FeatureType> getFeatureTypes(final IGeneratorDescriptor descriptor) {
+		final ArrayList<FeatureType> featureTypes = Lists.newArrayList();
+		final Iterable<ILibraryDescriptor> libraryDescriptors = LibraryExtensions
+				.getLibraryDescriptors(descriptor.getLibraryIDs());
+		for (final ILibraryDescriptor libraryDescriptor : libraryDescriptors) {
+			final ResourceSet set = new ResourceSetImpl();
+			final Resource resource = set.getResource(libraryDescriptor.getURI(), true);
+			final FeatureTypeLibrary featureTypeLibrary = (FeatureTypeLibrary) resource.getContents().get(0);
+			featureTypes.addAll(featureTypeLibrary.getTypes());
+		}
+
+		return featureTypes;
 	}
 
 	/**

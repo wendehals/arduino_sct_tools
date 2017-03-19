@@ -55,8 +55,9 @@ public class GenericFeatureConfigurationSection
 	 */
 	@Override
 	public Section createSection(final FormToolkit toolkit, final Composite parent) {
-		final Section section = toolkit.createSection(parent, ExpandableComposite.TITLE_BAR);
-		section.setText(convertCamelCaseName(this.featureType.getName()));
+		final Section section = toolkit.createSection(parent,
+				ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE);
+		section.setText(convertCamelCaseName(this.featureType.getName(), !this.featureType.isOptional()));
 		section.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.FILL_GRAB));
 
 		final Composite composite = toolkit.createComposite(section);
@@ -77,10 +78,7 @@ public class GenericFeatureConfigurationSection
 	private Control createParameterControl(final FormToolkit toolkit, final Composite composite,
 			final FeatureParameter parameter) {
 		final StringBuilder builder = new StringBuilder();
-		builder.append(convertCamelCaseName(parameter.getName()));
-		if (!parameter.isOptional()) {
-			builder.append('\u002A');
-		}
+		builder.append(convertCamelCaseName(parameter.getName(), !parameter.isOptional()));
 		builder.append(':');
 
 		final Label label = toolkit.createLabel(composite, builder.toString());
@@ -162,20 +160,24 @@ public class GenericFeatureConfigurationSection
 	public void dispose() {
 	}
 
-	private String convertCamelCaseName(final String name) {
-		final StringBuilder label = new StringBuilder();
+	private String convertCamelCaseName(final String name, final boolean mandatory) {
+		final StringBuilder builder = new StringBuilder();
 		final String[] splitName = name.split(CAMEL_CASE_PATTERN);
 
-		label.append(splitName[0].substring(0, 1).toUpperCase());
+		builder.append(splitName[0].substring(0, 1).toUpperCase());
 		if (splitName[0].length() > 1) {
-			label.append(splitName[0].substring(1));
+			builder.append(splitName[0].substring(1));
 		}
 
 		for (int i = 1; i < splitName.length; i++) {
-			label.append(" ").append(splitName[i]); //$NON-NLS-1$
+			builder.append(" ").append(splitName[i]); //$NON-NLS-1$
 		}
 
-		return label.toString();
+		if (mandatory) {
+			builder.append('\u002A');
+		}
+
+		return builder.toString();
 	}
 
 }
