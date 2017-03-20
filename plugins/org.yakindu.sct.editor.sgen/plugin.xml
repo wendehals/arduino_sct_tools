@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="featureConfigurationSections" name="Feature Configuration Sections" schema="schema/featureConfigurationSections.exsd"/>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="org.yakindu.sct.editor.sgen.SGenEditorUIExecutableExtensionFactory:org.yakindu.sct.editor.sgen.SGenMultiPageEditor"
+            contributorClass="org.yakindu.sct.editor.sgen.SGenMultiPageEditorContributor"
+            extensions="sgen"
+            icon="icons/GeneratorModel.gif"
+            id="org.yakindu.sct.editor.sgen.sgenMultiPageEditor"
+            name="YAKINDU SGen Multi Page Editor">
+      </editor>
+   </extension>
+</plugin>

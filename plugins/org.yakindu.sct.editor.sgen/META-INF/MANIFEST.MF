@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: YAKINDU SCT SGen Multi Page Editor
+Bundle-SymbolicName: org.yakindu.sct.editor.sgen;singleton:=true
+Bundle-Version: 0.5.0.qualifier
+Bundle-Activator: org.yakindu.sct.editor.sgen.SGenEditorUIPlugin
+Bundle-Vendor: Lothar Wendehals
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.eclipse.ui.editors,
+ org.eclipse.ui.forms,
+ org.eclipse.ui.ide,
+ org.yakindu.sct.model.sgen,
+ org.eclipse.xtext.ui,
+ org.yakindu.sct.generator.builder,
+ org.yakindu.sct.generator.core,
+ org.yakindu.sct.generator.genmodel.ui
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Export-Package: org.yakindu.sct.editor.sgen,
+ org.yakindu.sct.editor.sgen.extensions
