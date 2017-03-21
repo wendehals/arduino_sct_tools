@@ -51,7 +51,7 @@ public class ArchitecturesExtension {
 	private static List<ArchitectureElement> architectures;
 
 	/**
-	 * @return a collection of model traversals
+	 * @return a collection of {@link ArchitectureElement}s
 	 */
 	public static Collection<ArchitectureElement> getArchitectures() {
 		if (architectures == null) {
@@ -118,7 +118,7 @@ public class ArchitecturesExtension {
 		return Collections.unmodifiableCollection(architectures);
 	}
 
-	public static TimerElement getTimer(String id) {
+	public static TimerElement getTimer(final String id) {
 		for (final ArchitectureElement architecture : getArchitectures()) {
 			for (final TimerElement timer : architecture.timers) {
 				if (timer.getId().equals(id)) {

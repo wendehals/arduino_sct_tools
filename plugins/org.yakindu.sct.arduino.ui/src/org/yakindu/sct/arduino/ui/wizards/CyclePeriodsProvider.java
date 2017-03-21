@@ -25,7 +25,7 @@ public class CyclePeriodsProvider extends LabelProvider implements IStructuredCo
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+	public void inputChanged(final Viewer viewer, final Object oldInput, final Object newInput) {
 		this.cyclePeriods.clear();
 		if (newInput != null) {
 			this.cyclePeriods.addAll((Collection<Integer>) newInput);
@@ -36,7 +36,7 @@ public class CyclePeriodsProvider extends LabelProvider implements IStructuredCo
 	 * @see org.eclipse.jface.viewers.LabelProvider#getText(java.lang.Object)
 	 */
 	@Override
-	public String getText(Object element) {
+	public String getText(final Object element) {
 		return ((Integer) element).toString();
 	}
 
@@ -44,8 +44,18 @@ public class CyclePeriodsProvider extends LabelProvider implements IStructuredCo
 	 * @see org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java.lang.Object)
 	 */
 	@Override
-	public Object[] getElements(Object inputElement) {
+	public Object[] getElements(final Object inputElement) {
 		return this.cyclePeriods.toArray();
+	}
+
+	public int getIndex(final String element) {
+		final Object[] array = getElements(null);
+		for (int index = 0; index < array.length; index++) {
+			if (array[index].toString().equals(element)) {
+				return index;
+			}
+		}
+		return -1;
 	}
 
 }
