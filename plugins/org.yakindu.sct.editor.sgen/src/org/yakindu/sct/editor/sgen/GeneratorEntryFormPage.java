@@ -43,6 +43,9 @@ import org.yakindu.sct.model.sgen.FeatureConfiguration;
 import org.yakindu.sct.model.sgen.FeatureParameter;
 import org.yakindu.sct.model.sgen.FeatureParameterValue;
 import org.yakindu.sct.model.sgen.FeatureType;
+import org.yakindu.sct.model.sgen.IntLiteral;
+import org.yakindu.sct.model.sgen.RealLiteral;
+import org.yakindu.sct.model.sgen.SGenFactory;
 
 public class GeneratorEntryFormPage extends FormPage implements IXtextModelListener {
 
@@ -191,7 +194,23 @@ public class GeneratorEntryFormPage extends FormPage implements IXtextModelListe
 						if (parameterValue == null) {
 							parameterValue = createFeatureParameterValue(resource, featureConfiguration, parameter);
 						}
-						parameterValue.setValue(value);
+
+						switch (parameter.getParameterType()) {
+							case INTEGER:
+								final IntLiteral intLiteral = SGenFactory.eINSTANCE.createIntLiteral();
+								intLiteral.setValue(Integer.parseInt(value));
+								parameterValue.setExpression(intLiteral);
+								break;
+							case FLOAT:
+								final RealLiteral realLiteral = SGenFactory.eINSTANCE.createRealLiteral();
+								realLiteral.setValue(Float.parseFloat(value));
+								parameterValue.setExpression(realLiteral);
+								break;
+							case STRING:
+							default:
+								parameterValue.setValue(value);
+								break;
+						}
 					}
 				});
 			}

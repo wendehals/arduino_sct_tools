@@ -83,8 +83,9 @@ public class ArduinoFeatureConfigurationSection
 	@Override
 	public Section createSection(final FormToolkit toolkit, final Composite parent) {
 		this.section = toolkit.createSection(parent, ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE);
-		this.section.setText(this.featureType.getName());
+		this.section.setText(this.featureType.getName() + '\u002A');
 		this.section.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.FILL_GRAB));
+		this.section.setExpanded(true);
 
 		final Composite composite = toolkit.createComposite(this.section);
 		final TableWrapLayout layout = new TableWrapLayout();
@@ -120,7 +121,7 @@ public class ArduinoFeatureConfigurationSection
 		this.architectureViewer.addSelectionChangedListener(this);
 		this.architectureViewer.getCombo().setData(timerParameter);
 
-		label = toolkit.createLabel(composite, Messages.ArduinoSGenFormPage_timerLabel);
+		label = toolkit.createLabel(composite, Messages.ArduinoFeatureConfigurationSection_timerLabel);
 		label.setLayoutData(new TableWrapData(TableWrapData.FILL, TableWrapData.FILL));
 
 		this.timerViewer = new ComboViewer(composite, SWT.READ_ONLY | SWT.DROP_DOWN);
@@ -147,7 +148,7 @@ public class ArduinoFeatureConfigurationSection
 				IArduinoFeatureConstants.PARAM_CYCLE_PERIOD);
 
 		this.cyclePeriodText = toolkit.createText(this.cyclePeriodComposite, "", SWT.SINGLE | SWT.BORDER); //$NON-NLS-1$
-		this.cyclePeriodText.setToolTipText(Messages.ArduinoSGenFormPage_cyclePeriodToolTip);
+		this.cyclePeriodText.setToolTipText(Messages.ArduinoFeatureConfigurationSection_cyclePeriodToolTip);
 		this.cyclePeriodText.addModifyListener(this);
 		this.cyclePeriodText.setData(cyclePeriodParameter);
 
@@ -234,8 +235,9 @@ public class ArduinoFeatureConfigurationSection
 				this.formPage.updateModel((FeatureParameter) this.architectureViewer.getCombo().getData(),
 						timer.getId());
 			} else if (source == this.cyclePeriodViewer) {
-				final String cyclePeriod = (String) this.cyclePeriodViewer.getStructuredSelection().getFirstElement();
-				this.formPage.updateModel((FeatureParameter) this.cyclePeriodViewer.getCombo().getData(), cyclePeriod);
+				final Integer cyclePeriod = (Integer) this.cyclePeriodViewer.getStructuredSelection().getFirstElement();
+				this.formPage.updateModel((FeatureParameter) this.cyclePeriodViewer.getCombo().getData(),
+						cyclePeriod.toString());
 			}
 
 			this.mutex = false;
@@ -317,8 +319,9 @@ public class ArduinoFeatureConfigurationSection
 			} else {
 				combo.select(0);
 				// cyclePeriod could not be found in list, update model
-				this.formPage.updateModel(parameter,
-						(String) this.cyclePeriodViewer.getStructuredSelection().getFirstElement());
+				final Integer intCyclePeriod = (Integer) this.cyclePeriodViewer.getStructuredSelection()
+						.getFirstElement();
+				this.formPage.updateModel(parameter, intCyclePeriod.toString());
 			}
 		}
 

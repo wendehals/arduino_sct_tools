@@ -8,12 +8,9 @@ public class Messages extends NLS {
 
 	public static String ArduinoFeatureConfigurationSection_architectureLabel;
 	public static String ArduinoFeatureConfigurationSection_cyclePeriodLabel;
-
+	public static String ArduinoFeatureConfigurationSection_cyclePeriodToolTip;
+	public static String ArduinoFeatureConfigurationSection_timerLabel;
 	public static String ArduinoFeatureConfigurationSection_userSrcFolderLabel;
-	public static String ArduinoSGenFormPage_cyclePeriodToolTip;
-	public static String ArduinoSGenFormPage_formHeader;
-	public static String ArduinoSGenFormPage_formPageName;
-	public static String ArduinoSGenFormPage_timerLabel;
 
 	static {
 		// initialize resource bundle

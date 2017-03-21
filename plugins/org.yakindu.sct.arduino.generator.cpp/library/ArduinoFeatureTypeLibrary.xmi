@@ -10,6 +10,7 @@
     <parameters
         name="timer"/>
     <parameters
-        name="cyclePeriod"/>
+        name="cyclePeriod"
+        parameterType="INTEGER"/>
   </types>
 </sgen:FeatureTypeLibrary>
