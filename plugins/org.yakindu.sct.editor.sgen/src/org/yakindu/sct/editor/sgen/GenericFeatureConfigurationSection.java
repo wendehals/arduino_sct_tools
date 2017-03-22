@@ -12,8 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
@@ -29,36 +29,17 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
-import org.yakindu.sct.editor.sgen.extensions.IFeatureConfigurationSection;
 import org.yakindu.sct.model.sgen.FeatureConfiguration;
 import org.yakindu.sct.model.sgen.FeatureParameter;
-import org.yakindu.sct.model.sgen.FeatureType;
-import org.yakindu.sct.model.sgen.ParameterTypes;
 
-public class GenericFeatureConfigurationSection
-		implements IFeatureConfigurationSection, ModifyListener, SelectionListener {
-
-	private static final String CAMEL_CASE_PATTERN = "(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])"; //$NON-NLS-1$
+public class GenericFeatureConfigurationSection extends AbstractFeatureConfigurationSection
+		implements FocusListener, SelectionListener {
 
 	protected final Map<FeatureParameter, Control> controls = new HashMap<>();
 
-	protected GeneratorEntryFormPage generatorEntryFormPage;
-
-	protected FeatureType featureType;
-
 	protected Section section;
 
-	private boolean updating;
-
-	/**
-	 * @see org.yakindu.sct.editor.sgen.extensions.IFeatureConfigurationSection#initialize(org.yakindu.sct.editor.sgen.GeneratorEntryFormPage,
-	 *      org.yakindu.sct.model.sgen.FeatureType)
-	 */
-	@Override
-	public void initialize(final GeneratorEntryFormPage generatorEntryFormPage, final FeatureType featureType) {
-		this.generatorEntryFormPage = generatorEntryFormPage;
-		this.featureType = featureType;
-	}
+	private boolean mutex;
 
 	/**
 	 * @see org.yakindu.sct.editor.sgen.extensions.IFeatureConfigurationSection#getSection()
@@ -66,7 +47,7 @@ public class GenericFeatureConfigurationSection
 	@Override
 	public Section createSection(final FormToolkit toolkit, final Composite parent) {
 		this.section = toolkit.createSection(parent, ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE);
-		this.section.setText(convertCamelCaseName(this.featureType.getName(), !this.featureType.isOptional()));
+		this.section.setText(convertCamelCaseName(getFeatureType().getName(), !getFeatureType().isOptional()));
 		this.section.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.FILL_GRAB));
 
 		final Composite composite = toolkit.createComposite(this.section);
@@ -74,7 +55,7 @@ public class GenericFeatureConfigurationSection
 		layout.numColumns = 2;
 		composite.setLayout(layout);
 
-		for (final FeatureParameter parameter : this.featureType.getParameters()) {
+		for (final FeatureParameter parameter : getFeatureType().getParameters()) {
 			final Control control = createParameterControl(toolkit, composite, parameter);
 			this.controls.put(parameter, control);
 		}
@@ -94,20 +75,27 @@ public class GenericFeatureConfigurationSection
 		label.setLayoutData(new TableWrapData(TableWrapData.FILL, TableWrapData.FILL));
 
 		Control control;
-		if (ParameterTypes.BOOLEAN.equals(parameter.getParameterType())) {
-			final Button button = toolkit.createButton(composite, "", SWT.CHECK); //$NON-NLS-1$
-			button.addSelectionListener(this);
-			control = button;
-		} else {
-			final Text text = toolkit.createText(composite, "", SWT.SINGLE | SWT.BORDER); //$NON-NLS-1$
-			text.addModifyListener(this);
-			control = text;
+		switch (parameter.getParameterType()) {
+			case BOOLEAN:
+				final Button button = toolkit.createButton(composite, "", SWT.CHECK); //$NON-NLS-1$
+				button.addSelectionListener(this);
+				control = button;
+				break;
+			case INTEGER:
+			case FLOAT:
+			case STRING:
+			default:
+				final Text text = toolkit.createText(composite, "", SWT.SINGLE | SWT.BORDER); //$NON-NLS-1$
+				text.addFocusListener(this);
+				control = text;
+				break;
 		}
 
 		control.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.FILL));
 		control.setData(parameter);
 
 		return control;
+
 	}
 
 	/**
@@ -115,7 +103,7 @@ public class GenericFeatureConfigurationSection
 	 */
 	@Override
 	public void modelChanged(final IXtextDocument xtextDocument) {
-		this.updating = true;
+		this.mutex = true;
 
 		xtextDocument.readOnly(new IUnitOfWork.Void<XtextResource>() {
 			/**
@@ -124,8 +112,7 @@ public class GenericFeatureConfigurationSection
 			@Override
 			public void process(final XtextResource resource) throws Exception {
 				final FeatureConfiguration featureConfiguration = SGenModelUtil.getFeatureConfiguration(resource,
-						GenericFeatureConfigurationSection.this.generatorEntryFormPage.getStatechartName(),
-						GenericFeatureConfigurationSection.this.featureType);
+						getFormPage().getStatechartName(), getFeatureType());
 				if (featureConfiguration == null) {
 					GenericFeatureConfigurationSection.this.section.setExpanded(false);
 
@@ -139,18 +126,15 @@ public class GenericFeatureConfigurationSection
 				} else {
 					GenericFeatureConfigurationSection.this.section.setExpanded(true);
 
-					for (final FeatureParameter parameter : GenericFeatureConfigurationSection.this.featureType
-							.getParameters()) {
+					for (final FeatureParameter parameter : getFeatureType().getParameters()) {
 						final Control control = GenericFeatureConfigurationSection.this.controls.get(parameter);
 						if (control instanceof Text) {
 							final String value = SGenModelUtil.getStringParameterValue(resource,
-									GenericFeatureConfigurationSection.this.generatorEntryFormPage.getStatechartName(),
-									parameter);
+									getFormPage().getStatechartName(), parameter);
 							((Text) control).setText(value);
 						} else if (control instanceof Button) {
 							final boolean value = SGenModelUtil.getBooleanParameterValue(resource,
-									GenericFeatureConfigurationSection.this.generatorEntryFormPage.getStatechartName(),
-									parameter);
+									getFormPage().getStatechartName(), parameter);
 							((Button) control).setSelection(value);
 						}
 					}
@@ -158,19 +142,27 @@ public class GenericFeatureConfigurationSection
 			}
 		});
 
-		this.updating = false;
+		this.mutex = false;
 	}
 
 	/**
-	 * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
+	 * @see org.eclipse.swt.events.FocusListener#focusGained(org.eclipse.swt.events.FocusEvent)
 	 */
 	@Override
-	public void modifyText(final ModifyEvent event) {
-		if (!this.updating) {
+	public void focusGained(final FocusEvent e) {
+		// nothing to do
+	}
+
+	/**
+	 * @see org.eclipse.swt.events.FocusListener#focusLost(org.eclipse.swt.events.FocusEvent)
+	 */
+	@Override
+	public void focusLost(final FocusEvent event) {
+		if (!this.mutex) {
 			final Text text = (Text) event.getSource();
 			final FeatureParameter parameter = (FeatureParameter) text.getData();
 
-			this.generatorEntryFormPage.updateModel(parameter, text.getText());
+			getFormPage().updateModel(parameter, text.getText());
 		}
 	}
 
@@ -179,11 +171,11 @@ public class GenericFeatureConfigurationSection
 	 */
 	@Override
 	public void widgetSelected(final SelectionEvent event) {
-		if (!this.updating) {
+		if (!this.mutex) {
 			final Button button = (Button) event.getSource();
 			final FeatureParameter parameter = (FeatureParameter) button.getData();
 
-			this.generatorEntryFormPage.updateModel(parameter, button.getSelection());
+			getFormPage().updateModel(parameter, button.getSelection());
 		}
 	}
 
@@ -193,34 +185,6 @@ public class GenericFeatureConfigurationSection
 	@Override
 	public void widgetDefaultSelected(final SelectionEvent event) {
 		// nothing to do
-	}
-
-	/**
-	 * @see org.yakindu.sct.editor.sgen.extensions.IFeatureConfigurationSection#dispose()
-	 */
-	@Override
-	public void dispose() {
-		// nothing to do
-	}
-
-	private String convertCamelCaseName(final String name, final boolean mandatory) {
-		final StringBuilder builder = new StringBuilder();
-		final String[] splitName = name.split(CAMEL_CASE_PATTERN);
-
-		builder.append(splitName[0].substring(0, 1).toUpperCase());
-		if (splitName[0].length() > 1) {
-			builder.append(splitName[0].substring(1));
-		}
-
-		for (int i = 1; i < splitName.length; i++) {
-			builder.append(" ").append(splitName[i]); //$NON-NLS-1$
-		}
-
-		if (mandatory) {
-			builder.append('\u002A');
-		}
-
-		return builder.toString();
 	}
 
 }

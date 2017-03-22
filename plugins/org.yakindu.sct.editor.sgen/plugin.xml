@@ -13,4 +13,11 @@
             name="YAKINDU SGen Multi Page Editor">
       </editor>
    </extension>
+   <extension
+         point="org.yakindu.sct.editor.sgen.featureConfigurationSections">
+      <featureConfigurationSection
+            class="org.yakindu.sct.editor.sgen.extensions.LicenseHeaderFeatureConfigurationSection"
+            featureType="LicenseHeader">
+      </featureConfigurationSection>
+   </extension>
 </plugin>

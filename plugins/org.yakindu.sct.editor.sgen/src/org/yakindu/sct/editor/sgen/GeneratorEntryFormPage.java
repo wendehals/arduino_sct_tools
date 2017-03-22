@@ -44,8 +44,10 @@ import org.yakindu.sct.model.sgen.FeatureParameter;
 import org.yakindu.sct.model.sgen.FeatureParameterValue;
 import org.yakindu.sct.model.sgen.FeatureType;
 import org.yakindu.sct.model.sgen.IntLiteral;
+import org.yakindu.sct.model.sgen.Literal;
 import org.yakindu.sct.model.sgen.RealLiteral;
 import org.yakindu.sct.model.sgen.SGenFactory;
+import org.yakindu.sct.model.sgen.StringLiteral;
 
 public class GeneratorEntryFormPage extends FormPage implements IXtextModelListener {
 
@@ -183,33 +185,44 @@ public class GeneratorEntryFormPage extends FormPage implements IXtextModelListe
 					 */
 					@Override
 					public void process(final XtextResource resource) throws Exception {
-						FeatureConfiguration featureConfiguration = getFeatureConfiguration(resource,
-								getStatechartName(), parameter.getFeatureType());
-						if (featureConfiguration == null) {
-							featureConfiguration = createFeatureConfiguration(resource, getStatechartName(),
-									parameter.getFeatureType());
-						}
-						FeatureParameterValue parameterValue = featureConfiguration
-								.getParameterValue(parameter.getName());
-						if (parameterValue == null) {
-							parameterValue = createFeatureParameterValue(resource, featureConfiguration, parameter);
+						Literal literal = null;
+						try {
+							switch (parameter.getParameterType()) {
+								case INTEGER:
+									final IntLiteral intLiteral = SGenFactory.eINSTANCE.createIntLiteral();
+									intLiteral.setValue(Integer.parseInt(value));
+									literal = intLiteral;
+									break;
+								case FLOAT:
+									final RealLiteral realLiteral = SGenFactory.eINSTANCE.createRealLiteral();
+									realLiteral.setValue(Float.parseFloat(value));
+									literal = realLiteral;
+									break;
+								case STRING:
+								default:
+									final StringLiteral stringLiteral = SGenFactory.eINSTANCE.createStringLiteral();
+									stringLiteral.setValue(value);
+									literal = stringLiteral;
+									break;
+							}
+						} catch (final NumberFormatException exception) {
+							// nothing to do
 						}
 
-						switch (parameter.getParameterType()) {
-							case INTEGER:
-								final IntLiteral intLiteral = SGenFactory.eINSTANCE.createIntLiteral();
-								intLiteral.setValue(Integer.parseInt(value));
-								parameterValue.setExpression(intLiteral);
-								break;
-							case FLOAT:
-								final RealLiteral realLiteral = SGenFactory.eINSTANCE.createRealLiteral();
-								realLiteral.setValue(Float.parseFloat(value));
-								parameterValue.setExpression(realLiteral);
-								break;
-							case STRING:
-							default:
-								parameterValue.setValue(value);
-								break;
+						if (literal != null) {
+							FeatureConfiguration featureConfiguration = getFeatureConfiguration(resource,
+									getStatechartName(), parameter.getFeatureType());
+							if (featureConfiguration == null) {
+								featureConfiguration = createFeatureConfiguration(resource, getStatechartName(),
+										parameter.getFeatureType());
+							}
+							FeatureParameterValue parameterValue = featureConfiguration
+									.getParameterValue(parameter.getName());
+							if (parameterValue == null) {
+								parameterValue = createFeatureParameterValue(resource, featureConfiguration, parameter);
+							}
+
+							parameterValue.setExpression(literal);
 						}
 					}
 				});

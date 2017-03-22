@@ -13,12 +13,13 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
@@ -33,18 +34,13 @@ import org.yakindu.sct.arduino.generator.cpp.extensions.TimerElement;
 import org.yakindu.sct.arduino.generator.cpp.features.IArduinoFeatureConstants;
 import org.yakindu.sct.arduino.ui.wizards.CyclePeriodsProvider;
 import org.yakindu.sct.arduino.ui.wizards.NamedExtensionElementsProvider;
-import org.yakindu.sct.editor.sgen.GeneratorEntryFormPage;
+import org.yakindu.sct.editor.sgen.AbstractFeatureConfigurationSection;
 import org.yakindu.sct.editor.sgen.SGenModelUtil;
 import org.yakindu.sct.editor.sgen.extensions.IFeatureConfigurationSection;
 import org.yakindu.sct.model.sgen.FeatureParameter;
-import org.yakindu.sct.model.sgen.FeatureType;
 
-public class ArduinoFeatureConfigurationSection
-		implements IFeatureConfigurationSection, ModifyListener, ISelectionChangedListener {
-
-	private GeneratorEntryFormPage formPage;
-
-	private FeatureType featureType;
+public class ArduinoFeatureConfigurationSection extends AbstractFeatureConfigurationSection
+		implements FocusListener, ISelectionChangedListener {
 
 	private Section section;
 
@@ -62,19 +58,9 @@ public class ArduinoFeatureConfigurationSection
 
 	private Text cyclePeriodText;
 
-	private Text timerImplDescText;
+	private Text timerDescText;
 
 	private boolean mutex;
-
-	/**
-	 * @see org.yakindu.sct.editor.sgen.IFeatureConfigurationSection#initialize(org.yakindu.sct.editor.sgen.GeneratorEntryFormPage,
-	 *      org.yakindu.sct.model.sgen.FeatureType)
-	 */
-	@Override
-	public void initialize(final GeneratorEntryFormPage formPage, final FeatureType featureType) {
-		this.formPage = formPage;
-		this.featureType = featureType;
-	}
 
 	/**
 	 * @see org.yakindu.sct.editor.sgen.IFeatureConfigurationSection#createSection(org.eclipse.ui.forms.widgets.FormToolkit,
@@ -83,27 +69,29 @@ public class ArduinoFeatureConfigurationSection
 	@Override
 	public Section createSection(final FormToolkit toolkit, final Composite parent) {
 		this.section = toolkit.createSection(parent, ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE);
-		this.section.setText(this.featureType.getName() + '\u002A');
+		this.section.setText(getFeatureType().getName() + IFeatureConfigurationSection.ASTERISK);
 		this.section.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.FILL_GRAB));
 		this.section.setExpanded(true);
 
 		final Composite composite = toolkit.createComposite(this.section);
 		final TableWrapLayout layout = new TableWrapLayout();
-		layout.numColumns = 2;
+		layout.numColumns = 3;
 		composite.setLayout(layout);
 
-		final FeatureParameter userSrcFolderParameter = SGenModelUtil.getFeatureParameter(this.featureType,
+		final FeatureParameter userSrcFolderParameter = SGenModelUtil.getFeatureParameter(getFeatureType(),
 				IArduinoFeatureConstants.PARAM_USER_SRC_FOLDER);
 
-		Label label = toolkit.createLabel(composite, Messages.ArduinoFeatureConfigurationSection_userSrcFolderLabel);
+		Label label = toolkit.createLabel(composite,
+				Messages.ArduinoFeatureConfigurationSection_userSrcFolderLabel + IFeatureConfigurationSection.ASTERISK);
 		label.setLayoutData(new TableWrapData(TableWrapData.FILL, TableWrapData.FILL));
 
 		this.userSrcFolderText = toolkit.createText(composite, "", SWT.SINGLE | SWT.BORDER); //$NON-NLS-1$
-		this.userSrcFolderText.setLayoutData(new TableWrapData(TableWrapData.FILL, TableWrapData.FILL_GRAB));
-		this.userSrcFolderText.addModifyListener(this);
+		this.userSrcFolderText.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.FILL, 1, 2));
+		this.userSrcFolderText.addFocusListener(this);
 		this.userSrcFolderText.setData(userSrcFolderParameter);
 
-		label = toolkit.createLabel(composite, Messages.ArduinoFeatureConfigurationSection_architectureLabel);
+		label = toolkit.createLabel(composite,
+				Messages.ArduinoFeatureConfigurationSection_architectureLabel + IFeatureConfigurationSection.ASTERISK);
 		label.setLayoutData(new TableWrapData(TableWrapData.FILL, TableWrapData.FILL));
 
 		this.architectureViewer = new ComboViewer(composite, SWT.READ_ONLY | SWT.DROP_DOWN);
@@ -111,7 +99,7 @@ public class ArduinoFeatureConfigurationSection
 		toolkit.adapt(combo);
 		combo.setLayoutData(new TableWrapData(TableWrapData.FILL, TableWrapData.FILL));
 
-		final FeatureParameter timerParameter = SGenModelUtil.getFeatureParameter(this.featureType,
+		final FeatureParameter timerParameter = SGenModelUtil.getFeatureParameter(getFeatureType(),
 				IArduinoFeatureConstants.PARAM_TIMER);
 
 		NamedExtensionElementsProvider provider = new NamedExtensionElementsProvider();
@@ -121,7 +109,11 @@ public class ArduinoFeatureConfigurationSection
 		this.architectureViewer.addSelectionChangedListener(this);
 		this.architectureViewer.getCombo().setData(timerParameter);
 
-		label = toolkit.createLabel(composite, Messages.ArduinoFeatureConfigurationSection_timerLabel);
+		this.timerDescText = toolkit.createText(composite, "", SWT.READ_ONLY | SWT.MULTI | SWT.WRAP); //$NON-NLS-1$
+		this.timerDescText.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.FILL_GRAB, 2, 1));
+
+		label = toolkit.createLabel(composite,
+				Messages.ArduinoFeatureConfigurationSection_timerLabel + IFeatureConfigurationSection.ASTERISK);
 		label.setLayoutData(new TableWrapData(TableWrapData.FILL, TableWrapData.FILL));
 
 		this.timerViewer = new ComboViewer(composite, SWT.READ_ONLY | SWT.DROP_DOWN);
@@ -135,35 +127,34 @@ public class ArduinoFeatureConfigurationSection
 		this.timerViewer.addSelectionChangedListener(this);
 		this.timerViewer.getCombo().setData(timerParameter);
 
-		label = toolkit.createLabel(composite, Messages.ArduinoFeatureConfigurationSection_cyclePeriodLabel);
+		label = toolkit.createLabel(composite,
+				Messages.ArduinoFeatureConfigurationSection_cyclePeriodLabel + IFeatureConfigurationSection.ASTERISK);
 		label.setLayoutData(new TableWrapData(TableWrapData.FILL, TableWrapData.FILL));
 
 		this.cyclePeriodLayout = new StackLayout();
 
 		this.cyclePeriodComposite = new Composite(composite, SWT.NONE);
-		this.cyclePeriodComposite.setLayoutData(new TableWrapData(TableWrapData.FILL, TableWrapData.FILL));
+		this.cyclePeriodComposite.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.FILL, 1, 2));
 		this.cyclePeriodComposite.setLayout(this.cyclePeriodLayout);
 
-		final FeatureParameter cyclePeriodParameter = SGenModelUtil.getFeatureParameter(this.featureType,
+		final FeatureParameter cyclePeriodParameter = SGenModelUtil.getFeatureParameter(getFeatureType(),
 				IArduinoFeatureConstants.PARAM_CYCLE_PERIOD);
 
 		this.cyclePeriodText = toolkit.createText(this.cyclePeriodComposite, "", SWT.SINGLE | SWT.BORDER); //$NON-NLS-1$
 		this.cyclePeriodText.setToolTipText(Messages.ArduinoFeatureConfigurationSection_cyclePeriodToolTip);
-		this.cyclePeriodText.addModifyListener(this);
+		this.cyclePeriodText.addFocusListener(this);
 		this.cyclePeriodText.setData(cyclePeriodParameter);
 
 		this.cyclePeriodViewer = new ComboViewer(this.cyclePeriodComposite, SWT.READ_ONLY | SWT.DROP_DOWN);
 		combo = this.cyclePeriodViewer.getCombo();
+		combo.setToolTipText(Messages.ArduinoFeatureConfigurationSection_cyclePeriodToolTip);
+		combo.setData(cyclePeriodParameter);
 		toolkit.adapt(combo);
 
 		final CyclePeriodsProvider cyclePeriodsProvider = new CyclePeriodsProvider();
 		this.cyclePeriodViewer.setContentProvider(cyclePeriodsProvider);
 		this.cyclePeriodViewer.setLabelProvider(cyclePeriodsProvider);
 		this.cyclePeriodViewer.addSelectionChangedListener(this);
-		this.cyclePeriodViewer.getCombo().setData(cyclePeriodParameter);
-
-		this.timerImplDescText = toolkit.createText(composite, "", SWT.READ_ONLY | SWT.MULTI | SWT.WRAP | SWT.BORDER); //$NON-NLS-1$
-		this.timerImplDescText.setLayoutData(new TableWrapData(TableWrapData.FILL, TableWrapData.FILL_GRAB, 1, 2));
 
 		this.section.setClient(composite);
 
@@ -178,31 +169,31 @@ public class ArduinoFeatureConfigurationSection
 		if (!this.mutex) {
 			this.mutex = true;
 
-			xtextDocument.readOnly(new IUnitOfWork.Void<XtextResource>() {
-				/**
-				 * @see org.eclipse.xtext.util.concurrent.IUnitOfWork.Void#process(java.lang.Object)
-				 */
-				@Override
-				public void process(final XtextResource resource) throws Exception {
-					updateUserSrcFolder(resource);
-					updateArchitectureViewer(resource);
-				}
-			});
+			updateUserSrcFolder(xtextDocument);
+			updateArchitectureViewer(xtextDocument);
 
 			this.mutex = false;
 		}
 	}
 
 	/**
-	 * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
+	 * @see org.eclipse.swt.events.FocusListener#focusGained(org.eclipse.swt.events.FocusEvent)
 	 */
 	@Override
-	public void modifyText(final ModifyEvent event) {
+	public void focusGained(final FocusEvent e) {
+		// nothing to do
+	}
+
+	/**
+	 * @see org.eclipse.swt.events.FocusListener#focusLost(org.eclipse.swt.events.FocusEvent)
+	 */
+	@Override
+	public void focusLost(final FocusEvent event) {
 		if (!this.mutex) {
 			this.mutex = true;
 
 			final Text text = (Text) event.getSource();
-			this.formPage.updateModel((FeatureParameter) text.getData(), text.getText());
+			getFormPage().updateModel((FeatureParameter) text.getData(), text.getText());
 
 			this.mutex = false;
 		}
@@ -219,24 +210,16 @@ public class ArduinoFeatureConfigurationSection
 			final Object source = event.getSource();
 
 			if (source == this.architectureViewer) {
-				this.formPage.getEditor().getXtextDocument().readOnly(new IUnitOfWork.Void<XtextResource>() {
-					/**
-					 * @see org.eclipse.xtext.util.concurrent.IUnitOfWork.Void#process(java.lang.Object)
-					 */
-					@Override
-					public void process(final XtextResource resource) throws Exception {
-						updateTimerViewer(resource, null);
-					}
-				});
+				updateTimerViewer(getFormPage().getEditor().getXtextDocument(), null);
 			}
 
 			if ((source == this.architectureViewer) || (source == this.timerViewer)) {
 				final TimerElement timer = (TimerElement) this.timerViewer.getStructuredSelection().getFirstElement();
-				this.formPage.updateModel((FeatureParameter) this.architectureViewer.getCombo().getData(),
+				getFormPage().updateModel((FeatureParameter) this.architectureViewer.getCombo().getData(),
 						timer.getId());
 			} else if (source == this.cyclePeriodViewer) {
 				final Integer cyclePeriod = (Integer) this.cyclePeriodViewer.getStructuredSelection().getFirstElement();
-				this.formPage.updateModel((FeatureParameter) this.cyclePeriodViewer.getCombo().getData(),
+				getFormPage().updateModel((FeatureParameter) this.cyclePeriodViewer.getCombo().getData(),
 						cyclePeriod.toString());
 			}
 
@@ -244,23 +227,13 @@ public class ArduinoFeatureConfigurationSection
 		}
 	}
 
-	/**
-	 * @see org.yakindu.sct.editor.sgen.IFeatureConfigurationSection#dispose()
-	 */
-	@Override
-	public void dispose() {
-		// nothing to do
-	}
-
-	protected void updateUserSrcFolder(final XtextResource resource) {
-		final String userSrcFolder = SGenModelUtil.getStringParameterValue(resource, this.formPage.getStatechartName(),
-				(FeatureParameter) this.userSrcFolderText.getData());
+	private void updateUserSrcFolder(final IXtextDocument xtextDocument) {
+		final String userSrcFolder = getStringParameterValue(xtextDocument, this.userSrcFolderText);
 		this.userSrcFolderText.setText(userSrcFolder);
 	}
 
-	protected void updateArchitectureViewer(final XtextResource resource) {
-		final String timerId = SGenModelUtil.getStringParameterValue(resource, this.formPage.getStatechartName(),
-				(FeatureParameter) this.architectureViewer.getCombo().getData());
+	private void updateArchitectureViewer(final IXtextDocument xtextDocument) {
+		final String timerId = getStringParameterValue(xtextDocument, this.architectureViewer.getCombo());
 		final TimerElement timer = ArchitecturesExtension.getTimer(timerId);
 		if (timer != null) {
 			final NamedExtensionElementsProvider provider = (NamedExtensionElementsProvider) this.architectureViewer
@@ -273,10 +246,10 @@ public class ArduinoFeatureConfigurationSection
 			this.architectureViewer.getCombo().select(0);
 		}
 
-		updateTimerViewer(resource, timer);
+		updateTimerViewer(xtextDocument, timer);
 	}
 
-	protected void updateTimerViewer(final XtextResource resource, final TimerElement timer) {
+	private void updateTimerViewer(final IXtextDocument xtextDocument, final TimerElement timer) {
 		final ArchitectureElement architecture = (ArchitectureElement) this.architectureViewer.getStructuredSelection()
 				.getFirstElement();
 
@@ -293,13 +266,11 @@ public class ArduinoFeatureConfigurationSection
 			this.timerViewer.getCombo().select(0);
 		}
 
-		updateCyclePeriodControls(resource);
+		updateCyclePeriodControls(xtextDocument);
 	}
 
-	protected void updateCyclePeriodControls(final XtextResource resource) {
-		final FeatureParameter parameter = (FeatureParameter) this.cyclePeriodText.getData();
-		final String cyclePeriod = SGenModelUtil.getStringParameterValue(resource, this.formPage.getStatechartName(),
-				parameter);
+	private void updateCyclePeriodControls(final IXtextDocument xtextDocument) {
+		final String cyclePeriod = getStringParameterValue(xtextDocument, this.cyclePeriodText);
 
 		final TimerElement timer = (TimerElement) this.timerViewer.getStructuredSelection().getFirstElement();
 		if (timer.getPreDefinedCyclePeriods().isEmpty()) {
@@ -321,13 +292,30 @@ public class ArduinoFeatureConfigurationSection
 				// cyclePeriod could not be found in list, update model
 				final Integer intCyclePeriod = (Integer) this.cyclePeriodViewer.getStructuredSelection()
 						.getFirstElement();
-				this.formPage.updateModel(parameter, intCyclePeriod.toString());
+				getFormPage().updateModel((FeatureParameter) this.cyclePeriodViewer.getCombo().getData(),
+						intCyclePeriod.toString());
 			}
 		}
 
 		this.cyclePeriodComposite.layout();
 
-		this.timerImplDescText.setText(timer.getDescription());
+		this.timerDescText.setText(timer.getDescription());
+	}
+
+	private String getStringParameterValue(final IXtextDocument xtextDocument, final Widget widget) {
+		final String statechartName = getFormPage().getStatechartName();
+		final FeatureParameter featureParameter = (FeatureParameter) widget.getData();
+		final String value = xtextDocument.readOnly(new IUnitOfWork<String, XtextResource>() {
+			/**
+			 * @see org.eclipse.xtext.util.concurrent.IUnitOfWork.Void#process(java.lang.Object)
+			 */
+			@Override
+			public String exec(final XtextResource resource) throws Exception {
+				return SGenModelUtil.getStringParameterValue(resource, statechartName, featureParameter);
+			}
+		});
+
+		return value;
 	}
 
 }

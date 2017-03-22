@@ -17,6 +17,8 @@ import org.yakindu.sct.model.sgen.FeatureType;
 
 public interface IFeatureConfigurationSection {
 
+	static final char ASTERISK = '\u002A';
+
 	void initialize(GeneratorEntryFormPage formPage, FeatureType featureType);
 
 	Section createSection(final FormToolkit toolkit, final Composite parent);
