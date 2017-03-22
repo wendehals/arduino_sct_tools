@@ -186,27 +186,31 @@ public class GeneratorEntryFormPage extends FormPage implements IXtextModelListe
 					@Override
 					public void process(final XtextResource resource) throws Exception {
 						Literal literal = null;
-						try {
-							switch (parameter.getParameterType()) {
-								case INTEGER:
-									final IntLiteral intLiteral = SGenFactory.eINSTANCE.createIntLiteral();
+						switch (parameter.getParameterType()) {
+							case INTEGER:
+								final IntLiteral intLiteral = SGenFactory.eINSTANCE.createIntLiteral();
+								try {
 									intLiteral.setValue(Integer.parseInt(value));
-									literal = intLiteral;
-									break;
-								case FLOAT:
-									final RealLiteral realLiteral = SGenFactory.eINSTANCE.createRealLiteral();
+								} catch (final NumberFormatException exception) {
+									intLiteral.setValue(0);
+								}
+								literal = intLiteral;
+								break;
+							case FLOAT:
+								final RealLiteral realLiteral = SGenFactory.eINSTANCE.createRealLiteral();
+								try {
 									realLiteral.setValue(Float.parseFloat(value));
-									literal = realLiteral;
-									break;
-								case STRING:
-								default:
-									final StringLiteral stringLiteral = SGenFactory.eINSTANCE.createStringLiteral();
-									stringLiteral.setValue(value);
-									literal = stringLiteral;
-									break;
-							}
-						} catch (final NumberFormatException exception) {
-							// nothing to do
+								} catch (final NumberFormatException exception) {
+									realLiteral.setValue(0);
+								}
+								literal = realLiteral;
+								break;
+							case STRING:
+							default:
+								final StringLiteral stringLiteral = SGenFactory.eINSTANCE.createStringLiteral();
+								stringLiteral.setValue(value);
+								literal = stringLiteral;
+								break;
 						}
 
 						if (literal != null) {
