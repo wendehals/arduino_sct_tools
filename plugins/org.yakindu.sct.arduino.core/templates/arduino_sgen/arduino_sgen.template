@@ -14,7 +14,7 @@ GeneratorModel for yakindu::arduino_cpp {
 		feature Arduino {
 			userSrcFolder = "${srcFolder}"
 			timer = "${timer}"
-			cyclePeriod = "${cyclePeriod}"
+			cyclePeriod = ${cyclePeriod}
 		}
 	}
 }
