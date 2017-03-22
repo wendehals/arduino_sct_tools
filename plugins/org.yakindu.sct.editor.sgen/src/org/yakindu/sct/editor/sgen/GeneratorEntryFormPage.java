@@ -185,7 +185,7 @@ public class GeneratorEntryFormPage extends FormPage implements IXtextModelListe
 					 */
 					@Override
 					public void process(final XtextResource resource) throws Exception {
-						Literal literal = null;
+						Literal literal;
 						switch (parameter.getParameterType()) {
 							case INTEGER:
 								final IntLiteral intLiteral = SGenFactory.eINSTANCE.createIntLiteral();
@@ -213,21 +213,19 @@ public class GeneratorEntryFormPage extends FormPage implements IXtextModelListe
 								break;
 						}
 
-						if (literal != null) {
-							FeatureConfiguration featureConfiguration = getFeatureConfiguration(resource,
-									getStatechartName(), parameter.getFeatureType());
-							if (featureConfiguration == null) {
-								featureConfiguration = createFeatureConfiguration(resource, getStatechartName(),
-										parameter.getFeatureType());
-							}
-							FeatureParameterValue parameterValue = featureConfiguration
-									.getParameterValue(parameter.getName());
-							if (parameterValue == null) {
-								parameterValue = createFeatureParameterValue(resource, featureConfiguration, parameter);
-							}
-
-							parameterValue.setExpression(literal);
+						FeatureConfiguration featureConfiguration = getFeatureConfiguration(resource,
+								getStatechartName(), parameter.getFeatureType());
+						if (featureConfiguration == null) {
+							featureConfiguration = createFeatureConfiguration(resource, getStatechartName(),
+									parameter.getFeatureType());
 						}
+						FeatureParameterValue parameterValue = featureConfiguration
+								.getParameterValue(parameter.getName());
+						if (parameterValue == null) {
+							parameterValue = createFeatureParameterValue(resource, featureConfiguration, parameter);
+						}
+
+						parameterValue.setExpression(literal);
 					}
 				});
 			}
