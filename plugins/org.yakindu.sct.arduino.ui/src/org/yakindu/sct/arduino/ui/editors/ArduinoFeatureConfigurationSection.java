@@ -81,8 +81,8 @@ public class ArduinoFeatureConfigurationSection extends AbstractFeatureConfigura
 		final FeatureParameter userSrcFolderParameter = SGenModelUtil.getFeatureParameter(getFeatureType(),
 				IArduinoFeatureConstants.PARAM_USER_SRC_FOLDER);
 
-		Label label = toolkit.createLabel(composite,
-				Messages.ArduinoFeatureConfigurationSection_userSrcFolderLabel + IFeatureConfigurationSection.ASTERISK);
+		Label label = toolkit.createLabel(composite, Messages.ArduinoFeatureConfigurationSection_userSrcFolderLabel
+				+ IFeatureConfigurationSection.ASTERISK + ':');
 		label.setLayoutData(new TableWrapData(TableWrapData.FILL, TableWrapData.FILL));
 
 		this.userSrcFolderText = toolkit.createText(composite, "", SWT.SINGLE | SWT.BORDER); //$NON-NLS-1$
@@ -90,8 +90,8 @@ public class ArduinoFeatureConfigurationSection extends AbstractFeatureConfigura
 		this.userSrcFolderText.addFocusListener(this);
 		this.userSrcFolderText.setData(userSrcFolderParameter);
 
-		label = toolkit.createLabel(composite,
-				Messages.ArduinoFeatureConfigurationSection_architectureLabel + IFeatureConfigurationSection.ASTERISK);
+		label = toolkit.createLabel(composite, Messages.ArduinoFeatureConfigurationSection_architectureLabel
+				+ IFeatureConfigurationSection.ASTERISK + ':');
 		label.setLayoutData(new TableWrapData(TableWrapData.FILL, TableWrapData.FILL));
 
 		this.architectureViewer = new ComboViewer(composite, SWT.READ_ONLY | SWT.DROP_DOWN);
@@ -113,7 +113,7 @@ public class ArduinoFeatureConfigurationSection extends AbstractFeatureConfigura
 		this.timerDescText.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.FILL_GRAB, 2, 1));
 
 		label = toolkit.createLabel(composite,
-				Messages.ArduinoFeatureConfigurationSection_timerLabel + IFeatureConfigurationSection.ASTERISK);
+				Messages.ArduinoFeatureConfigurationSection_timerLabel + IFeatureConfigurationSection.ASTERISK + ':');
 		label.setLayoutData(new TableWrapData(TableWrapData.FILL, TableWrapData.FILL));
 
 		this.timerViewer = new ComboViewer(composite, SWT.READ_ONLY | SWT.DROP_DOWN);
@@ -127,8 +127,8 @@ public class ArduinoFeatureConfigurationSection extends AbstractFeatureConfigura
 		this.timerViewer.addSelectionChangedListener(this);
 		this.timerViewer.getCombo().setData(timerParameter);
 
-		label = toolkit.createLabel(composite,
-				Messages.ArduinoFeatureConfigurationSection_cyclePeriodLabel + IFeatureConfigurationSection.ASTERISK);
+		label = toolkit.createLabel(composite, Messages.ArduinoFeatureConfigurationSection_cyclePeriodLabel
+				+ IFeatureConfigurationSection.ASTERISK + ':');
 		label.setLayoutData(new TableWrapData(TableWrapData.FILL, TableWrapData.FILL));
 
 		this.cyclePeriodLayout = new StackLayout();
