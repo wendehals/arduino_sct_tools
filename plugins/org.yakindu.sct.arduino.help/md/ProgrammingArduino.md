@@ -16,6 +16,10 @@ Our statechart model for the "Blink" example is now complete. Open the context m
 
 ![Generate Code Artifacts](screenshots/GenerateCodeArtifacts.png)
 
+You might also open the SGen Multi Page Editor via the context menu on the "Blink.sgen" file in the Project Explorer. Choose "Open With" and select the Multi Page Editor. On the form page you can click on the gear-wheels in the upper right corner to generate the code artifacts.
+
+![SGen Multi Page Editor](screenshots/SGenMultiPageEditor.png)
+
 Your Eclipse environment should now look like depicted in the figure below. There are two new folders, "src" and "src-gen". The "src-gen" folder contains the statemachine generated from the statechart, interfaces to the statemachine, a timer implementation, and everything else that is needed to execute the statemachine on your Arduino. The "src" folder is meant to be changed by the developer. We will go into detail later.
 
 ![Project after Code Generation](screenshots/ProjectAfterCodeGeneration.png)
