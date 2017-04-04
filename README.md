@@ -2,6 +2,8 @@
 
 This project brings you tooling to program your Arduino with statecharts. You will use the [YAKINDU Statechart Tools](http://statecharts.org) to create a statechart. With this statechart you model the intended behaviour of your Arduino. From the state chart C++ code is generated for your Arduino. You just need to fill two methods to connect the hardware to your statechart and deploy the code to your Arduino. Five minutes to program an Arduino with statecharts!
 
+YAKINDU SCT for Arduino does not only support the well-known Arduino Uno board but various other boards based on these microprocessors and their derivates: ATmega328, ATmega2560, ATmega32u4, ESP8266, and others. It even supports unknown microprocessors by a generic implementation.
+
 You will find further documentation here:
 
 * [Installation Guide](plugins/org.yakindu.sct.arduino.help/md/Installation.md)
