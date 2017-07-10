@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: YAKINDU Statechart Tools for Arduino C++ Code Generator
 Bundle-SymbolicName: org.yakindu.sct.arduino.generator.cpp;singleton:=true
-Bundle-Version: 0.5.0.qualifier
+Bundle-Version: 0.6.0.qualifier
 Require-Bundle: org.yakindu.sct.model.sexec,
  org.yakindu.sct.model.stext,
  org.yakindu.sct.generator.core,

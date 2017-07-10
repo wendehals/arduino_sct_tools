@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.yakindu.sct.arduino_0.5.0.qualifier.jar" id="org.yakindu.sct.arduino" version="0.5.0.qualifier">
+   <feature url="features/org.yakindu.sct.arduino_0.6.0.qualifier.jar" id="org.yakindu.sct.arduino" version="0.6.0.qualifier">
       <category name="org.yakindu.sct.arduino.p2repo"/>
    </feature>
    <category-def name="org.yakindu.sct.arduino.p2repo" label="YAKINDU Statechart Tools for Arduino">

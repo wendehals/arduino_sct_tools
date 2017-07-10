@@ -39,7 +39,7 @@
   <setupTask
       xsi:type="setup:VariableTask"
       name="eclipse.target.platform"
-      defaultValue="Neon"
+      defaultValue="Oxygen"
       storageURI="scope://Workspace"/>
   <setupTask
       xsi:type="git:GitCloneTask"
@@ -97,7 +97,8 @@
           </detail>
         </annotation>
         <requirement
-            name="org.eclipse.platform.sdk"/>
+            name="org.eclipse.platform.sdk"
+            versionRange="[4.7.0,4.8.0)"/>
         <requirement
             name="org.eclipse.license.feature.group"/>
         <requirement
@@ -115,13 +116,13 @@
             name="org.yakindu.sct.generator.feature.group"
             versionRange="[2.9.0,2.10.0)"/>
         <repositoryList
-            name="Neon">
+            name="Oxygen">
           <repository
-              url="http://download.eclipse.org/eclipse/updates/4.6"/>
+              url="http://download.eclipse.org/eclipse/updates/4.7"/>
           <repository
               url="http://download.eclipse.org/tools/cdt/releases/9.2"/>
           <repository
-              url="http://download.eclipse.org/releases/neon/"/>
+              url="http://download.eclipse.org/releases/oxygen/"/>
           <repository
               url="http://download.eclipse.org/cbi/updates/license"/>
           <repository
@@ -140,8 +141,14 @@
               xsi:type="predicates:NaturePredicate"
               nature="org.eclipse.pde.PluginNature"/>
           <operand
-              xsi:type="predicates:NamePredicate"
-              pattern="org\.yakindu\.sct\.arduino.*"/>
+              xsi:type="predicates:OrPredicate">
+            <operand
+                xsi:type="predicates:NamePredicate"
+                pattern="org\.yakindu\.sct\.arduino.*"/>
+            <operand
+                xsi:type="predicates:NamePredicate"
+                pattern="org\.yakindu\.sct\.editor\.sgen"/>
+          </operand>
         </predicate>
       </workingSet>
       <workingSet
@@ -189,6 +196,12 @@
             <operand
                 xsi:type="predicates:NamePredicate"
                 pattern="org\.yakindu\.sct\.arduino.*"/>
+          </operand>
+          <operand
+              xsi:type="predicates:NotPredicate">
+            <operand
+                xsi:type="predicates:NamePredicate"
+                pattern="org\.yakindu\.sct\.editor\.sgen"/>
           </operand>
         </predicate>
       </workingSet>
