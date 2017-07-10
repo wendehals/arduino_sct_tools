@@ -15,12 +15,14 @@ import org.yakindu.sct.arduino.generator.cpp.Naming
 import org.yakindu.sct.model.sexec.ExecutionFlow
 import org.yakindu.sct.model.sgen.GeneratorEntry
 import org.yakindu.sct.model.sgraph.Statechart
+import org.yakindu.sct.model.sexec.extensions.SExecExtensions
 
 abstract class AbstractTimer {
 
 	@Inject extension Naming
 	@Inject extension GenmodelEntries
 	@Inject extension MaxParallelTimers
+	@Inject extension SExecExtensions
 
 	public def String timerName()
 
@@ -32,16 +34,18 @@ abstract class AbstractTimer {
 		
 		«headerIncludes(flow)»
 		
-		class «timerName»: public «timerInterface» {
+		class «timerName»«IF flow.timed»: public «timerInterface»«ENDIF» {
 		public:
-			«publicHeaderPart»
+			«publicHeaderPart(flow)»
 		
 		private:
-			«privateHeaderPart»
+			«privateHeaderPart(flow)»
 		};
 		
 		«timerName»::~«timerName»() {
-			delete events;
+			«IF flow.timed»
+				delete events;
+			«ENDIF»
 		}
 		
 		#endif /* «timerName.h.define» */
@@ -54,19 +58,23 @@ abstract class AbstractTimer {
 		
 		«variableDeclarations(flow)»
 		
-		«constructor»
+		«constructor(flow)»
 		
 		«start»
 		
 		«init»
 		
-		«setTimer»
+		«IF flow.timed»
+			«setTimer»
+			
+			«unsetTimer»
+
+		«ENDIF»
+		«runCycle(flow)»
 		
-		«unsetTimer»
-		
-		«runCycle»
-		
-		«raiseTimeEvents»
+		«IF flow.timed»
+			«raiseTimeEvents»
+		«ENDIF»
 		
 		«cancel»
 	'''
@@ -75,60 +83,72 @@ abstract class AbstractTimer {
 		#include <Arduino.h>
 		
 		#include "«flow.typesModule.h»"
-		#include "«timerInterface.h»"
 		#include "«statemachineInterface.h»"
-		#include "«timedStatemachineInterface.h»"
-		#include "«timeEvent.h»"
 		#include "«hardwareConnector.h»"
+		«IF flow.timed»
+			#include "«timerInterface.h»"
+			#include "«timedStatemachineInterface.h»"
+			#include "«timeEvent.h»"
+		«ENDIF»
 	'''
 
-	protected def publicHeaderPart(GeneratorEntry it) '''
+	protected def publicHeaderPart(GeneratorEntry it, ExecutionFlow flow) '''
 		«timerName»(«statemachineInterface»* statemachine, «hardwareConnector»* hardware);
 		
 		inline ~«timerName»();
 		
 		void start();
 		
-		void setTimer(«timedStatemachineInterface»* timedStatemachine, sc_eventid eventId, sc_integer time, sc_boolean isPeriodic);
-		
-		void unsetTimer(«timedStatemachineInterface»* timedStatemachine, sc_eventid eventId);
-		
+		«IF flow.timed»
+			void setTimer(«timedStatemachineInterface»* timedStatemachine, sc_eventid eventId, sc_integer time, sc_boolean isPeriodic);
+			
+			void unsetTimer(«timedStatemachineInterface»* timedStatemachine, sc_eventid eventId);
+
+		«ENDIF»
 		void runCycle();
 		
 		void cancel();
 	'''
 
-	protected def privateHeaderPart(GeneratorEntry it) '''
+	protected def privateHeaderPart(GeneratorEntry it, ExecutionFlow flow) '''
 		«statemachineInterface»* statemachine;
 		
 		«hardwareConnector»* hardware;
 		
-		«timeEvent»* events;
+		«IF flow.timed»
+			«timeEvent»* events;
+		«ENDIF»
 		
 		void init();
 		
-		void raiseTimeEvents();
+		«IF flow.timed»
+			void raiseTimeEvents();
+		«ENDIF»
 	'''
 
 	protected def CharSequence variableDeclarations(GeneratorEntry it, ExecutionFlow flow) '''
 		const unsigned int CYCLE_PERIOD = «cyclePeriod»;
-		const unsigned char MAX_PARALLEL_TIME_EVENTS = «maxParallelTimers(flow.sourceElement as Statechart)»;
+		«IF flow.timed»
+			const unsigned char MAX_PARALLEL_TIME_EVENTS = «maxParallelTimers(flow.sourceElement as Statechart)»;
+		«ENDIF»
 	'''
 
-	protected def constructor(GeneratorEntry it) '''
+	protected def constructor(GeneratorEntry it, ExecutionFlow flow) '''
 		«timerName»::«timerName»(«statemachineInterface»* statemachine, «hardwareConnector»* hardware) {
-			«constructorBody»
+			«constructorBody(flow)»
 		}
 	'''
 
-	protected def constructorBody(GeneratorEntry it) '''
+	protected def constructorBody(GeneratorEntry it, ExecutionFlow flow) '''
 		this->statemachine = statemachine;
 		this->hardware = hardware;
 		
-		events = new «timeEvent»[MAX_PARALLEL_TIME_EVENTS];
-		for (unsigned char i = 0; i < MAX_PARALLEL_TIME_EVENTS; i++) {
-			events[i].eventId = NULL;
-		}
+		«IF flow.timed»
+			events = new «timeEvent»[MAX_PARALLEL_TIME_EVENTS];
+			for (unsigned char i = 0; i < MAX_PARALLEL_TIME_EVENTS; i++) {
+				events[i].eventId = NULL;
+			}
+		«ENDIF»
 	'''
 
 	protected def start(GeneratorEntry it) '''
@@ -188,14 +208,16 @@ abstract class AbstractTimer {
 		}
 	'''
 
-	protected def runCycle(GeneratorEntry it) '''
+	protected def runCycle(GeneratorEntry it, ExecutionFlow flow) '''
 		void «timerName»::runCycle() {
-			«runCycleBody»
+			«runCycleBody(flow)»
 		}
 	'''
 
-	protected def runCycleBody(GeneratorEntry it) '''
-		raiseTimeEvents();
+	protected def runCycleBody(GeneratorEntry it, ExecutionFlow flow) '''
+		«IF flow.timed»
+			raiseTimeEvents();
+		«ENDIF»
 		hardware->raiseEvents();
 		statemachine->runCycle();
 		hardware->syncState();

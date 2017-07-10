@@ -9,6 +9,7 @@
 package org.yakindu.sct.arduino.generator.cpp.timers
 
 import org.yakindu.sct.model.sgen.GeneratorEntry
+import org.yakindu.sct.model.sexec.ExecutionFlow
 
 class SoftwareTimer_Millis extends AbstractTimer {
 
@@ -16,14 +17,14 @@ class SoftwareTimer_Millis extends AbstractTimer {
 		"SoftwareTimer_Millis"
 	}
 
-	override protected privateHeaderPart(GeneratorEntry it) '''
-		«super.privateHeaderPart(it)»
+	override protected privateHeaderPart(GeneratorEntry it, ExecutionFlow flow) '''
+		«super.privateHeaderPart(it, flow)»
 		
 		unsigned long lastCycle;
 	'''
 
-	override protected constructorBody(GeneratorEntry it) '''
-		«super.constructorBody(it)»
+	override protected constructorBody(GeneratorEntry it, ExecutionFlow flow) '''
+		«super.constructorBody(it, flow)»
 		
 		lastCycle = 0;
 	'''
@@ -32,10 +33,10 @@ class SoftwareTimer_Millis extends AbstractTimer {
 		lastCycle = millis();
 	'''
 
-	override protected runCycleBody(GeneratorEntry it) '''
+	override protected runCycleBody(GeneratorEntry it, ExecutionFlow flow) '''
 		unsigned long current = millis();
 		if (current >= lastCycle + CYCLE_PERIOD){
-			«super.runCycleBody(it)»
+			«super.runCycleBody(it, flow)»
 			lastCycle = current;
 		}
 	'''

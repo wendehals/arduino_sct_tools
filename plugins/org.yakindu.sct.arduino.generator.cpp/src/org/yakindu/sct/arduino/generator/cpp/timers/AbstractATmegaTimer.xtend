@@ -12,12 +12,14 @@ import com.google.inject.Inject
 import org.yakindu.sct.arduino.generator.cpp.GenmodelEntries
 import org.yakindu.sct.arduino.generator.cpp.Naming
 import org.yakindu.sct.model.sexec.ExecutionFlow
+import org.yakindu.sct.model.sexec.extensions.SExecExtensions
 import org.yakindu.sct.model.sgen.GeneratorEntry
 
 abstract class AbstractATmegaTimer extends AbstractTimer {
 
 	@Inject extension Naming
 	@Inject extension GenmodelEntries
+	@Inject extension SExecExtensions
 
 	override generateTimer(GeneratorEntry it, ExecutionFlow flow) '''
 		«licenseText»
@@ -28,19 +30,23 @@ abstract class AbstractATmegaTimer extends AbstractTimer {
 		
 		«ISR»
 		
-		«constructor»
+		«constructor(flow)»
 		
 		«start»
 		
 		«init»
 		
-		«setTimer»
+		«IF flow.timed»
+			«setTimer»
+			
+			«unsetTimer»
+
+		«ENDIF»
+		«runCycle(flow)»
 		
-		«unsetTimer»
-		
-		«runCycle»
-		
-		«raiseTimeEvents»
+		«IF flow.timed»
+			«raiseTimeEvents»
+		«ENDIF»
 		
 		«sleep»
 		
@@ -52,17 +58,17 @@ abstract class AbstractATmegaTimer extends AbstractTimer {
 		«super.headerIncludes(it, flow)»
 	'''
 
-	override protected privateHeaderPart(GeneratorEntry it) '''
-		«super.privateHeaderPart(it)»
+	override protected privateHeaderPart(GeneratorEntry it, ExecutionFlow flow) '''
+		«super.privateHeaderPart(it, flow)»
 		
 		void sleep();
 	'''
 
 	protected def CharSequence ISR(GeneratorEntry it)
 
-	override protected runCycleBody(GeneratorEntry it) '''
+	override protected runCycleBody(GeneratorEntry it, ExecutionFlow flow) '''
 		if (runCycleFlag) {
-			«super.runCycleBody(it)»
+			«super.runCycleBody(it, flow)»
 			runCycleFlag = false;
 		}
 		sleep();

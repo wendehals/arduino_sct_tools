@@ -12,12 +12,14 @@ import com.google.inject.Inject
 import org.yakindu.sct.generator.c.IContentTemplate
 import org.yakindu.sct.generator.c.IGenArtifactConfigurations
 import org.yakindu.sct.model.sexec.ExecutionFlow
+import org.yakindu.sct.model.sexec.extensions.SExecExtensions
 import org.yakindu.sct.model.sgen.GeneratorEntry
 
 class ArduinoMain implements IContentTemplate {
 
 	@Inject extension Naming
 	@Inject extension GenmodelEntries
+	@Inject extension SExecExtensions
 
 	override content(ExecutionFlow it, GeneratorEntry entry, IGenArtifactConfigurations locations) '''
 		«entry.licenseText»
@@ -30,7 +32,7 @@ class ArduinoMain implements IContentTemplate {
 		«module.connector»* connector;
 		«entry.timerClassName»* timer;
 		
-		«module»* getStatemachine(){
+		«module»* getStatemachine() {
 			return statemachine;
 		}
 		
@@ -39,7 +41,7 @@ class ArduinoMain implements IContentTemplate {
 			connector = new «module.connector»(statemachine);
 			timer = new «entry.timerClassName»(statemachine, connector);
 		
-			statemachine->setTimer(timer);
+			«IF timed»statemachine->setTimer(timer);«ENDIF»
 			timer->start();
 		}
 		

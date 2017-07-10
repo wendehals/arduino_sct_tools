@@ -25,6 +25,7 @@ import org.yakindu.sct.generator.cpp.TimedStatemachineInterface
 import org.yakindu.sct.generator.cpp.TimerInterface
 import org.yakindu.sct.generator.cpp.Types
 import org.yakindu.sct.model.sexec.ExecutionFlow
+import org.yakindu.sct.model.sexec.extensions.SExecExtensions
 import org.yakindu.sct.model.sgen.GeneratorEntry
 
 class ArduinoCodeGenerator implements IExecutionFlowGenerator {
@@ -43,11 +44,12 @@ class ArduinoCodeGenerator implements IExecutionFlowGenerator {
 	@Inject HardwareConnectorHeader hardwareConnectorHeaderContent
 	@Inject StatemachineConnectorHeader statemachineConnectorHeaderContent
 	@Inject StatemachineConnector statemachineConnectorContent
-	
-	@Inject	IGenArtifactConfigurations locations
+
+	@Inject IGenArtifactConfigurations locations
 
 	@Inject extension Naming
 	@Inject extension GenmodelEntries
+	@Inject extension SExecExtensions
 
 	override generate(ExecutionFlow it, GeneratorEntry entry, IFileSystemAccess fsa) {
 		initGenerationArtifacts(locations, it, entry)
@@ -64,8 +66,12 @@ class ArduinoCodeGenerator implements IExecutionFlowGenerator {
 	def private initGenerationArtifacts(IGenArtifactConfigurations it, ExecutionFlow flow, GeneratorEntry entry) {
 		configure(flow.typesModule.h, typesContent)
 		configure(statemachineInterface.h, statemachineInterfaceContent)
-		configure(timedStatemachineInterface.h, timedStatemachineInterfaceContent)
-		configure(timerInterface.h, timerInterfaceContent)
+
+		if (flow.timed) {
+			configure(timedStatemachineInterface.h, timedStatemachineInterfaceContent)
+			configure(timerInterface.h, timerInterfaceContent)
+		}
+
 		configure(flow.module.h, statemachineHeaderContent)
 		configure(flow.module.cpp, statemachineImplementationContent)
 
@@ -74,7 +80,10 @@ class ArduinoCodeGenerator implements IExecutionFlowGenerator {
 		configure(arduinoMain.h, arduinoMainHeaderContent);
 		configure(arduinoMain.cpp, arduinoMainContent);
 		configure(hardwareConnector.h, hardwareConnectorHeaderContent);
-		configure(timeEvent.h, timeEventHeaderContent);
+
+		if (flow.timed) {
+			configure(timeEvent.h, timeEventHeaderContent);
+		}
 
 		// userSrcFolder
 		if (getUserSrcFolder(entry) != null) {

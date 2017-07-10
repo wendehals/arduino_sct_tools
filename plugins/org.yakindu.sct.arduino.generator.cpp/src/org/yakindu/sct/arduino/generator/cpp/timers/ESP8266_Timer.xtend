@@ -24,7 +24,7 @@ class ESP8266_Timer extends AbstractTimer {
 		
 		«timerCallback»
 		
-		«constructor»
+		«constructor(flow)»
 		
 		«start»
 		
@@ -34,7 +34,7 @@ class ESP8266_Timer extends AbstractTimer {
 		
 		«unsetTimer»
 		
-		«runCycle»
+		«runCycle(flow)»
 		
 		«raiseTimeEvents»
 		
@@ -65,9 +65,9 @@ class ESP8266_Timer extends AbstractTimer {
 		os_timer_arm(&osTimer, CYCLE_PERIOD, true);
 	'''
 
-	override protected runCycleBody(GeneratorEntry it) '''
+	override protected runCycleBody(GeneratorEntry it, ExecutionFlow flow) '''
 		if (runCycleFlag) {
-			«super.runCycleBody(it)»
+			«super.runCycleBody(it, flow)»
 			runCycleFlag = false;
 		}
 		yield();
