@@ -32,9 +32,9 @@
 						<configuration>
 							<artifacts>
 								<artifact>
-									<file>Neon.target</file>
+									<file>Oxygen.target</file>
 									<type>target</type>
-									<classifier>Neon</classifier>
+									<classifier>Oxygen</classifier>
 								</artifact>
 							</artifacts>
 						</configuration>
