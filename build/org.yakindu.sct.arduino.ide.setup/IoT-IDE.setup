@@ -49,7 +49,8 @@
       <requirement
           name="org.eclipse.platform.ide"/>
       <requirement
-          name="org.eclipse.platform.feature.group"/>
+          name="org.eclipse.platform.feature.group"
+          versionRange="[4.7.0,4.8.0)"/>
       <requirement
           name="org.eclipse.rcp.feature.group"/>
       <requirement
@@ -68,7 +69,7 @@
           versionRange="[2.9.0,2.10.0)"/>
       <requirement
           name="org.yakindu.sct.arduino.feature.group"
-          versionRange="[0.5.0,0.6.0)"/>
+          versionRange="[0.6.0,0.7.0)"/>
       <requirement
           name="org.eclipse.paho.client.mqttv3"/>
       <requirement
