@@ -97,7 +97,7 @@
           </detail>
         </annotation>
         <requirement
-            name="org.eclipse.platform.sdk"
+            name="org.eclipse.platform.sdk.feature.group"
             versionRange="[4.7.0,4.8.0)"/>
         <requirement
             name="org.eclipse.license.feature.group"/>
@@ -115,6 +115,8 @@
         <requirement
             name="org.yakindu.sct.generator.feature.group"
             versionRange="[2.9.0,2.10.0)"/>
+        <requirement
+            name="org.junit.feature.group"/>
         <repositoryList
             name="Oxygen">
           <repository
