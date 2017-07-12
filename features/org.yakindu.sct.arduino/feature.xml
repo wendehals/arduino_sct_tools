@@ -26,22 +26,27 @@
       <import plugin="org.yakindu.sct.generator.genmodel"/>
       <import plugin="org.yakindu.sct.generator.c"/>
       <import plugin="org.yakindu.sct.generator.cpp"/>
+      <import plugin="org.eclipse.cdt.ui"/>
       <import plugin="org.eclipse.core.resources"/>
       <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="org.eclipse.ui"/>
-      <import plugin="org.eclipse.ui.ide"/>
-      <import plugin="org.eclipse.cdt.ui"/>
       <import plugin="org.eclipse.tools.templates.freemarker"/>
       <import plugin="org.eclipse.tools.templates.ui"/>
-      <import plugin="org.yakindu.sct.ui" version="2.9.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.ui.ide"/>
+      <import plugin="org.yakindu.sct.ui" match="greaterOrEqual"/>
+      <import plugin="org.yakindu.sct.generator.builder"/>
       <import plugin="org.eclipse.cdt.core"/>
       <import plugin="org.eclipse.emf.transaction"/>
       <import plugin="org.eclipse.emf.workspace"/>
       <import plugin="org.eclipse.gmf.runtime.emf.commands.core"/>
-      <import plugin="org.yakindu.sct.generator.builder"/>
       <import plugin="org.yakindu.sct.ui.editor"/>
       <import plugin="org.eclipse.emf.common.ui"/>
-      <import feature="org.eclipse.cdt.arduino" version="9.1.0.201609121658" match="greaterOrEqual"/>
+      <import feature="org.eclipse.cdt.arduino" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui.editors"/>
+      <import plugin="org.eclipse.ui.forms"/>
+      <import plugin="org.eclipse.xtext.ui"/>
+      <import plugin="org.yakindu.sct.generator.genmodel.ui"/>
+      <import plugin="org.yakindu.sct.model.sgen"/>
    </requires>
 
    <plugin
