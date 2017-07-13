@@ -65,7 +65,9 @@ class MaxParallelTimers {
 	}
 
 	def dispatch int maxParallelTimers(Transition it) {
-		maxParallelTimers(trigger);
+		if (trigger !== null) {
+			maxParallelTimers(trigger)
+		}
 	}
 
 	def dispatch int maxParallelTimers(Reaction reaction) {
