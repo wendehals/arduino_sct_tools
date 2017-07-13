@@ -86,7 +86,7 @@ class ArduinoCodeGenerator implements IExecutionFlowGenerator {
 		}
 
 		// userSrcFolder
-		if (getUserSrcFolder(entry) != null) {
+		if (getUserSrcFolder(entry) !== null) {
 			configure(flow.module.connector.h, IArduinoFeatureConstants::PARAM_USER_SRC_FOLDER,
 				statemachineConnectorHeaderContent)
 			configure(flow.module.connector.cpp, IArduinoFeatureConstants::PARAM_USER_SRC_FOLDER,

@@ -38,7 +38,7 @@ class GenmodelEntries extends org.yakindu.sct.generator.c.GenmodelEntries {
 
 	def cyclePeriod(GeneratorEntry it) {
 		val paramValue = generatorOptionsFeature?.getParameterValue(IArduinoFeatureConstants::PARAM_CYCLE_PERIOD)
-		if (paramValue != null) {
+		if (paramValue !== null) {
 			try {
 				return Integer.parseInt(paramValue.stringValue);
 			} catch (NumberFormatException exception) {

@@ -116,6 +116,8 @@
             name="org.yakindu.sct.generator.feature.group"
             versionRange="[2.9.0,2.10.0)"/>
         <requirement
+            name="org.eclipse.xtext.sdk.feature.group"/>
+        <requirement
             name="org.junit"/>
         <repositoryList
             name="Oxygen">
