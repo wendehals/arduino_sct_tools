@@ -110,7 +110,11 @@
             name="org.eclipse.cdt.arduino.feature.group"
             versionRange="[9.2.0,9.3.0)"/>
         <requirement
+            name="org.eclipse.emf.sdk.feature.group"/>
+        <requirement
             name="org.eclipse.xtext.sdk.feature.group"/>
+        <requirement
+            name="org.eclipse.gmf.runtime.sdk.feature.group"/>
         <requirement
             name="org.junit"/>
         <repositoryList
