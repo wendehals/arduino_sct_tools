@@ -10,8 +10,8 @@ package org.yakindu.sct.arduino.generator.cpp;
 
 import org.yakindu.base.types.inferrer.ITypeSystemInferrer;
 import org.yakindu.sct.generator.c.types.CTypeSystemAccess;
-import org.yakindu.sct.generator.core.GeneratorModule;
 import org.yakindu.sct.generator.core.IExecutionFlowGenerator;
+import org.yakindu.sct.generator.core.IGeneratorModule;
 import org.yakindu.sct.generator.core.types.ICodegenTypeSystemAccess;
 import org.yakindu.sct.generator.cpp.CppNamingService;
 import org.yakindu.sct.model.sexec.naming.INamingService;
@@ -20,14 +20,14 @@ import org.yakindu.sct.model.stext.inferrer.STextTypeInferrer;
 
 import com.google.inject.Binder;
 
-public class ArduinoCppCodeGeneratorModule implements GeneratorModule {
+public class ArduinoCppCodeGeneratorModule implements IGeneratorModule {
 
 	/**
 	 * @see org.yakindu.sct.generator.core.GeneratorModule#configure(org.yakindu.sct.model.sgen.GeneratorEntry,
 	 *      com.google.inject.Binder)
 	 */
 	@Override
-	public void configure(GeneratorEntry entry, Binder binder) {
+	public void configure(final GeneratorEntry entry, final Binder binder) {
 		binder.bind(GeneratorEntry.class).toInstance(entry);
 		binder.bind(IExecutionFlowGenerator.class).to(ArduinoCodeGenerator.class);
 		binder.bind(ICodegenTypeSystemAccess.class).to(CTypeSystemAccess.class);

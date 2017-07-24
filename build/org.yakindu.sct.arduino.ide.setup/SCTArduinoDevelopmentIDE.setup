@@ -110,6 +110,9 @@
             name="org.eclipse.cdt.arduino.feature.group"
             versionRange="[9.2.0,9.3.0)"/>
         <requirement
+            name="org.yakindu.sct.feature.group"
+            versionRange="[3.0.0,3.1.0)"/>
+        <requirement
             name="org.eclipse.emf.sdk.feature.group"/>
         <requirement
             name="org.eclipse.emf.compare.ide.ui.feature.group"/>
@@ -131,6 +134,8 @@
               url="http://download.eclipse.org/releases/oxygen/"/>
           <repository
               url="http://download.eclipse.org/cbi/updates/license"/>
+          <repository
+              url="https://updates.yakindu.com/statecharts/releases/"/>
           <repository
               url="http://download.eclipse.org/tools/orbit/R-builds/R20170516192513/repository"/>
         </repositoryList>
