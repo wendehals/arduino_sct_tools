@@ -133,8 +133,6 @@
               url="http://download.eclipse.org/cbi/updates/license"/>
           <repository
               url="http://download.eclipse.org/tools/orbit/R-builds/R20170516192513/repository"/>
-          <repository
-              url="http://yakindu.com/statecharts/releases"/>
         </repositoryList>
       </targlet>
       <description>YAKINDU Statechart Tools for Arduino</description>
