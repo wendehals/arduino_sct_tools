@@ -112,9 +112,13 @@
         <requirement
             name="org.eclipse.emf.sdk.feature.group"/>
         <requirement
+            name="org.eclipse.emf.compare.ide.ui.feature.group"/>
+        <requirement
             name="org.eclipse.xtext.sdk.feature.group"/>
         <requirement
             name="org.eclipse.gmf.runtime.sdk.feature.group"/>
+        <requirement
+            name="com.google.inject.multibindings"/>
         <requirement
             name="org.junit"/>
         <repositoryList
@@ -129,6 +133,8 @@
               url="http://download.eclipse.org/cbi/updates/license"/>
           <repository
               url="http://download.eclipse.org/tools/orbit/R-builds/R20170516192513/repository"/>
+          <repository
+              url="http://yakindu.com/statecharts/releases"/>
         </repositoryList>
       </targlet>
       <description>YAKINDU Statechart Tools for Arduino</description>
