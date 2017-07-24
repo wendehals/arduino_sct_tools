@@ -110,12 +110,6 @@
             name="org.eclipse.cdt.arduino.feature.group"
             versionRange="[9.2.0,9.3.0)"/>
         <requirement
-            name="org.yakindu.sct.feature.group"
-            versionRange="[2.9.0,2.10.0)"/>
-        <requirement
-            name="org.yakindu.sct.generator.feature.group"
-            versionRange="[2.9.0,2.10.0)"/>
-        <requirement
             name="org.eclipse.xtext.sdk.feature.group"/>
         <requirement
             name="org.junit"/>
@@ -129,8 +123,6 @@
               url="http://download.eclipse.org/releases/oxygen/"/>
           <repository
               url="http://download.eclipse.org/cbi/updates/license"/>
-          <repository
-              url="http://updates.yakindu.org/sct/neon/releases"/>
           <repository
               url="http://download.eclipse.org/tools/orbit/R-builds/R20170516192513/repository"/>
         </repositoryList>
@@ -210,6 +202,12 @@
                 pattern="org\.yakindu\.sct\.editor\.sgen"/>
           </operand>
         </predicate>
+      </workingSet>
+      <workingSet
+          name="Yakindu Base">
+        <predicate
+            xsi:type="predicates:NamePredicate"
+            pattern="org\.yakindu\.base.*"/>
       </workingSet>
     </setupTask>
   </stream>

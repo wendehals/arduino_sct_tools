@@ -6,7 +6,7 @@
 
 	<groupId>org.yakindu.sct.arduino</groupId>
 	<artifactId>parent</artifactId>
-	<version>0.6.1-SNAPSHOT</version>
+	<version>0.7.0-SNAPSHOT</version>
 
 	<packaging>pom</packaging>
 
@@ -233,7 +233,7 @@
 						<artifact>
 							<groupId>org.yakindu.sct.arduino</groupId>
 							<artifactId>org.yakindu.sct.arduino.target</artifactId>
-							<version>0.6.1-SNAPSHOT</version>
+							<version>0.7.0-SNAPSHOT</version>
 							<classifier>Oxygen</classifier>
 						</artifact>
 					</target>
