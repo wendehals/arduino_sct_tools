@@ -193,6 +193,18 @@
         </predicate>
       </workingSet>
       <workingSet
+          name="Yakindu SCT Models">
+        <predicate
+            xsi:type="predicates:NamePredicate"
+            pattern="org\.yakindu\.sct\.model.*"/>
+      </workingSet>
+      <workingSet
+          name="Yakindu SCT Generators">
+        <predicate
+            xsi:type="predicates:NamePredicate"
+            pattern="org\.yakindu\.sct\.generator.*"/>
+      </workingSet>
+      <workingSet
           name="Yakindu SCT">
         <predicate
             xsi:type="predicates:AndPredicate">
@@ -210,6 +222,18 @@
             <operand
                 xsi:type="predicates:NamePredicate"
                 pattern="org\.yakindu\.sct\.editor\.sgen"/>
+          </operand>
+          <operand
+              xsi:type="predicates:NotPredicate">
+            <operand
+                xsi:type="predicates:NamePredicate"
+                pattern="org\.yakindu\.sct\.model.*"/>
+          </operand>
+          <operand
+              xsi:type="predicates:NotPredicate">
+            <operand
+                xsi:type="predicates:NamePredicate"
+                pattern="org\.yakindu\.sct\.generator.*"/>
           </operand>
         </predicate>
       </workingSet>
