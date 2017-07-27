@@ -15,7 +15,7 @@ import org.yakindu.sct.model.sexec.ExecutionFlow
 import org.yakindu.sct.model.sexec.extensions.SExecExtensions
 import org.yakindu.sct.model.sgen.GeneratorEntry
 
-abstract class AbstractATmegaTimer extends AbstractTimer {
+abstract class AbstractAVRTimer extends AbstractTimer {
 
 	@Inject extension Naming
 	@Inject extension GenmodelEntries

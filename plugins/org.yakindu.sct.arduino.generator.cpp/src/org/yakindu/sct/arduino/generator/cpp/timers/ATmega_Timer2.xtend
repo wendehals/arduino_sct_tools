@@ -10,7 +10,7 @@ package org.yakindu.sct.arduino.generator.cpp.timers
 
 import org.yakindu.sct.model.sgen.GeneratorEntry
 
-class ATmega_Timer2 extends AbstractATmega8BitTimer {
+class ATmega_Timer2 extends AbstractAVR8BitTimer {
 
 	override timerName() {
 		"ATmega_Timer2"

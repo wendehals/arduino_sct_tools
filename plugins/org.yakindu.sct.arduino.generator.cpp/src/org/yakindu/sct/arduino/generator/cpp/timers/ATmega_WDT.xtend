@@ -13,7 +13,7 @@ import com.google.inject.Inject
 import org.yakindu.sct.arduino.generator.cpp.GenmodelEntries
 import org.yakindu.sct.model.sexec.ExecutionFlow
 
-class ATmega_WDT extends AbstractATmegaTimer {
+class ATmega_WDT extends AbstractAVRTimer {
 
 	@Inject extension GenmodelEntries
 

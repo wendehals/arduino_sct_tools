@@ -52,9 +52,30 @@
        </timer>
     </architecture>
     <architecture
+          id="org.yakindu.sct.arduino.generator.cpp.architecture.attiny85"
+          kind="attiny"
+          name="Atmel ATtiny25/V-45/V-85/V">
+       <timer
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATtiny_Timer0"
+             description="Hardware timer based on Timer/Counter0. It supports only the idle sleep mode between cycles."
+             id="attiny.timer0"
+             maxCyclePeriod="1048560"
+             minCyclePeriod="1"
+             name="Timer/Counter0 (8 bit)">
+       </timer>
+       <timer
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATtiny_Timer1"
+             description="Hardware timer based on Timer/Counter1. It supports only the idle sleep mode between cycles."
+             id="attiny.timer1"
+             maxCyclePeriod="1048560"
+             minCyclePeriod="1"
+             name="Timer/Counter1 (8 bit)">
+       </timer>
+    </architecture>
+    <architecture
           id="org.yakindu.sct.arduino.generator.cpp.architecture.atmega328p"
           kind="atmega"
-          name="Atmel ATmega48P/88P/168P/328P">
+          name="Atmel ATmega48A/PA-88A/PA-168A/PA-328P">
        <timer
              cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_Timer0"
              description="Hardware timer based on Timer/Counter0. It supports only the idle sleep mode between cycles."
@@ -92,7 +113,7 @@
     <architecture
           id="org.yakindu.sct.arduino.generator.cpp.architecture.atmega2560"
           kind="atmega"
-          name="Atmel ATmega640/1280/1281/2560/2561">
+          name="Atmel ATmega640/V-1280/V-1281/V-2560/V-2561/V">
        <timer
              cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_Timer0"
              description="Hardware timer based on Timer/Counter0. It supports only the idle sleep mode between cycles."
@@ -154,7 +175,7 @@
     <architecture
           id="org.yakindu.sct.arduino.generator.cpp.architecture.atmega32u4"
           kind="atmega"
-          name="Atmel ATmega16u4/32u4">
+          name="Atmel ATmega16u4-32u4">
        <timer
              cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_Timer0"
              description="Hardware timer based on Timer/Counter0. It supports only the idle sleep mode between cycles."
