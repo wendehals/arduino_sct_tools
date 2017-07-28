@@ -113,6 +113,12 @@
             name="org.yakindu.sct.feature.group"
             versionRange="[3.0.0,3.1.0)"/>
         <requirement
+            name="org.yakindu.sct.generator.c.feature.group"
+            versionRange="[3.0.0,3.1.0)"/>
+        <requirement
+            name="org.yakindu.sct.generator.cpp.feature.group"
+            versionRange="[3.0.0,3.1.0)"/>
+        <requirement
             name="org.eclipse.emf.sdk.feature.group"/>
         <requirement
             name="org.eclipse.emf.compare.ide.ui.feature.group"/>
