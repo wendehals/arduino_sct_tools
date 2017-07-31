@@ -56,7 +56,7 @@
           kind="attiny"
           name="Atmel ATtiny25/V-45/V-85/V">
        <timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATtiny_Timer0"
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.avr.ATtiny_Timer0"
              description="Hardware timer based on Timer/Counter0. It supports only the idle sleep mode between cycles."
              id="attiny.timer0"
              maxCyclePeriod="1048560"
@@ -64,12 +64,21 @@
              name="Timer/Counter0 (8 bit)">
        </timer>
        <timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATtiny_Timer1"
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.avr.ATtiny_Timer1"
              description="Hardware timer based on Timer/Counter1. It supports only the idle sleep mode between cycles."
              id="attiny.timer1"
              maxCyclePeriod="1048560"
              minCyclePeriod="1"
              name="Timer/Counter1 (8 bit)">
+       </timer>
+       <timer
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.avr.ATtiny_WDT"
+             description="Hardware timer based on the watchdog timer. It supports all sleep modes. Note, other sleep modes than IDLE prevent other timers from being executed."
+             id="attiny.wdt"
+             maxCyclePeriod="1000000"
+             minCyclePeriod="1"
+             name="Watchdog Timer"
+             preDefinedCyclePeriods="16,32,64,125,250,500,1000,2000,4000,8000">
        </timer>
     </architecture>
     <architecture
@@ -77,7 +86,7 @@
           kind="atmega"
           name="Atmel ATmega48A/PA-88A/PA-168A/PA-328P">
        <timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_Timer0"
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.avr.ATmega_Timer0"
              description="Hardware timer based on Timer/Counter0. It supports only the idle sleep mode between cycles."
              id="atmega328p.timer0"
              maxCyclePeriod="1048560"
@@ -85,7 +94,7 @@
              name="Timer/Counter0 (8 bit)">
        </timer>
        <timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_Timer1"
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.avr.ATmega_Timer1"
              description="Hardware timer based on Timer/Counter1. It supports only the idle sleep mode between cycles."
              id="atmega328p.timer1"
              maxCyclePeriod="1068960"
@@ -93,7 +102,7 @@
              name="Timer/Counter1 (16 bit)">
        </timer>
        <timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_Timer2"
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.avr.ATmega_Timer2"
              description="Hardware timer based on Timer/Counter2. It supports only the idle and power save sleep modes between cycles. Note, the power save sleep mode prevents other timers from being executed."
              id="atmega328p.timer2"
              maxCyclePeriod="1048560"
@@ -101,7 +110,7 @@
              name="Timer/Counter2 (8 bit)">
        </timer>
        <timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_WDT"
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.avr.ATmega_WDT"
              description="Hardware timer based on the watchdog timer. It supports all sleep modes. Note, other sleep modes than IDLE prevent other timers from being executed."
              id="atmega.wdt"
              maxCyclePeriod="1000000"
@@ -115,7 +124,7 @@
           kind="atmega"
           name="Atmel ATmega640/V-1280/V-1281/V-2560/V-2561/V">
        <timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_Timer0"
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.avr.ATmega_Timer0"
              description="Hardware timer based on Timer/Counter0. It supports only the idle sleep mode between cycles."
              id="atmega2560.timer0"
              maxCyclePeriod="1048560"
@@ -123,7 +132,7 @@
              name="Timer/Counter0 (8 bit)">
        </timer>
        <timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_Timer1"
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.avr.ATmega_Timer1"
              description="Hardware timer based on Timer/Counter1. It supports only the idle sleep mode between cycles."
              id="atmega2560.timer1"
              maxCyclePeriod="1068960"
@@ -131,7 +140,7 @@
              name="Timer/Counter1 (16 bit)">
        </timer>
        <timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_Timer2"
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.avr.ATmega_Timer2"
              description="Hardware timer based on Timer/Counter2. It supports only the idle and power save sleep modes between cycles. Note, the power save sleep mode prevents other timers from being executed."
              id="atmega2560.timer2"
              maxCyclePeriod="1048560"
@@ -139,7 +148,7 @@
              name="Timer/Counter2 (8 bit)">
        </timer>
        <timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_Timer3"
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.avr.ATmega_Timer3"
              description="Hardware timer based on Timer/Counter3. It supports only the idle sleep mode between cycles."
              id="atmega2560.timer3"
              maxCyclePeriod="1068960"
@@ -147,7 +156,7 @@
              name="Timer/Counter3 (16 bit)">
        </timer>
        <timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_Timer4"
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.avr.ATmega_Timer4"
              description="Hardware timer based on Timer/Counter4. It supports only the idle sleep mode between cycles."
              id="atmega2560.timer4"
              maxCyclePeriod="1068960"
@@ -155,7 +164,7 @@
              name="Timer/Counter4 (16 bit)">
        </timer>
        <timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_Timer5"
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.avr.ATmega_Timer5"
              description="Hardware timer based on Timer/Counter5. It supports only the idle sleep mode between cycles."
              id="atmega2560.timer5"
              maxCyclePeriod="1068960"
@@ -163,7 +172,7 @@
              name="Timer/Counter5 (16 bit)">
        </timer>
        <timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_WDT"
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.avr.ATmega_WDT"
              description="Hardware timer based on the watchdog timer. It supports all sleep modes. Note, other sleep modes than IDLE prevent other timers from being executed."
              id="atmega.wdt"
              maxCyclePeriod="1000000"
@@ -177,7 +186,7 @@
           kind="atmega"
           name="Atmel ATmega16u4-32u4">
        <timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_Timer0"
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.avr.ATmega_Timer0"
              description="Hardware timer based on Timer/Counter0. It supports only the idle sleep mode between cycles."
              id="atmega32u4.timer0"
              maxCyclePeriod="1048560"
@@ -185,7 +194,7 @@
              name="Timer/Counter0 (8 bit)">
        </timer>
        <timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_Timer1"
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.avr.ATmega_Timer1"
              description="Hardware timer based on Timer/Counter1. It supports only the idle sleep mode between cycles."
              id="atmega32u4.timer1"
              maxCyclePeriod="1068960"
@@ -193,7 +202,7 @@
              name="Timer/Counter1 (16 bit)">
        </timer>
        <timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_Timer3"
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.avr.ATmega_Timer3"
              description="Hardware timer based on Timer/Counter3. It supports only the idle sleep mode between cycles."
              id="atmega32u4.timer3"
              maxCyclePeriod="1068960"
@@ -201,7 +210,7 @@
              name="Timer/Counter3 (16 bit)">
        </timer>
        <timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ATmega_WDT"
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.avr.ATmega_WDT"
              description="Hardware timer based on the watchdog timer. It supports all sleep modes. Note, other sleep modes than IDLE prevent other timers from being executed."
              id="atmega.wdt"
              maxCyclePeriod="1000000"
@@ -215,7 +224,7 @@
            kind="esp8266"
            name="ESP8266">
        <timer
-             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.ESP8266_Timer"
+             cppCodeGenerator="org.yakindu.sct.arduino.generator.cpp.timers.esp.ESP8266_Timer"
              description="Software Timer (OS) of the ESP8266. Does not support any sleep modes."
              id="esp8266.ostimer"
              minCyclePeriod="5"

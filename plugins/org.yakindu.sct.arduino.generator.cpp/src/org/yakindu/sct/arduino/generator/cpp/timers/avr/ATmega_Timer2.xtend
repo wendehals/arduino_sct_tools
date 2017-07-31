@@ -6,7 +6,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package org.yakindu.sct.arduino.generator.cpp.timers
+package org.yakindu.sct.arduino.generator.cpp.timers.avr
 
 import org.yakindu.sct.model.sgen.GeneratorEntry
 
@@ -73,7 +73,7 @@ class ATmega_Timer2 extends AbstractAVR8BitTimer {
 
 	override protected sleepBody(GeneratorEntry it) '''
 		uint8_t sleepMode = hardware->prepareSleepMode();
-
+		
 		switch (sleepMode) {
 		case SLEEP_MODE_IDLE:
 		case SLEEP_MODE_ADC:
@@ -86,17 +86,17 @@ class ATmega_Timer2 extends AbstractAVR8BitTimer {
 			set_sleep_mode(SLEEP_MODE_PWR_SAVE);
 			break;
 		}
-
+		
 		noInterrupts();
 		sleep_enable();
 		interrupts();
-
+		
 		if (sleepMode == SLEEP_MODE_PWR_DOWN || sleepMode == SLEEP_MODE_PWR_SAVE
 				|| sleepMode == SLEEP_MODE_STANDBY
 				|| sleepMode == SLEEP_MODE_EXT_STANDBY) {
 			sleep_bod_disable();
 		}
-
+		
 		sleep_cpu();
 		sleep_disable();
 	'''

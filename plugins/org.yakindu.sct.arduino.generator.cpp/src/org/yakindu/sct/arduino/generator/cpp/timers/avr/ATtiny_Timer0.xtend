@@ -6,28 +6,28 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package org.yakindu.sct.arduino.generator.cpp.timers
+package org.yakindu.sct.arduino.generator.cpp.timers.avr
 
 import org.yakindu.sct.model.sgen.GeneratorEntry
 
-class ATmega_Timer4 extends AbstractAVR16BitTimer {
+class ATtiny_Timer0 extends AbstractAVR8BitTimer {
 
 	override timerName() {
-		"ATmega_Timer4"
+		"ATtiny_Timer0"
 	}
 
 	override protected ISR(GeneratorEntry it) '''
-		ISR(TIMER4_COMPA_vect) {
+		ISR(TIMER0_COMPA_vect) {
 			«IF useOverflows»
 				overflowCounter++;
 				
 				if (overflowCounter == overflows && moduloRest != 0) {
 					noInterrupts();
-					OCR4A = (moduloRest * 0.001f * (16000000 / 1024)) - 1;
+					OCR0A = (moduloRest * 0.001f * (16000000 / 1024)) - 1;
 					interrupts();
 				} else if (overflowCounter >= overflows) {
 					noInterrupts();
-					OCR4A = OVERFLOW_COMPARE_VALUE;
+					OCR0A = OVERFLOW_COMPARE_VALUE;
 					interrupts();
 				
 					runCycleFlag = true;
@@ -40,38 +40,38 @@ class ATmega_Timer4 extends AbstractAVR16BitTimer {
 	'''
 
 	override protected initBody(GeneratorEntry it) '''
-		// initialize Timer4
+		// initialize Timer0
 		noInterrupts();
-		TCCR4A = 0;     // set entire TCCR4A register to 0
-		TCCR4B = 0;     // same for TCCR4B
+		TCCR0A = 0;     // set entire TCCR0A register to 0
+		TCCR0B = 0;     // same for TCCR0B
 		
 		«IF useOverflows»
 			overflows = CYCLE_PERIOD / MAX_PERIOD;
 			moduloRest = CYCLE_PERIOD % MAX_PERIOD;
 			
-			OCR4A = OVERFLOW_COMPARE_VALUE;
+			OCR0A = OVERFLOW_COMPARE_VALUE;
 		«ELSE»
 			// set compare match register to desired timer count
 			// period in ms, Arduino runs at 16 MHz, prescaler at 1024
-			OCR4A = (CYCLE_PERIOD * 0.001f * (16000000 / 1024)) - 1;
+			OCR0A = (CYCLE_PERIOD * 0.001f * (16000000 / 1024)) - 1;
 		«ENDIF»
 		
 		// turn on CTC mode
-		TCCR4B |= (1 << WGM42);
+		TCCR0A |= (1 << WGM01);
 		
-		// Set CS42 and CS40 bits for 1024 prescaler
-		TCCR4B |= (1 << CS42);
-		TCCR4B |= (1 << CS40);
+		// Set CS02 and CS00 bits for 1024 prescaler
+		TCCR0B |= (1 << CS02);
+		TCCR0B |= (1 << CS00);
 		
 		// enable timer compare interrupt
-		TIMSK4 |= (1 << OCIE4A);
+		TIMSK0 |= (1 << OCIE0A);
 		
 		// enable global interrupts
 		interrupts();
 	'''
 
 	override protected cancelBody(GeneratorEntry it) '''
-		TCCR4B = 0; // turn off the timer
+		TCCR0B = 0; // turn off the timer
 	'''
 
 }

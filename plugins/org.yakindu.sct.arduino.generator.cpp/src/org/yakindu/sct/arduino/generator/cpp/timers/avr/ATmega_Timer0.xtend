@@ -6,7 +6,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package org.yakindu.sct.arduino.generator.cpp.timers
+package org.yakindu.sct.arduino.generator.cpp.timers.avr
 
 import org.yakindu.sct.model.sgen.GeneratorEntry
 

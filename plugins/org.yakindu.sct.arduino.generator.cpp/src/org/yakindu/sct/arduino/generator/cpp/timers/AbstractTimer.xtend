@@ -32,6 +32,10 @@ abstract class AbstractTimer {
 		#ifndef «timerName.h.define»
 		#define «timerName.h.define»
 		
+		«IF flow.timed»
+			#define MAX_PARALLEL_TIME_EVENTS «maxParallelTimers(flow.sourceElement as Statechart)»
+
+		«ENDIF»
 		«headerIncludes(flow)»
 		
 		class «timerName»«IF flow.timed»: public «timerInterface»«ENDIF» {
@@ -116,7 +120,7 @@ abstract class AbstractTimer {
 		«hardwareConnector»* hardware;
 		
 		«IF flow.timed»
-			«timeEvent»* events;
+			«timeEvent» events[MAX_PARALLEL_TIME_EVENTS];
 		«ENDIF»
 		
 		void init();
@@ -128,9 +132,6 @@ abstract class AbstractTimer {
 
 	protected def CharSequence variableDeclarations(GeneratorEntry it, ExecutionFlow flow) '''
 		const unsigned int CYCLE_PERIOD = «cyclePeriod»;
-		«IF flow.timed»
-			const unsigned char MAX_PARALLEL_TIME_EVENTS = «maxParallelTimers(flow.sourceElement as Statechart)»;
-		«ENDIF»
 	'''
 
 	protected def constructor(GeneratorEntry it, ExecutionFlow flow) '''
@@ -144,7 +145,6 @@ abstract class AbstractTimer {
 		this->hardware = hardware;
 		
 		«IF flow.timed»
-			events = new «timeEvent»[MAX_PARALLEL_TIME_EVENTS];
 			for (unsigned char i = 0; i < MAX_PARALLEL_TIME_EVENTS; i++) {
 				events[i].eventId = NULL;
 			}
