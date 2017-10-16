@@ -2,7 +2,7 @@
 <?pde version="3.8"?><target name="Oxygen" sequenceNumber="32">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.platform.sdk" version="4.7.0.I20170612-0950"/>
+<unit id="org.eclipse.platform.sdk" version="4.7.1.M20171009-0410"/>
 <repository location="http://download.eclipse.org/eclipse/updates/4.7"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
@@ -15,14 +15,14 @@
 <repository location="http://download.eclipse.org/cbi/updates/license"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.cdt.arduino.feature.group" version="9.2.1.201704050430"/>
-<unit id="org.eclipse.cdt.feature.group" version="9.2.1.201704050430"/>
-<repository location="http://download.eclipse.org/tools/cdt/releases/9.2"/>
+<unit id="org.eclipse.cdt.arduino.feature.group" version="9.3.0.201707130901"/>
+<unit id="org.eclipse.cdt.feature.group" version="9.3.2.201709131603"/>
+<repository location="http://download.eclipse.org/tools/cdt/releases/9.3"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.yakindu.sct.feature.group" version="3.0.0.201707171105"/>
-<unit id="org.yakindu.sct.generator.c.feature.group" version="3.0.0.201707171105"/>
-<unit id="org.yakindu.sct.generator.cpp.feature.group" version="3.0.0.201707171105"/>
+<unit id="org.yakindu.sct.feature.group" version="3.1.0.201710041056"/>
+<unit id="org.yakindu.sct.generator.c.feature.group" version="3.1.0.201710041056"/>
+<unit id="org.yakindu.sct.generator.cpp.feature.group" version="3.1.0.201710041056"/>
 <repository location="https://updates.yakindu.com/statecharts/releases/"/>
 </location>
 </locations>

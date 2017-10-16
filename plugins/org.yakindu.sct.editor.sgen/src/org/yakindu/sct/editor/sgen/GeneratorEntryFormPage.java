@@ -35,6 +35,9 @@ import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.ui.editor.model.IXtextModelListener;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
+import org.yakindu.base.expressions.expressions.ExpressionsFactory;
+import org.yakindu.base.expressions.expressions.FloatLiteral;
+import org.yakindu.base.expressions.expressions.PrimitiveValueExpression;
 import org.yakindu.sct.editor.sgen.extensions.FeatureConfigurationSectionsExtension;
 import org.yakindu.sct.editor.sgen.extensions.IFeatureConfigurationSection;
 import org.yakindu.sct.generator.builder.action.GenerateModelAction;
@@ -43,11 +46,6 @@ import org.yakindu.sct.model.sgen.FeatureConfiguration;
 import org.yakindu.sct.model.sgen.FeatureParameter;
 import org.yakindu.sct.model.sgen.FeatureParameterValue;
 import org.yakindu.sct.model.sgen.FeatureType;
-import org.yakindu.sct.model.sgen.IntLiteral;
-import org.yakindu.sct.model.sgen.Literal;
-import org.yakindu.sct.model.sgen.RealLiteral;
-import org.yakindu.sct.model.sgen.SGenFactory;
-import org.yakindu.sct.model.sgen.StringLiteral;
 
 public class GeneratorEntryFormPage extends FormPage implements IXtextModelListener {
 
@@ -185,34 +183,6 @@ public class GeneratorEntryFormPage extends FormPage implements IXtextModelListe
 					 */
 					@Override
 					public void process(final XtextResource resource) throws Exception {
-						Literal literal;
-						switch (parameter.getParameterType()) {
-							case INTEGER:
-								final IntLiteral intLiteral = SGenFactory.eINSTANCE.createIntLiteral();
-								try {
-									intLiteral.setValue(Integer.parseInt(value));
-								} catch (final NumberFormatException exception) {
-									intLiteral.setValue(0);
-								}
-								literal = intLiteral;
-								break;
-							case FLOAT:
-								final RealLiteral realLiteral = SGenFactory.eINSTANCE.createRealLiteral();
-								try {
-									realLiteral.setValue(Float.parseFloat(value));
-								} catch (final NumberFormatException exception) {
-									realLiteral.setValue(0);
-								}
-								literal = realLiteral;
-								break;
-							case STRING:
-							default:
-								final StringLiteral stringLiteral = SGenFactory.eINSTANCE.createStringLiteral();
-								stringLiteral.setValue(value);
-								literal = stringLiteral;
-								break;
-						}
-
 						FeatureConfiguration featureConfiguration = getFeatureConfiguration(resource,
 								getStatechartName(), parameter.getFeatureType());
 						if (featureConfiguration == null) {
@@ -225,7 +195,31 @@ public class GeneratorEntryFormPage extends FormPage implements IXtextModelListe
 							parameterValue = createFeatureParameterValue(resource, featureConfiguration, parameter);
 						}
 
-						parameterValue.setExpression(literal);
+						switch (parameter.getParameterType()) {
+							case INTEGER:
+								try {
+									parameterValue.setValue(Integer.parseInt(value));
+								} catch (final NumberFormatException exception) {
+									parameterValue.setValue(0);
+								}
+								break;
+							case FLOAT:
+								final FloatLiteral realLiteral = ExpressionsFactory.eINSTANCE.createFloatLiteral();
+								try {
+									realLiteral.setValue(Float.parseFloat(value));
+								} catch (final NumberFormatException exception) {
+									realLiteral.setValue(0);
+								}
+								final PrimitiveValueExpression expression = ExpressionsFactory.eINSTANCE
+										.createPrimitiveValueExpression();
+								expression.setValue(realLiteral);
+								parameterValue.setExpression(expression);
+								break;
+							case STRING:
+							default:
+								parameterValue.setValue(value);
+								break;
+						}
 					}
 				});
 			}

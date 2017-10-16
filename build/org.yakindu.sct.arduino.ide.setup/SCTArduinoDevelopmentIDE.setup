@@ -112,6 +112,12 @@
             name="org.eclipse.cdt.arduino.feature.group"
             versionRange="[9.3.0,9.4.0)"/>
         <requirement
+            name="org.eclipse.tm.terminal.connector.cdtserial.feature.feature.group"
+            versionRange="[4.3.0,4.4.0)"/>
+        <requirement
+            name="org.eclipse.tm.terminal.view.feature.feature.group"
+            versionRange="[4.3.0,4.4.0)"/>
+        <requirement
             name="org.yakindu.sct.feature.group"
             versionRange="[3.1.0,3.2.0)"/>
         <requirement
