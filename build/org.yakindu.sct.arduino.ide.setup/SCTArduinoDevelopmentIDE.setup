@@ -20,6 +20,8 @@
     <requirement
         name="org.eclipse.pde.feature.group"/>
     <requirement
+        name="org.eclipse.emf.sdk.feature.group"/>
+    <requirement
         name="org.eclipse.xtext.sdk.feature.group"/>
     <requirement
         name="org.eclipse.xtend.sdk.feature.group"/>
@@ -105,19 +107,19 @@
             name="org.eclipse.egit.feature.group"/>
         <requirement
             name="org.eclipse.cdt.feature.group"
-            versionRange="[9.2.0,9.3.0)"/>
+            versionRange="[9.3.0,9.4.0)"/>
         <requirement
             name="org.eclipse.cdt.arduino.feature.group"
-            versionRange="[9.2.0,9.3.0)"/>
+            versionRange="[9.3.0,9.4.0)"/>
         <requirement
             name="org.yakindu.sct.feature.group"
-            versionRange="[3.0.0,3.1.0)"/>
+            versionRange="[3.1.0,3.2.0)"/>
         <requirement
             name="org.yakindu.sct.generator.c.feature.group"
-            versionRange="[3.0.0,3.1.0)"/>
+            versionRange="[3.1.0,3.2.0)"/>
         <requirement
             name="org.yakindu.sct.generator.cpp.feature.group"
-            versionRange="[3.0.0,3.1.0)"/>
+            versionRange="[3.1.0,3.2.0)"/>
         <requirement
             name="org.eclipse.emf.sdk.feature.group"/>
         <requirement
@@ -135,7 +137,7 @@
           <repository
               url="http://download.eclipse.org/eclipse/updates/4.7"/>
           <repository
-              url="http://download.eclipse.org/tools/cdt/releases/9.2"/>
+              url="http://download.eclipse.org/tools/cdt/releases/9.3"/>
           <repository
               url="http://download.eclipse.org/releases/oxygen/"/>
           <repository
@@ -143,7 +145,7 @@
           <repository
               url="https://updates.yakindu.com/statecharts/releases/"/>
           <repository
-              url="http://download.eclipse.org/tools/orbit/R-builds/R20170516192513/repository"/>
+              url="http://download.eclipse.org/tools/orbit/downloads/drops/R20170919201930/repository"/>
         </repositoryList>
       </targlet>
       <description>YAKINDU Statechart Tools for Arduino</description>
