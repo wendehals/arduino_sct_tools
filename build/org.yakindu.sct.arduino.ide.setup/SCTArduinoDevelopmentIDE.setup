@@ -135,6 +135,8 @@
         <requirement
             name="org.eclipse.gmf.runtime.sdk.feature.group"/>
         <requirement
+            name="org.python.pydev.feature.feature.group"/>
+        <requirement
             name="com.google.inject.multibindings"/>
         <requirement
             name="org.junit"/>
@@ -152,6 +154,8 @@
               url="https://updates.yakindu.com/statecharts/releases/"/>
           <repository
               url="http://download.eclipse.org/tools/orbit/downloads/drops/R20170919201930/repository"/>
+          <repository
+              url="http://www.pydev.org/updates/"/>
         </repositoryList>
       </targlet>
       <description>YAKINDU Statechart Tools for Arduino</description>
