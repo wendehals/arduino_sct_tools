@@ -58,26 +58,28 @@
       <requirement
           name="org.eclipse.egit.feature.group"/>
       <requirement
-          name="org.eclipse.cdt.feature.group"/>
+          name="org.eclipse.cdt.feature.group"
+          versionRange="[9.3.0,9.4.0)"/>
       <requirement
-          name="org.eclipse.cdt.arduino.feature.group"/>
+          name="org.eclipse.cdt.arduino.feature.group"
+          versionRange="[9.3.0,9.4.0)"/>
       <requirement
           name="org.yakindu.sct.feature.group"
-          versionRange="[2.9.0,2.10.0)"/>
+          versionRange="[3.1.0,3.2.0)"/>
       <requirement
           name="org.yakindu.sct.generator.feature.group"
-          versionRange="[2.9.0,2.10.0)"/>
+          versionRange="[3.1.0,3.2.0)"/>
       <requirement
           name="org.yakindu.sct.arduino.feature.group"
-          versionRange="[0.6.0,0.7.0)"/>
+          versionRange="[0.7.0,0.8.0)"/>
       <repository
           url="http://download.eclipse.org/releases/oxygen"/>
       <repository
-          url="http://download.eclipse.org/tools/cdt/releases/9.2"/>
+          url="http://download.eclipse.org/tools/cdt/releases/9.3"/>
       <repository
           url="http://download.eclipse.org/eclipse/updates/4.7"/>
       <repository
-          url="http://updates.yakindu.org/sct/neon/releases"/>
+          url="http://updates.yakindu.org/sct/oxygen/releases"/>
       <repository
           url="https://wendehals.github.io/arduino_sct_tools/releases/"/>
     </setupTask>
