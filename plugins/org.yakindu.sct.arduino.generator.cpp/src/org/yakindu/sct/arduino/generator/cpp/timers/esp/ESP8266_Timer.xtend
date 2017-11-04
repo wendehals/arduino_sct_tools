@@ -1,16 +1,16 @@
 package org.yakindu.sct.arduino.generator.cpp.timers.esp
 
 import com.google.inject.Inject
-import org.yakindu.sct.arduino.generator.cpp.GenmodelEntries
-import org.yakindu.sct.arduino.generator.cpp.Naming
 import org.yakindu.sct.arduino.generator.cpp.timers.AbstractTimer
 import org.yakindu.sct.model.sexec.ExecutionFlow
 import org.yakindu.sct.model.sgen.GeneratorEntry
+import org.yakindu.sct.arduino.generator.cpp.ArduinoCPPNaming
+import org.yakindu.sct.arduino.generator.cpp.ArduinoGenmodelEntries
 
 class ESP8266_Timer extends AbstractTimer {
 
-	@Inject extension Naming
-	@Inject extension GenmodelEntries
+	@Inject extension ArduinoCPPNaming
+	@Inject extension ArduinoGenmodelEntries
 
 	override timerName() {
 		"ESP8266_Timer"

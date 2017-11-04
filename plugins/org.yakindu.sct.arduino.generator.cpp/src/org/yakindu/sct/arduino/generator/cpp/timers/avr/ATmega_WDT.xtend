@@ -10,12 +10,12 @@ package org.yakindu.sct.arduino.generator.cpp.timers.avr
 
 import org.yakindu.sct.model.sgen.GeneratorEntry
 import com.google.inject.Inject
-import org.yakindu.sct.arduino.generator.cpp.GenmodelEntries
 import org.yakindu.sct.model.sexec.ExecutionFlow
+import org.yakindu.sct.arduino.generator.cpp.ArduinoGenmodelEntries
 
 class ATmega_WDT extends AbstractAVRTimer {
 
-	@Inject extension GenmodelEntries
+	@Inject extension ArduinoGenmodelEntries
 
 	override timerName() {
 		"ATmega_WDT"

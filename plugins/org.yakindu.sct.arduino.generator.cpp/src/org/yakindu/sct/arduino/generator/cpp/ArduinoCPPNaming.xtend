@@ -8,7 +8,9 @@
  */
 package org.yakindu.sct.arduino.generator.cpp
 
-class Naming extends org.yakindu.sct.generator.cpp.Naming {
+import org.yakindu.sct.generator.cpp.CppNaming
+
+class ArduinoCPPNaming extends CppNaming {
 
 	def arduinoMain() {
 		"ArduinoMain"

@@ -47,8 +47,8 @@ class ArduinoCodeGenerator implements IExecutionFlowGenerator {
 
 	@Inject IGenArtifactConfigurations locations
 
-	@Inject extension Naming
-	@Inject extension GenmodelEntries
+	@Inject extension ArduinoCPPNaming
+	@Inject extension ArduinoGenmodelEntries
 	@Inject extension SExecExtensions
 
 	override generate(ExecutionFlow it, GeneratorEntry entry, IFileSystemAccess fsa) {

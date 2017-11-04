@@ -8,7 +8,7 @@
 		<relativePath>../../build/org.yakindu.sct.arduino.build/pom.xml</relativePath>
 		<groupId>org.yakindu.sct.arduino</groupId>
 		<artifactId>parent</artifactId>
-		<version>0.7.0-SNAPSHOT</version>
+		<version>0.7.1-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>org.yakindu.sct.editor.sgen</artifactId>

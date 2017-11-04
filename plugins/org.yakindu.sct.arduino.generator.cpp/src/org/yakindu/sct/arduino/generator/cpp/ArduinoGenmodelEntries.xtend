@@ -15,7 +15,7 @@ import org.yakindu.sct.arduino.generator.cpp.features.IArduinoFeatureConstants
 import org.yakindu.sct.model.sgen.GeneratorEntry
 import org.yakindu.sct.generator.core.library.ICoreLibraryHelper
 
-class GenmodelEntries extends org.yakindu.sct.generator.c.GenmodelEntries {
+class ArduinoGenmodelEntries extends org.yakindu.sct.generator.c.extensions.GenmodelEntries {
 
 	@Inject extension ICoreLibraryHelper coreLibraryHelper
 

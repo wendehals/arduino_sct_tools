@@ -16,8 +16,8 @@ import org.yakindu.sct.generator.c.IGenArtifactConfigurations
 
 class StatemachineConnector implements IContentTemplate {
 
-	@Inject extension Naming
-	@Inject extension GenmodelEntries
+	@Inject extension ArduinoCPPNaming
+	@Inject extension ArduinoGenmodelEntries
 
 	override content(ExecutionFlow it, GeneratorEntry entry, IGenArtifactConfigurations locations) '''
 		«entry.licenseText»

@@ -9,18 +9,18 @@
 package org.yakindu.sct.arduino.generator.cpp.timers
 
 import com.google.inject.Inject
-import org.yakindu.sct.arduino.generator.cpp.GenmodelEntries
 import org.yakindu.sct.arduino.generator.cpp.MaxParallelTimers
-import org.yakindu.sct.arduino.generator.cpp.Naming
 import org.yakindu.sct.model.sexec.ExecutionFlow
 import org.yakindu.sct.model.sgen.GeneratorEntry
 import org.yakindu.sct.model.sgraph.Statechart
 import org.yakindu.sct.model.sexec.extensions.SExecExtensions
+import org.yakindu.sct.arduino.generator.cpp.ArduinoCPPNaming
+import org.yakindu.sct.arduino.generator.cpp.ArduinoGenmodelEntries
 
 abstract class AbstractTimer {
 
-	@Inject extension Naming
-	@Inject extension GenmodelEntries
+	@Inject extension ArduinoCPPNaming
+	@Inject extension ArduinoGenmodelEntries
 	@Inject extension MaxParallelTimers
 	@Inject extension SExecExtensions
 

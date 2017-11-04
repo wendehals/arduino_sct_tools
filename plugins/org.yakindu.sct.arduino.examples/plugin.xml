@@ -3,15 +3,15 @@
 <plugin>
    <extension point="org.eclipse.ui.newWizards">
       <category
-            id="org.yakindu.sct.arduino.examples.category"
+            id="arduino.examples.category"
             name="YAKINDU Statechart Tools for Arduino Examples"
             parentCategory="org.eclipse.ui.Examples">
       </category>
       <wizard
-            id="org.yakindu.sct.arduino.examples.pedestrianCrossing"
+            id="arduino.examples.pedestrianCrossing"
             name="Pedestrian Crossing"
             class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard"
-            category="org.eclipse.ui.Examples/org.yakindu.sct.arduino.examples.category"
+            category="org.eclipse.ui.Examples/arduino.examples.category"
             finalPerspective="org.eclipse.cdt.ui.CPerspective"
             preferredPerspectives="org.eclipse.cdt.ui.CPerspective,org.yakindu.sct.ui.ModelingPerspective,org.yakindu.sct.ui.SimulationPerspective"
             icon="icons/yakindu16.png"
@@ -21,11 +21,11 @@
          </description>
       </wizard>
       <wizard
-            category="org.eclipse.ui.Examples/org.yakindu.sct.arduino.examples.category"
+            category="org.eclipse.ui.Examples/arduino.examples.category"
             class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard"
             finalPerspective="org.eclipse.cdt.ui.CPerspective"
             icon="icons/yakindu16.png"
-            id="org.yakindu.sct.arduino.examples.blink"
+            id="arduino.examples.blink"
             name="Blink"
             preferredPerspectives="org.eclipse.cdt.ui.CPerspective,org.yakindu.sct.ui.ModelingPerspective,org.yakindu.sct.ui.SimulationPerspective"
             project="true">
@@ -38,7 +38,7 @@
          point="org.eclipse.emf.common.ui.examples">
       <example
             pageImage="icons/yakindu48.png"
-            wizardID="org.yakindu.sct.arduino.examples.pedestrianCrossing">
+            wizardID="arduino.examples.pedestrianCrossing">
          <projectDescriptor
                contentURI="projects/PedestrianCrossing.zip"
                description="A pedestrian crossing traffic light running on an Arduino Uno."
@@ -50,7 +50,7 @@
       </example>
       <example
             pageImage="icons/yakindu48.png"
-            wizardID="org.yakindu.sct.arduino.examples.blink">
+            wizardID="arduino.examples.blink">
          <projectDescriptor
                contentURI="projects/Blink.zip"
                description="The typical Arduino&quot;Hello World&quot; example - a blinking LED - running on an Arduino Uno."

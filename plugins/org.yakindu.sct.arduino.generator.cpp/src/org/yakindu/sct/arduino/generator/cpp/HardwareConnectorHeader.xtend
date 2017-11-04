@@ -16,8 +16,8 @@ import org.yakindu.sct.model.sgen.GeneratorEntry
 
 class HardwareConnectorHeader implements IContentTemplate {
 
-	@Inject extension Naming
-	@Inject extension GenmodelEntries
+	@Inject extension ArduinoCPPNaming
+	@Inject extension ArduinoGenmodelEntries
 
 	override content(ExecutionFlow flow, GeneratorEntry it, IGenArtifactConfigurations locations) '''
 		«licenseText»

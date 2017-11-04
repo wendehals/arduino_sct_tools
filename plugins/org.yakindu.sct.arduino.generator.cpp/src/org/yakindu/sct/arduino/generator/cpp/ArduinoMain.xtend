@@ -17,8 +17,8 @@ import org.yakindu.sct.model.sgen.GeneratorEntry
 
 class ArduinoMain implements IContentTemplate {
 
-	@Inject extension Naming
-	@Inject extension GenmodelEntries
+	@Inject extension ArduinoCPPNaming
+	@Inject extension ArduinoGenmodelEntries
 	@Inject extension SExecExtensions
 
 	override content(ExecutionFlow it, GeneratorEntry entry, IGenArtifactConfigurations locations) '''
