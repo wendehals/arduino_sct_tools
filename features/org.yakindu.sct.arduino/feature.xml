@@ -25,7 +25,7 @@
       <import plugin="org.yakindu.sct.generator.core"/>
       <import plugin="org.yakindu.sct.generator.genmodel"/>
       <import plugin="org.yakindu.sct.generator.c"/>
-      <import plugin="org.yakindu.sct.generator.cpp"/>
+      <import plugin="org.yakindu.sct.generator.cpp" version="3.1.1" match="greaterOrEqual"/>
       <import plugin="org.eclipse.cdt.ui"/>
       <import plugin="org.eclipse.core.resources"/>
       <import plugin="org.eclipse.core.runtime"/>
