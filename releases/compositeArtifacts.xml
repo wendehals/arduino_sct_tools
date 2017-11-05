@@ -5,7 +5,7 @@
   <properties size='1'>
     <property name='p2.timestamp' value='1243822502440'/>
   </properties>
-  <children size='12'>
+  <children size='14'>
     <child location='0.1.0'/>
     <child location='0.2.0'/>
     <child location='0.3.0'/>
@@ -13,7 +13,9 @@
     <child location='0.5.0'/>
     <child location='0.6.1'/>
     <child location='0.7.0'/>
+    <child location='0.7.1'/>
     <child location='http://download.eclipse.org/releases/neon'/>
+    <child location='http://download.eclipse.org/releases/oxygen'/>
     <child location='http://download.eclipse.org/tools/cdt/releases/9.0'/>
     <child location='http://download.eclipse.org/tools/cdt/releases/9.1'/>
     <child location='http://download.eclipse.org/tools/cdt/releases/9.2'/>
