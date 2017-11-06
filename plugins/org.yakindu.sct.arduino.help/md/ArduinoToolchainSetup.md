@@ -1,4 +1,4 @@
-#Arduino Toolchain Setup
+# Arduino Toolchain Setup
 
 Before starting development for your Arduino you need to install and setup the Arduino toolchain and libraries in your freshly installed Eclipse environment. Open the Arduino Downloads Manager from the Help menu. In the Platforms tab add a new toolchain by clicking the "Add" button and choosing the target platform. In our case it's the Arduino AVR Boards package.
 
