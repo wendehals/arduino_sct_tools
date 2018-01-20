@@ -62,7 +62,7 @@
       xsi:type="git:GitCloneTask"
       id="git.clone.tools_template"
       remoteURI="https://git.eclipse.org/r/cdt/org.eclipse.tools.templates"
-      checkoutBranch="tmpl1_0">
+      checkoutBranch="master">
     <description>org.eclipse.tools.templates</description>
   </setupTask>
   <stream name="master"
