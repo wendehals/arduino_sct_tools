@@ -107,25 +107,19 @@
             name="org.eclipse.egit.feature.group"/>
         <requirement
             name="org.eclipse.cdt.feature.group"
-            versionRange="[9.3.0,9.4.0)"/>
+            versionRange="[9.4.0,9.5.0)"/>
         <requirement
             name="org.eclipse.cdt.arduino.feature.group"
-            versionRange="[9.3.0,9.4.0)"/>
-        <requirement
-            name="org.eclipse.tm.terminal.connector.cdtserial.feature.feature.group"
-            versionRange="[4.3.0,4.4.0)"/>
-        <requirement
-            name="org.eclipse.tm.terminal.view.feature.feature.group"
-            versionRange="[4.3.0,4.4.0)"/>
+            versionRange="[9.4.0,9.5.0)"/>
         <requirement
             name="org.yakindu.sct.feature.group"
-            versionRange="[3.1.0,3.2.0)"/>
+            versionRange="[3.2.0,3.3.0)"/>
         <requirement
             name="org.yakindu.sct.generator.c.feature.group"
-            versionRange="[3.1.0,3.2.0)"/>
+            versionRange="[3.2.0,3.3.0)"/>
         <requirement
             name="org.yakindu.sct.generator.cpp.feature.group"
-            versionRange="[3.1.0,3.2.0)"/>
+            versionRange="[3.2.0,3.3.0)"/>
         <requirement
             name="org.eclipse.emf.sdk.feature.group"/>
         <requirement
@@ -135,8 +129,6 @@
         <requirement
             name="org.eclipse.gmf.runtime.sdk.feature.group"/>
         <requirement
-            name="org.python.pydev.feature.feature.group"/>
-        <requirement
             name="com.google.inject.multibindings"/>
         <requirement
             name="org.junit"/>
@@ -145,7 +137,7 @@
           <repository
               url="http://download.eclipse.org/eclipse/updates/4.7"/>
           <repository
-              url="http://download.eclipse.org/tools/cdt/releases/9.3"/>
+              url="http://download.eclipse.org/tools/cdt/releases/9.4"/>
           <repository
               url="http://download.eclipse.org/releases/oxygen/"/>
           <repository
@@ -154,8 +146,6 @@
               url="https://updates.yakindu.com/statecharts/releases/"/>
           <repository
               url="http://download.eclipse.org/tools/orbit/downloads/drops/R20170919201930/repository"/>
-          <repository
-              url="http://www.pydev.org/updates/"/>
         </repositoryList>
       </targlet>
       <description>YAKINDU Statechart Tools for Arduino</description>
