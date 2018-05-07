@@ -11,6 +11,7 @@ package org.yakindu.sct.arduino.generator.cpp;
 import org.yakindu.base.types.inferrer.ITypeSystemInferrer;
 import org.yakindu.sct.generator.c.CExpressionsGenerator;
 import org.yakindu.sct.generator.c.IncludeProvider;
+import org.yakindu.sct.generator.c.extensions.GenmodelEntries;
 import org.yakindu.sct.generator.c.extensions.Naming;
 import org.yakindu.sct.generator.c.types.CTypeSystemAccess;
 import org.yakindu.sct.generator.core.IExecutionFlowGenerator;
@@ -25,6 +26,7 @@ import org.yakindu.sct.model.sgen.GeneratorEntry;
 import org.yakindu.sct.model.stext.inferrer.STextTypeInferrer;
 
 import com.google.inject.Binder;
+import com.google.inject.name.Names;
 
 public class ArduinoCppCodeGeneratorModule implements IGeneratorModule {
 
@@ -42,6 +44,17 @@ public class ArduinoCppCodeGeneratorModule implements IGeneratorModule {
 		binder.bind(Naming.class).to(CppNaming.class);
 		binder.bind(IncludeProvider.class).to(StandardCppIncludeProvider.class);
 		binder.bind(CExpressionsGenerator.class).to(CppExpressionsGenerator.class);
+		binder.bind(String.class).annotatedWith(Names.named("Separator")).toInstance(getSeparator(entry));
+	}
+
+	protected String getSeparator(final GeneratorEntry entry) {
+		final GenmodelEntries entries = new GenmodelEntries();
+		final String separator = entries.getSeparator(entry);
+		if (separator == null) {
+			return "_";
+		} else {
+			return separator;
+		}
 	}
 
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="Oxygen" sequenceNumber="34">
+<?pde version="3.8"?><target name="Oxygen" sequenceNumber="36">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.platform.sdk" version="4.7.1.M20171009-0410"/>
+<unit id="org.eclipse.platform.sdk" version="4.7.3.M20180330-0640"/>
 <repository location="http://download.eclipse.org/eclipse/updates/4.7"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
@@ -17,14 +17,14 @@
 <repository location="http://download.eclipse.org/cbi/updates/license"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.cdt.arduino.feature.group" version="9.4.0.201801130900"/>
-<unit id="org.eclipse.cdt.feature.group" version="9.4.0.201801130900"/>
+<unit id="org.eclipse.cdt.arduino.feature.group" version="9.4.3.201802261533"/>
+<unit id="org.eclipse.cdt.feature.group" version="9.4.3.201802261533"/>
 <repository location="http://download.eclipse.org/tools/cdt/releases/9.4"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.yakindu.sct.feature.group" version="3.2.0.201801111201"/>
-<unit id="org.yakindu.sct.generator.c.feature.group" version="3.2.0.201801111201"/>
-<unit id="org.yakindu.sct.generator.cpp.feature.group" version="3.2.0.201801111201"/>
+<unit id="org.yakindu.sct.feature.group" version="3.3.2.201804191418"/>
+<unit id="org.yakindu.sct.generator.c.feature.group" version="3.3.2.201804191418"/>
+<unit id="org.yakindu.sct.generator.cpp.feature.group" version="3.3.2.201804191418"/>
 <repository location="https://updates.yakindu.com/statecharts/releases/"/>
 </location>
 </locations>

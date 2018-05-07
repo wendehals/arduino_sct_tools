@@ -113,13 +113,13 @@
             versionRange="[9.4.0,9.5.0)"/>
         <requirement
             name="org.yakindu.sct.feature.group"
-            versionRange="[3.2.0,3.3.0)"/>
+            versionRange="[3.3.0,3.4.0)"/>
         <requirement
             name="org.yakindu.sct.generator.c.feature.group"
-            versionRange="[3.2.0,3.3.0)"/>
+            versionRange="[3.3.0,3.4.0)"/>
         <requirement
             name="org.yakindu.sct.generator.cpp.feature.group"
-            versionRange="[3.2.0,3.3.0)"/>
+            versionRange="[3.3.0,3.4.0)"/>
         <requirement
             name="org.eclipse.emf.sdk.feature.group"/>
         <requirement
