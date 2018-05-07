@@ -14,7 +14,7 @@
 	<name>YAKINDU Statechart Tools for Arduino</name>
 
 	<properties>
-		<tycho.version>1.0.0</tycho.version>
+		<tycho.version>1.1.0</tycho.version>
 		<build-helper.version>3.0.0</build-helper.version>
 		<org.jboss.tools.tycho-plugins.version>0.23.2</org.jboss.tools.tycho-plugins.version>
 		<xtextVersion>2.12.0</xtextVersion>
@@ -85,7 +85,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-clean-plugin</artifactId>
-					<version>2.5</version>
+					<version>3.1.0</version>
 					<configuration>
 						<filesets>
 							<fileset>
