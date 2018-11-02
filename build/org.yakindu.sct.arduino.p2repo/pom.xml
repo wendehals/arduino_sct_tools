@@ -8,7 +8,7 @@
 		<relativePath>../org.yakindu.sct.arduino.build/pom.xml</relativePath>
 		<groupId>org.yakindu.sct.arduino</groupId>
 		<artifactId>parent</artifactId>
-		<version>0.8.0-SNAPSHOT</version>
+		<version>0.9.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>org.yakindu.sct.arduino.p2repo</artifactId>
@@ -82,15 +82,15 @@
 							<!-- Symbols are used while expanding index.html template -->
 							<symbols>
 								<update.site.name>${project.parent.name}</update.site.name>
-								<target.eclipse.version>Oxygen (4.7.0)</target.eclipse.version>
+								<target.eclipse.version>2018-09 (4.9)</target.eclipse.version>
 							</symbols>
 
 							<associateSites>
-								<site>http://download.eclipse.org/releases/oxygen</site>
-								<site>http://download.eclipse.org/eclipse/updates/4.7</site>
+								<site>http://download.eclipse.org/releases/2018-09</site>
+								<site>http://download.eclipse.org/eclipse/updates/4.9</site>
 								<site>http://download.eclipse.org/cbi/updates/license</site>
-								<site>http://download.eclipse.org/tools/cdt/releases/9.2</site>
-								<site>http://updates.yakindu.org/sct/neon/releases</site>
+								<site>http://download.eclipse.org/tools/cdt/releases/9.5</site>
+								<site>http://updates.yakindu.org/sct/releases</site>
 							</associateSites>
 						</configuration>
 					</execution>

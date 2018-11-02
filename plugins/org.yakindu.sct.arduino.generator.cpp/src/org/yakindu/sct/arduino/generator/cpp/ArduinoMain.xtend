@@ -23,34 +23,34 @@ class ArduinoMain implements IContentTemplate {
 
 	override content(ExecutionFlow it, GeneratorEntry entry, IGenArtifactConfigurations locations) '''
 		«entry.licenseText»
-		
+
 		#include "«arduinoMain.h»"
 		#include "«entry.timerClassName.h»"
 		#include "«entry.userSrcFolderRelativeToSrcGen»«module.connector.h»"
-		
+
 		«module»* statemachine;
 		«module.connector»* connector;
 		«entry.timerClassName»* timer;
-		
+
 		«module»* getStatemachine() {
 			return statemachine;
 		}
-		
+
 		void setup() {
 			statemachine = new «module»();
 			connector = new «module.connector»(statemachine);
 			timer = new «entry.timerClassName»(statemachine, connector);
-		
+
 			«IF timed»statemachine->setTimer(timer);«ENDIF»
 			timer->start();
 		}
-		
+
 		void loop() {
 			timer->runCycle();
 		}
 	'''
 
-	def timerClassName(GeneratorEntry it) {
+	def String timerClassName(GeneratorEntry it) {
 		timer.codeGenerator.timerName
 	}
 

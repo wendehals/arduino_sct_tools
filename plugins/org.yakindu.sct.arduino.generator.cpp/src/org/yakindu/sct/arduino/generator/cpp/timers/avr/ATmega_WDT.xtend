@@ -95,7 +95,7 @@ class ATmega_WDT extends AbstractAVRTimer {
 		interrupts();
 	'''
 
-	override def sleepBody(GeneratorEntry it) '''
+	override CharSequence sleepBody(GeneratorEntry it) '''
 		set_sleep_mode(hardware->prepareSleepMode());
 		noInterrupts();
 		sleep_enable();

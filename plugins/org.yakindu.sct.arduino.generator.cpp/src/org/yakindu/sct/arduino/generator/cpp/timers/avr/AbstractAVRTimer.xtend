@@ -75,13 +75,13 @@ abstract class AbstractAVRTimer extends AbstractTimer {
 		sleep();
 	'''
 
-	protected def sleep(GeneratorEntry it) '''
+	protected def CharSequence sleep(GeneratorEntry it) '''
 		void «timerName»::sleep() {
 			«sleepBody»
 		}
 	'''
 
-	protected def sleepBody(GeneratorEntry it) '''
+	protected def CharSequence sleepBody(GeneratorEntry it) '''
 		hardware->prepareSleepMode();
 		
 		set_sleep_mode(SLEEP_MODE_IDLE);
@@ -94,7 +94,7 @@ abstract class AbstractAVRTimer extends AbstractTimer {
 
 	protected def int maxPeriod()
 
-	protected def useOverflows(GeneratorEntry entry) {
+	protected def boolean useOverflows(GeneratorEntry entry) {
 		entry.cyclePeriod > maxPeriod;
 	}
 

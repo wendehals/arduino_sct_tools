@@ -2,7 +2,7 @@
 <feature
       id="org.yakindu.sct.arduino"
       label="YAKINDU Statechart Tools for Arduino"
-      version="0.8.0.qualifier"
+      version="0.9.0.qualifier"
       provider-name="Lothar Wendehals"
       license-feature="org.eclipse.license"
       license-feature-version="1.0.1.qualifier">
@@ -12,11 +12,11 @@
    </description>
 
    <copyright url="https://github.com/wendehals/arduino_sct_tools">
-      Copyright 2016 by Lothar Wendehals
+      Copyright 2018 by Lothar Wendehals
    </copyright>
 
    <url>
-      <discovery label="CDT 9.1.0" url="http://download.eclipse.org/tools/cdt/releases/9.1"/>
+      <discovery label="CDT 9.5.0" url="http://download.eclipse.org/tools/cdt/releases/9.5"/>
    </url>
 
    <requires>

@@ -12,19 +12,19 @@ import org.yakindu.sct.generator.cpp.CppNaming
 
 class ArduinoCPPNaming extends CppNaming {
 
-	def arduinoMain() {
+	def String arduinoMain() {
 		"ArduinoMain"
 	}
 
-	def timeEvent() {
+	def String timeEvent() {
 		"TimeEvent"
 	}
 
-	def hardwareConnector() {
+	def String hardwareConnector() {
 		"Hardware".connector
 	}
 
-	def connector(String it) {
+	def String connector(String it) {
 		it + "Connector"
 	}
 

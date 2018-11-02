@@ -24,9 +24,9 @@ abstract class AbstractTimer {
 	@Inject extension MaxParallelTimers
 	@Inject extension SExecExtensions
 
-	public def String timerName()
+	def String timerName()
 
-	public def generateTimerHeader(GeneratorEntry it, ExecutionFlow flow) '''
+	def CharSequence generateTimerHeader(GeneratorEntry it, ExecutionFlow flow) '''
 		«licenseText»
 		
 		#ifndef «timerName.h.define»
@@ -55,35 +55,35 @@ abstract class AbstractTimer {
 		#endif /* «timerName.h.define» */
 	'''
 
-	public def generateTimer(GeneratorEntry it, ExecutionFlow flow) '''
+	def CharSequence generateTimer(GeneratorEntry it, ExecutionFlow flow) '''
 		«licenseText»
-		
+
 		#include "«timerName.h»"
-		
+
 		«variableDeclarations(flow)»
-		
+
 		«constructor(flow)»
-		
+
 		«start»
-		
+
 		«init»
-		
+
 		«IF flow.timed»
 			«setTimer»
-			
+
 			«unsetTimer»
 
 		«ENDIF»
 		«runCycle(flow)»
-		
+
 		«IF flow.timed»
 			«raiseTimeEvents»
 		«ENDIF»
-		
+
 		«cancel»
 	'''
 
-	protected def headerIncludes(GeneratorEntry it, ExecutionFlow flow) '''
+	protected def CharSequence headerIncludes(GeneratorEntry it, ExecutionFlow flow) '''
 		#include <Arduino.h>
 		
 		#include "«flow.typesModule.h»"
@@ -96,7 +96,7 @@ abstract class AbstractTimer {
 		«ENDIF»
 	'''
 
-	protected def publicHeaderPart(GeneratorEntry it, ExecutionFlow flow) '''
+	protected def CharSequence publicHeaderPart(GeneratorEntry it, ExecutionFlow flow) '''
 		«timerName»(«statemachineInterface»* statemachine, «hardwareConnector»* hardware);
 		
 		inline ~«timerName»();
@@ -114,7 +114,7 @@ abstract class AbstractTimer {
 		void cancel();
 	'''
 
-	protected def privateHeaderPart(GeneratorEntry it, ExecutionFlow flow) '''
+	protected def CharSequence privateHeaderPart(GeneratorEntry it, ExecutionFlow flow) '''
 		«statemachineInterface»* statemachine;
 		
 		«hardwareConnector»* hardware;
@@ -134,13 +134,13 @@ abstract class AbstractTimer {
 		const unsigned int CYCLE_PERIOD = «cyclePeriod»;
 	'''
 
-	protected def constructor(GeneratorEntry it, ExecutionFlow flow) '''
+	protected def CharSequence constructor(GeneratorEntry it, ExecutionFlow flow) '''
 		«timerName»::«timerName»(«statemachineInterface»* statemachine, «hardwareConnector»* hardware) {
 			«constructorBody(flow)»
 		}
 	'''
 
-	protected def constructorBody(GeneratorEntry it, ExecutionFlow flow) '''
+	protected def CharSequence constructorBody(GeneratorEntry it, ExecutionFlow flow) '''
 		this->statemachine = statemachine;
 		this->hardware = hardware;
 		
@@ -151,35 +151,35 @@ abstract class AbstractTimer {
 		«ENDIF»
 	'''
 
-	protected def start(GeneratorEntry it) '''
+	protected def CharSequence start(GeneratorEntry it) '''
 		void «timerName»::start() {
 			«startBody»
 		}
 	'''
 
-	protected def startBody(GeneratorEntry it) '''
+	protected def CharSequence startBody(GeneratorEntry it) '''
 		statemachine->init();
 		statemachine->enter();
 		hardware->init();
 		init();
 	'''
 
-	protected def init(GeneratorEntry it) '''
+	protected def CharSequence init(GeneratorEntry it) '''
 		void «timerName»::init() {
 			«initBody»
 		}
 	'''
 
-	protected def initBody(GeneratorEntry it) '''
+	protected def CharSequence initBody(GeneratorEntry it) '''
 	'''
 
-	protected def setTimer(GeneratorEntry it) '''
+	protected def CharSequence setTimer(GeneratorEntry it) '''
 		void «timerName»::setTimer(«timedStatemachineInterface»* timedStatemachine, sc_eventid eventId, sc_integer duration, sc_boolean isPeriodic) {
 			«setTimerBody»
 		}
 	'''
 
-	protected def setTimerBody(GeneratorEntry it) '''
+	protected def CharSequence setTimerBody(GeneratorEntry it) '''
 		for (unsigned char i = 0; i < MAX_PARALLEL_TIME_EVENTS; i++) {
 			if (events[i].eventId == NULL) {
 				events[i].timedStatemachine = timedStatemachine;
@@ -193,13 +193,13 @@ abstract class AbstractTimer {
 		}
 	'''
 
-	protected def unsetTimer(GeneratorEntry it) '''
+	protected def CharSequence unsetTimer(GeneratorEntry it) '''
 		void «timerName»::unsetTimer(«timedStatemachineInterface»* timedStatemachine, sc_eventid eventId) {
 			«unsetTimerBody»
 		}
 	'''
 
-	protected def unsetTimerBody(GeneratorEntry it) '''
+	protected def CharSequence unsetTimerBody(GeneratorEntry it) '''
 		for (unsigned char i = 0; i < MAX_PARALLEL_TIME_EVENTS; i++) {
 			if (events[i].eventId == eventId) {
 				events[i].eventId = NULL;
@@ -208,13 +208,13 @@ abstract class AbstractTimer {
 		}
 	'''
 
-	protected def runCycle(GeneratorEntry it, ExecutionFlow flow) '''
+	protected def CharSequence runCycle(GeneratorEntry it, ExecutionFlow flow) '''
 		void «timerName»::runCycle() {
 			«runCycleBody(flow)»
 		}
 	'''
 
-	protected def runCycleBody(GeneratorEntry it, ExecutionFlow flow) '''
+	protected def CharSequence runCycleBody(GeneratorEntry it, ExecutionFlow flow) '''
 		«IF flow.timed»
 			raiseTimeEvents();
 		«ENDIF»
@@ -223,24 +223,24 @@ abstract class AbstractTimer {
 		hardware->syncState();
 	'''
 
-	protected def raiseTimeEvents(GeneratorEntry it) '''
+	protected def CharSequence raiseTimeEvents(GeneratorEntry it) '''
 		void «timerName»::raiseTimeEvents() {
 			«raiseTimeEventsBody»
 		}
 	'''
 
-	protected def raiseTimeEventsBody(GeneratorEntry it) '''
+	protected def CharSequence raiseTimeEventsBody(GeneratorEntry it) '''
 		for (unsigned char i = 0; i < MAX_PARALLEL_TIME_EVENTS; i++) {
 			if (events[i].eventId == NULL) {
 				continue;
 			}
-		
+
 			events[i].overflowCounter++;
-		
+
 			if ((events[i].overflowCounter >= events[i].overflows) && !events[i].eventRaised) {
 				events[i].timedStatemachine->raiseTimeEvent(events[i].eventId);
 				events[i].overflowCounter = 0;
-		
+
 				if (!events[i].periodic) {
 					events[i].eventRaised = true;
 				}
@@ -248,13 +248,13 @@ abstract class AbstractTimer {
 		}
 	'''
 
-	protected def cancel(GeneratorEntry it) '''
+	protected def CharSequence cancel(GeneratorEntry it) '''
 		void «timerName»::cancel() {
 			«cancelBody»
 		}
 	'''
 
-	protected def cancelBody(GeneratorEntry it) '''
+	protected def CharSequence cancelBody(GeneratorEntry it) '''
 	'''
 
 }

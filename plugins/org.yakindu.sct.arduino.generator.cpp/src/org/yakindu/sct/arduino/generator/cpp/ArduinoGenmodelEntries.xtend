@@ -23,11 +23,11 @@ class ArduinoGenmodelEntries extends org.yakindu.sct.generator.c.extensions.Genm
 		getFeatureConfiguration(IArduinoFeatureConstants::FEATURE_NAME)
 	}
 
-	def getUserSrcFolder(GeneratorEntry it) {
+	def String getUserSrcFolder(GeneratorEntry it) {
 		generatorOptionsFeature?.getParameterValue(IArduinoFeatureConstants::PARAM_USER_SRC_FOLDER).stringValue
 	}
 
-	def getSrcGenFolder(GeneratorEntry it) {
+	def String getSrcGenFolder(GeneratorEntry it) {
 		coreLibraryHelper.getTargetFolderValue(it).stringValue
 	}
 
@@ -36,7 +36,7 @@ class ArduinoGenmodelEntries extends org.yakindu.sct.generator.c.extensions.Genm
 		ArchitecturesExtension.getTimer(timerId)
 	}
 
-	def cyclePeriod(GeneratorEntry it) {
+	def int cyclePeriod(GeneratorEntry it) {
 		val paramValue = generatorOptionsFeature?.getParameterValue(IArduinoFeatureConstants::PARAM_CYCLE_PERIOD)
 		if (paramValue !== null) {
 			try {
@@ -48,15 +48,15 @@ class ArduinoGenmodelEntries extends org.yakindu.sct.generator.c.extensions.Genm
 		return IArduinoFeatureConstants::CYCLE_PERIOD_DEFAULT
 	}
 
-	def srcGenFolderRelativeToUserSrc(GeneratorEntry it) {
+	def String srcGenFolderRelativeToUserSrc(GeneratorEntry it) {
 		folderRelativeToOther(srcGenFolder, userSrcFolder)
 	}
 
-	def userSrcFolderRelativeToSrcGen(GeneratorEntry it) {
+	def String userSrcFolderRelativeToSrcGen(GeneratorEntry it) {
 		folderRelativeToOther(userSrcFolder, srcGenFolder)
 	}
 
-	def folderRelativeToOther(String folder, String otherFolder) {
+	def String folderRelativeToOther(String folder, String otherFolder) {
 		if (otherFolder.equals(folder)) {
 			""
 		} else if (otherFolder.empty) {
