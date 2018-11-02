@@ -45,7 +45,7 @@ import org.yakindu.sct.generator.builder.nature.SCTNature;
 import org.yakindu.sct.model.sgraph.SGraphPackage;
 import org.yakindu.sct.model.sgraph.Statechart;
 import org.yakindu.sct.ui.editor.DiagramActivator;
-import org.yakindu.sct.ui.editor.factories.FactoryUtils;
+import org.yakindu.sct.ui.editor.wizards.DefaultModelCreator;
 
 public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 
@@ -65,28 +65,28 @@ public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 
 	private IFile diagramFile;
 
-	public ArduinoSCTProjectGenerator(String manifestPath, String projectName) {
+	public ArduinoSCTProjectGenerator(final String manifestPath, final String projectName) {
 		super(manifestPath);
 		setProjectName(projectName);
 	}
 
-	public void setStatechartName(String statechartName) {
+	public void setStatechartName(final String statechartName) {
 		this.statechartName = statechartName;
 	}
 
-	public void setSrcFolder(String srcFolderName) {
+	public void setSrcFolder(final String srcFolderName) {
 		this.srcFolderName = srcFolderName;
 	}
 
-	public void setSrcGenFolder(String srcGenFolderName) {
+	public void setSrcGenFolder(final String srcGenFolderName) {
 		this.srcGenFolderName = srcGenFolderName;
 	}
 
-	public void setCyclePeriod(int cyclePeriod) {
+	public void setCyclePeriod(final int cyclePeriod) {
 		this.cyclePeriod = cyclePeriod;
 	}
 
-	public void setTimer(TimerElement timer) {
+	public void setTimer(final TimerElement timer) {
 		this.timer = timer;
 	}
 
@@ -95,7 +95,7 @@ public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 	 *      org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	public void generate(Map<String, Object> model, IProgressMonitor monitor) throws CoreException {
+	public void generate(final Map<String, Object> model, final IProgressMonitor monitor) throws CoreException {
 		model.put("statechartName", this.statechartName); //$NON-NLS-1$
 		model.put("srcFolder", this.srcFolderName); //$NON-NLS-1$
 		model.put("srcGenFolder", this.srcGenFolderName); //$NON-NLS-1$
@@ -125,7 +125,7 @@ public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 	 * @see org.eclipse.tools.templates.freemarker.FMProjectGenerator#initProjectDescription(org.eclipse.core.resources.IProjectDescription)
 	 */
 	@Override
-	protected void initProjectDescription(IProjectDescription description) throws CoreException {
+	protected void initProjectDescription(final IProjectDescription description) throws CoreException {
 		description.setNatureIds(new String[] { CProjectNature.C_NATURE_ID, CCProjectNature.CC_NATURE_ID,
 				ARDUINO_PROJECT_NATURE_ID, SCTNature.NATURE_ID });
 		final ICommand command = description.newCommand();
@@ -133,7 +133,7 @@ public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 		description.setBuildSpec(new ICommand[] { command });
 	}
 
-	protected void createDiagram(IProgressMonitor progressMonitor) {
+	protected void createDiagram(final IProgressMonitor progressMonitor) {
 		final TransactionalEditingDomain editingDomain = WorkspaceEditingDomainFactory.INSTANCE.createEditingDomain();
 		progressMonitor.beginTask(Messages.ArduinoSCTProjectGenerator_creatingDiagram, 3);
 
@@ -148,9 +148,10 @@ public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 			 *      org.eclipse.core.runtime.IAdaptable)
 			 */
 			@Override
-			protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info)
+			protected CommandResult doExecuteWithResult(final IProgressMonitor monitor, final IAdaptable info)
 					throws ExecutionException {
-				FactoryUtils.createStatechartModel(resource, DiagramActivator.DIAGRAM_PREFERENCES_HINT);
+				final DefaultModelCreator modelCreator = new DefaultModelCreator();
+				modelCreator.createStatechartModel(resource, DiagramActivator.DIAGRAM_PREFERENCES_HINT);
 				final Statechart statechart = (Statechart) EcoreUtil.getObjectByType(resource.getContents(),
 						SGraphPackage.Literals.STATECHART);
 				statechart.setDomainID(BasePackage.Literals.DOMAIN_ELEMENT__DOMAIN_ID.getDefaultValueLiteral());

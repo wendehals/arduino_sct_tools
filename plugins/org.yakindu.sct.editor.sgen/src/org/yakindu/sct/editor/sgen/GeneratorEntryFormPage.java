@@ -16,6 +16,7 @@ import static org.yakindu.sct.editor.sgen.SGenModelUtil.getFeatureTypes;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.action.Action;
@@ -42,6 +43,7 @@ import org.yakindu.sct.editor.sgen.extensions.FeatureConfigurationSectionsExtens
 import org.yakindu.sct.editor.sgen.extensions.IFeatureConfigurationSection;
 import org.yakindu.sct.generator.builder.action.GenerateModelAction;
 import org.yakindu.sct.generator.core.extensions.GeneratorExtensions;
+import org.yakindu.sct.generator.core.extensions.IGeneratorDescriptor;
 import org.yakindu.sct.model.sgen.FeatureConfiguration;
 import org.yakindu.sct.model.sgen.FeatureParameter;
 import org.yakindu.sct.model.sgen.FeatureParameterValue;
@@ -91,21 +93,24 @@ public class GeneratorEntryFormPage extends FormPage implements IXtextModelListe
 		final Map<String, IFeatureConfigurationSection> featureConfigurationSections = FeatureConfigurationSectionsExtension
 				.getFeatureConfigurationSections();
 
-		final Collection<FeatureType> featureTypes = getFeatureTypes(
-				GeneratorExtensions.getGeneratorDescriptor(this.generatorId));
-		for (final FeatureType featureType : featureTypes) {
-			IFeatureConfigurationSection featureConfigurationSection = featureConfigurationSections
-					.get(featureType.getName());
-			if (featureConfigurationSection == null) {
-				featureConfigurationSection = new GenericFeatureConfigurationSection();
+		final Optional<IGeneratorDescriptor> generatorDescriptor = GeneratorExtensions
+				.getGeneratorDescriptor(this.generatorId);
+		if (generatorDescriptor.isPresent()) {
+			final Collection<FeatureType> featureTypes = getFeatureTypes(generatorDescriptor.get());
+			for (final FeatureType featureType : featureTypes) {
+				IFeatureConfigurationSection featureConfigurationSection = featureConfigurationSections
+						.get(featureType.getName());
+				if (featureConfigurationSection == null) {
+					featureConfigurationSection = new GenericFeatureConfigurationSection();
+				}
+
+				featureConfigurationSection.initialize(this, featureType);
+				featureConfigurationSection.createSection(toolkit, parent);
+				this.sections.put(featureType.getName(), featureConfigurationSection);
 			}
 
-			featureConfigurationSection.initialize(this, featureType);
-			featureConfigurationSection.createSection(toolkit, parent);
-			this.sections.put(featureType.getName(), featureConfigurationSection);
+			this.sections.values().forEach(section -> section.modelChanged(getEditor().getXtextDocument()));
 		}
-
-		this.sections.values().forEach(section -> section.modelChanged(getEditor().getXtextDocument()));
 	}
 
 	private IAction createGenerateAction() {

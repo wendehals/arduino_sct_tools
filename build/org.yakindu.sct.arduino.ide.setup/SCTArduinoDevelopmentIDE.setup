@@ -22,6 +22,8 @@
     <requirement
         name="org.eclipse.emf.sdk.feature.group"/>
     <requirement
+        name="org.eclipse.emf.ecore.xcore.sdk.feature.group"/>
+    <requirement
         name="org.eclipse.xtext.sdk.feature.group"/>
     <requirement
         name="org.eclipse.xtend.sdk.feature.group"/>
@@ -113,13 +115,13 @@
             versionRange="[9.5.0,9.6.0)"/>
         <requirement
             name="org.yakindu.sct.feature.group"
-            versionRange="3.4.0"/>
+            versionRange="[3.4.0,3.5.0)"/>
         <requirement
             name="org.yakindu.sct.generator.c.feature.group"
             versionRange="[3.4.0,3.5.0)"/>
         <requirement
             name="org.yakindu.sct.generator.cpp.feature.group"
-            versionRange="[3.3.0,3.4.0)"/>
+            versionRange="[3.4.0,3.5.0)"/>
         <requirement
             name="org.eclipse.emf.sdk.feature.group"/>
         <requirement

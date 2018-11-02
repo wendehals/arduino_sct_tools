@@ -8,6 +8,8 @@
  */
 package org.yakindu.sct.arduino.generator.cpp;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.xtext.generator.OutputConfiguration;
 import org.yakindu.sct.arduino.generator.cpp.features.IArduinoFeatureConstants;
 import org.yakindu.sct.generator.core.execution.SExecGeneratorEntryExecutor;
@@ -21,11 +23,12 @@ public class ArduinoCppCodeGenerator extends SExecGeneratorEntryExecutor {
 	 * @see org.yakindu.sct.generator.core.execution.AbstractGeneratorEntryExecutor#execute(org.yakindu.sct.model.sgen.GeneratorEntry)
 	 */
 	@Override
-	public void execute(GeneratorEntry entry) {
+	public IStatus execute(final GeneratorEntry entry) {
 		execute(getFileSystemAccess(entry), entry);
+		return Status.OK_STATUS;
 	}
 
-	private ISCTFileSystemAccess getFileSystemAccess(GeneratorEntry entry) {
+	private ISCTFileSystemAccess getFileSystemAccess(final GeneratorEntry entry) {
 		final ISCTFileSystemAccess fileSystemAccess = this.factory.create(entry);
 
 		final FeatureConfiguration featureConfiguration = entry
