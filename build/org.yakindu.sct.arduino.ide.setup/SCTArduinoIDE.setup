@@ -37,11 +37,11 @@
       vm="true"/>
   <setupTask
       xsi:type="setup:EclipseIniTask"
-      option="-Doomph.redirection.org.yakindu.sct.arduino.ide.oxygen"
+      option="-Doomph.redirection.org.yakindu.sct.arduino.ide.2018-09"
       value="=index:/redirectable.products.setup->https://raw.githubusercontent.com/wendehals/arduino_sct_tools/master/build/org.yakindu.sct.arduino.ide.setup/SCTArduinoIDE.setup"
       vm="true"/>
-  <version name="oxygen"
-      label="Oxygen"
+  <version name="2018-09"
+      label="2018-09"
       requiredJavaVersion="1.8">
     <setupTask
         xsi:type="setup.p2:P2Task"
@@ -50,7 +50,7 @@
           name="org.eclipse.platform.ide"/>
       <requirement
           name="org.eclipse.platform.feature.group"
-          versionRange="[4.7.0,4.8.0)"/>
+          versionRange="[4.9.0,4.10.0)"/>
       <requirement
           name="org.eclipse.rcp.feature.group"/>
       <requirement
@@ -59,27 +59,27 @@
           name="org.eclipse.egit.feature.group"/>
       <requirement
           name="org.eclipse.cdt.feature.group"
-          versionRange="[9.4.0,9.5.0)"/>
+          versionRange="[9.5.0,9.6.0)"/>
       <requirement
           name="org.eclipse.cdt.arduino.feature.group"
-          versionRange="[9.4.0,9.5.0)"/>
+          versionRange="[9.5.0,9.6.0)"/>
       <requirement
           name="org.yakindu.sct.feature.group"
-          versionRange="[3.3.0,3.4.0)"/>
+          versionRange="[3.4.0,3.5.0)"/>
       <requirement
           name="org.yakindu.sct.generator.feature.group"
-          versionRange="[3.3.0,3.4.0)"/>
+          versionRange="[3.4.0,3.5.0)"/>
       <requirement
           name="org.yakindu.sct.arduino.feature.group"
-          versionRange="[0.8.0,0.9.0)"/>
+          versionRange="[0.9.0,0.10.0)"/>
       <repository
-          url="http://download.eclipse.org/releases/oxygen"/>
+          url="http://download.eclipse.org/eclipse/updates/4.9"/>
       <repository
-          url="http://download.eclipse.org/tools/cdt/releases/9.4"/>
+          url="http://download.eclipse.org/releases/2018-09"/>
       <repository
-          url="http://download.eclipse.org/eclipse/updates/4.7"/>
+          url="http://download.eclipse.org/tools/cdt/releases/9.5"/>
       <repository
-          url="http://updates.yakindu.org/sct/oxygen/releases"/>
+          url="https://updates.yakindu.com/statecharts/releases/"/>
       <repository
           url="https://wendehals.github.io/arduino_sct_tools/releases/"/>
     </setupTask>
