@@ -18,14 +18,15 @@ import org.yakindu.sct.generator.core.IExecutionFlowGenerator;
 import org.yakindu.sct.generator.core.IGeneratorModule;
 import org.yakindu.sct.generator.core.types.ICodegenTypeSystemAccess;
 import org.yakindu.sct.generator.cpp.CppExpressionsGenerator;
+import org.yakindu.sct.generator.cpp.CppInterfaceIncludeProvider;
 import org.yakindu.sct.generator.cpp.CppNaming;
 import org.yakindu.sct.generator.cpp.CppNamingService;
-import org.yakindu.sct.generator.cpp.StandardCppIncludeProvider;
 import org.yakindu.sct.model.sexec.naming.INamingService;
 import org.yakindu.sct.model.sgen.GeneratorEntry;
 import org.yakindu.sct.model.stext.inferrer.STextTypeInferrer;
 
 import com.google.inject.Binder;
+import com.google.inject.multibindings.Multibinder;
 import com.google.inject.name.Names;
 
 public class ArduinoCppCodeGeneratorModule implements IGeneratorModule {
@@ -37,14 +38,15 @@ public class ArduinoCppCodeGeneratorModule implements IGeneratorModule {
 	@Override
 	public void configure(final GeneratorEntry entry, final Binder binder) {
 		binder.bind(GeneratorEntry.class).toInstance(entry);
+		binder.bind(String.class).annotatedWith(Names.named("Separator")).toInstance(getSeparator(entry));
 		binder.bind(IExecutionFlowGenerator.class).to(ArduinoCodeGenerator.class);
 		binder.bind(ICodegenTypeSystemAccess.class).to(CTypeSystemAccess.class);
 		binder.bind(INamingService.class).to(CppNamingService.class);
 		binder.bind(ITypeSystemInferrer.class).to(STextTypeInferrer.class);
 		binder.bind(Naming.class).to(CppNaming.class);
-		binder.bind(IncludeProvider.class).to(StandardCppIncludeProvider.class);
 		binder.bind(CExpressionsGenerator.class).to(CppExpressionsGenerator.class);
-		binder.bind(String.class).annotatedWith(Names.named("Separator")).toInstance(getSeparator(entry));
+		final Multibinder<IncludeProvider> includeBinder = Multibinder.newSetBinder(binder, IncludeProvider.class);
+		includeBinder.addBinding().to(CppInterfaceIncludeProvider.class);
 	}
 
 	protected String getSeparator(final GeneratorEntry entry) {
