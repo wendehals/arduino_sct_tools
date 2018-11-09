@@ -1,6 +1,0 @@
-{
-  "name": "YAKINDU SCT Arduino Support",
-  "tagline": "Program an Arduino with statecharts in less than five minutes",
-  "body": "# YAKINDU SCT Arduino Support\r\n\r\nProgram your Arduino with [YAKINDU Statechart Tools](http://statecharts.org).\r\n\r\nThis is an Eclipse update site for the YAKINDU SCT Arduino Support feature.",
-  "note": "Don't delete this file! It's used internally to help with page regeneration."
-}

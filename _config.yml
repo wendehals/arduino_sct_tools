@@ -1,0 +1,8 @@
+title: YAKINDU SCT Arduino Support
+description: Program an Arduino with statecharts in less than five minutes
+google_analytics: 
+show_downloads: true
+theme: jekyll-theme-midnight
+
+gems:
+  - jekyll-mentions
