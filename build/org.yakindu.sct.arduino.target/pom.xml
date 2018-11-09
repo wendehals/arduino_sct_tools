@@ -32,9 +32,9 @@
 						<configuration>
 							<artifacts>
 								<artifact>
-									<file>Oxygen.target</file>
+									<file>2018-09.target</file>
 									<type>target</type>
-									<classifier>Oxygen</classifier>
+									<classifier>2018-09</classifier>
 								</artifact>
 							</artifacts>
 						</configuration>
