@@ -67,7 +67,10 @@
           name="org.yakindu.sct.feature.group"
           versionRange="[3.4.0,3.5.0)"/>
       <requirement
-          name="org.yakindu.sct.generator.feature.group"
+          name="org.yakindu.sct.generator.c.feature.group"
+          versionRange="[3.4.0,3.5.0)"/>
+      <requirement
+          name="org.yakindu.sct.generator.cpp.feature.group"
           versionRange="[3.4.0,3.5.0)"/>
       <requirement
           name="org.yakindu.sct.arduino.feature.group"
