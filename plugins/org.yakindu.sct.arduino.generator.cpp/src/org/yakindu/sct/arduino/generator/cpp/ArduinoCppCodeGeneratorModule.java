@@ -11,6 +11,7 @@ package org.yakindu.sct.arduino.generator.cpp;
 import org.yakindu.base.types.inferrer.ITypeSystemInferrer;
 import org.yakindu.sct.generator.c.CExpressionsGenerator;
 import org.yakindu.sct.generator.c.IncludeProvider;
+import org.yakindu.sct.generator.c.ScTypesIncludeProvider;
 import org.yakindu.sct.generator.c.extensions.GenmodelEntries;
 import org.yakindu.sct.generator.c.extensions.Naming;
 import org.yakindu.sct.generator.c.types.CTypeSystemAccess;
@@ -45,8 +46,14 @@ public class ArduinoCppCodeGeneratorModule implements IGeneratorModule {
 		binder.bind(ITypeSystemInferrer.class).to(STextTypeInferrer.class);
 		binder.bind(Naming.class).to(CppNaming.class);
 		binder.bind(CExpressionsGenerator.class).to(CppExpressionsGenerator.class);
+
+		addIncludeProvider(binder, ScTypesIncludeProvider.class);
+		addIncludeProvider(binder, CppInterfaceIncludeProvider.class);
+	}
+
+	protected void addIncludeProvider(final Binder binder, final Class<? extends IncludeProvider> provider) {
 		final Multibinder<IncludeProvider> includeBinder = Multibinder.newSetBinder(binder, IncludeProvider.class);
-		includeBinder.addBinding().to(CppInterfaceIncludeProvider.class);
+		includeBinder.addBinding().to(provider);
 	}
 
 	protected String getSeparator(final GeneratorEntry entry) {
