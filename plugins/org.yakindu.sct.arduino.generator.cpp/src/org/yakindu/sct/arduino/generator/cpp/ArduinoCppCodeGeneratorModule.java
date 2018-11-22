@@ -23,6 +23,9 @@ import org.yakindu.sct.generator.cpp.CppInterfaceIncludeProvider;
 import org.yakindu.sct.generator.cpp.CppNaming;
 import org.yakindu.sct.generator.cpp.CppNamingService;
 import org.yakindu.sct.model.sexec.naming.INamingService;
+import org.yakindu.sct.model.sexec.transformation.BehaviorMapping;
+import org.yakindu.sct.model.sexec.transformation.IModelSequencer;
+import org.yakindu.sct.model.sexec.transformation.ng.ModelSequencer;
 import org.yakindu.sct.model.sgen.GeneratorEntry;
 import org.yakindu.sct.model.stext.inferrer.STextTypeInferrer;
 
@@ -38,6 +41,8 @@ public class ArduinoCppCodeGeneratorModule implements IGeneratorModule {
 	 */
 	@Override
 	public void configure(final GeneratorEntry entry, final Binder binder) {
+		binder.bind(IModelSequencer.class).to(ModelSequencer.class);
+		binder.bind(BehaviorMapping.class).to(org.yakindu.sct.model.sexec.transformation.ng.BehaviorMapping.class);
 		binder.bind(GeneratorEntry.class).toInstance(entry);
 		binder.bind(String.class).annotatedWith(Names.named("Separator")).toInstance(getSeparator(entry));
 		binder.bind(IExecutionFlowGenerator.class).to(ArduinoCodeGenerator.class);
