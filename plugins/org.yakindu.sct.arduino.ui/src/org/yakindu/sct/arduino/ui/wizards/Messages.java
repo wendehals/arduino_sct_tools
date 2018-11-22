@@ -14,6 +14,8 @@ public class Messages extends NLS {
 
 	private static final String BUNDLE_NAME = "org.yakindu.sct.arduino.ui.wizards.messages"; //$NON-NLS-1$
 
+	public static String ArduinoSCTProjectGenerator_creatingDiagram;
+
 	public static String ArduinoSCTWizardPage_architectureLabel;
 	public static String ArduinoSCTWizardPage_cyclePeriodLabel;
 	public static String ArduinoSCTWizardPage_cyclePeriodNotInIntervalMessage;

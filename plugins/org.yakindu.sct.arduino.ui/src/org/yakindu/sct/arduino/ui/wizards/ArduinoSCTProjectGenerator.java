@@ -6,7 +6,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package org.yakindu.sct.arduino.core;
+package org.yakindu.sct.arduino.ui.wizards;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -41,6 +41,7 @@ import org.eclipse.tools.templates.freemarker.FMProjectGenerator;
 import org.osgi.framework.Bundle;
 import org.yakindu.base.base.BasePackage;
 import org.yakindu.sct.arduino.generator.cpp.extensions.TimerElement;
+import org.yakindu.sct.arduino.ui.SCTArduinoUIPlugin;
 import org.yakindu.sct.generator.builder.nature.SCTNature;
 import org.yakindu.sct.model.sgraph.SGraphPackage;
 import org.yakindu.sct.model.sgraph.Statechart;
@@ -122,7 +123,7 @@ public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 	 */
 	@Override
 	protected Bundle getSourceBundle() {
-		return SCTArduinoPlugin.getDefault().getBundle();
+		return SCTArduinoUIPlugin.getDefault().getBundle();
 	}
 
 	/**
@@ -178,13 +179,13 @@ public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 		try {
 			command.execute(progressMonitor, null);
 		} catch (final ExecutionException exception) {
-			SCTArduinoPlugin.logError(exception);
+			SCTArduinoUIPlugin.logError(exception);
 		}
 
 		try {
 			WorkspaceSynchronizer.getFile(resource).setCharset(UTF_8, new NullProgressMonitor());
 		} catch (final CoreException exception) {
-			SCTArduinoPlugin.logError(exception);
+			SCTArduinoUIPlugin.logError(exception);
 		}
 
 		editingDomain.dispose();

@@ -6,7 +6,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package org.yakindu.sct.arduino.core;
+package org.yakindu.sct.arduino.ui.wizards;
 
 import org.yakindu.sct.model.stext.lib.StatechartAnnotations;
 import org.yakindu.sct.ui.editor.wizards.DefaultModelCreator;

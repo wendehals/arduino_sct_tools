@@ -22,7 +22,6 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.WorkbenchException;
 import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
 import org.eclipse.ui.part.FileEditorInput;
-import org.yakindu.sct.arduino.core.ArduinoSCTProjectGenerator;
 import org.yakindu.sct.arduino.ui.SCTArduinoUIPlugin;
 import org.yakindu.sct.ui.perspectives.IYakinduSctPerspectives;
 
@@ -41,7 +40,7 @@ public class NewArduinoSCTProjectWizard extends TemplateWizard {
 	public void addPages() {
 		this.projectCreationPage = new WizardNewProjectCreationPage("basicNewProjectPage") { //$NON-NLS-1$
 			@Override
-			public void createControl(Composite parent) {
+			public void createControl(final Composite parent) {
 				super.createControl(parent);
 				createWorkingSetGroup((Composite) getControl(), getSelection(),
 						new String[] { "org.eclipse.ui.resourceWorkingSetPage" }); //$NON-NLS-1$
