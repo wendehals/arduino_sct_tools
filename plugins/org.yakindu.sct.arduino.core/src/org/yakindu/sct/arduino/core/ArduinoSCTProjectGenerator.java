@@ -45,7 +45,7 @@ import org.yakindu.sct.generator.builder.nature.SCTNature;
 import org.yakindu.sct.model.sgraph.SGraphPackage;
 import org.yakindu.sct.model.sgraph.Statechart;
 import org.yakindu.sct.ui.editor.DiagramActivator;
-import org.yakindu.sct.ui.editor.wizards.DefaultModelCreator;
+import org.yakindu.sct.ui.editor.wizards.IModelCreator;
 
 public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 
@@ -84,6 +84,10 @@ public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 
 	public void setCyclePeriod(final int cyclePeriod) {
 		this.cyclePeriod = cyclePeriod;
+	}
+
+	protected int getCyclePeriod() {
+		return this.cyclePeriod;
 	}
 
 	public void setTimer(final TimerElement timer) {
@@ -150,7 +154,7 @@ public class ArduinoSCTProjectGenerator extends FMProjectGenerator {
 			@Override
 			protected CommandResult doExecuteWithResult(final IProgressMonitor monitor, final IAdaptable info)
 					throws ExecutionException {
-				final DefaultModelCreator modelCreator = new DefaultModelCreator();
+				final IModelCreator modelCreator = new ArduinoModelCreator(getCyclePeriod());
 				modelCreator.createStatechartModel(resource, DiagramActivator.DIAGRAM_PREFERENCES_HINT);
 				final Statechart statechart = (Statechart) EcoreUtil.getObjectByType(resource.getContents(),
 						SGraphPackage.Literals.STATECHART);
