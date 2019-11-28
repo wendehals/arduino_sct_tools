@@ -16,13 +16,21 @@
 	<properties>
 		<tycho.version>1.5.1</tycho.version>
 		<build-helper.version>3.0.0</build-helper.version>
-		<org.jboss.tools.tycho-plugins.version>1.0.0</org.jboss.tools.tycho-plugins.version>
+		<org.jboss.tools.tycho-plugins.version>1.4.0</org.jboss.tools.tycho-plugins.version>
 		<xtextVersion>2.19.0</xtextVersion>
 		<maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>jboss-public-repository-group</id>
+			<name>JBoss Public Repository Group</name>
+			<url>http://repository.jboss.org/nexus/content/groups/public/</url>
+		</pluginRepository>
+	</pluginRepositories>
 
 	<build>
 		<pluginManagement>
