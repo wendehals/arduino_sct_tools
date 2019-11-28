@@ -43,7 +43,7 @@
   <setupTask
       xsi:type="setup:VariableTask"
       name="eclipse.target.platform"
-      defaultValue="2018-09"
+      defaultValue="2019-06"
       storageURI="scope://Workspace"/>
   <setupTask
       xsi:type="git:GitCloneTask"
@@ -102,26 +102,26 @@
         </annotation>
         <requirement
             name="org.eclipse.platform.sdk"
-            versionRange="[4.9.0,4.10.0)"/>
+            versionRange="[4.12.0,4.13.0)"/>
         <requirement
             name="org.eclipse.license.feature.group"/>
         <requirement
             name="org.eclipse.egit.feature.group"/>
         <requirement
             name="org.eclipse.cdt.feature.group"
-            versionRange="[9.5.0,9.6.0)"/>
+            versionRange="[9.8.0,9.9.0)"/>
         <requirement
             name="org.eclipse.cdt.arduino.feature.group"
-            versionRange="[9.5.0,9.6.0)"/>
+            versionRange="[9.8.0,9.9.0)"/>
         <requirement
             name="org.yakindu.sct.feature.group"
-            versionRange="[3.4.0,3.5.0)"/>
+            versionRange="[3.5.0,3.6.0)"/>
         <requirement
             name="org.yakindu.sct.generator.c.feature.group"
-            versionRange="[3.4.0,3.5.0)"/>
+            versionRange="[3.5.0,3.6.0)"/>
         <requirement
             name="org.yakindu.sct.generator.cpp.feature.group"
-            versionRange="[3.4.0,3.5.0)"/>
+            versionRange="[3.5.0,3.6.0)"/>
         <requirement
             name="org.eclipse.emf.sdk.feature.group"/>
         <requirement
@@ -135,19 +135,19 @@
         <requirement
             name="org.junit"/>
         <repositoryList
-            name="2018-09">
+            name="2019-06">
           <repository
-              url="http://download.eclipse.org/eclipse/updates/4.9"/>
+              url="http://download.eclipse.org/eclipse/updates/4.12"/>
           <repository
-              url="http://download.eclipse.org/tools/cdt/releases/9.5"/>
+              url="http://download.eclipse.org/tools/cdt/releases/9.8"/>
           <repository
-              url="http://download.eclipse.org/releases/2018-09"/>
+              url="http://download.eclipse.org/releases/2019-06"/>
           <repository
               url="http://download.eclipse.org/cbi/updates/license"/>
           <repository
               url="https://updates.yakindu.com/statecharts/releases/"/>
           <repository
-              url="http://download.eclipse.org/tools/orbit/downloads/drops/R20170919201930/repository"/>
+              url="https://download.eclipse.org/tools/orbit/downloads/drops/R20190827152740/repository"/>
         </repositoryList>
       </targlet>
       <description>YAKINDU Statechart Tools for Arduino</description>
