@@ -4,29 +4,17 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<relativePath>../org.yakindu.sct.arduino.build/pom.xml</relativePath>
-		<groupId>org.yakindu.sct.arduino</groupId>
-		<artifactId>parent</artifactId>
-		<version>0.9.0-SNAPSHOT</version>
-	</parent>
-
+	<groupId>org.yakindu.sct.arduino</groupId>
 	<artifactId>org.yakindu.sct.arduino.p2repo</artifactId>
+	<version>0.10.0-SNAPSHOT</version>
+
 	<packaging>eclipse-repository</packaging>
 
-	<pluginRepositories>
-		<pluginRepository>
-			<id>jboss-public-repository-group</id>
-			<name>JBoss Public Repository Group</name>
-			<url>http://repository.jboss.org/nexus/content/groups/public/</url>
-		</pluginRepository>
-
-		<pluginRepository>
-			<id>jboss-snapshots-repository</id>
-			<name>JBoss Snapshots Repository</name>
-			<url>https://repository.jboss.org/nexus/content/repositories/snapshots/</url>
-		</pluginRepository>
-	</pluginRepositories>
+	<parent>
+		<groupId>org.yakindu.sct.arduino</groupId>
+		<artifactId>releng</artifactId>
+		<version>0.10.0-SNAPSHOT</version>
+	</parent>
 
 	<build>
 		<plugins>
@@ -82,14 +70,14 @@
 							<!-- Symbols are used while expanding index.html template -->
 							<symbols>
 								<update.site.name>${project.parent.name}</update.site.name>
-								<target.eclipse.version>2018-09 (4.9)</target.eclipse.version>
+								<target.eclipse.version>2019-06 (4.12)</target.eclipse.version>
 							</symbols>
 
 							<associateSites>
-								<site>http://download.eclipse.org/releases/2018-09</site>
-								<site>http://download.eclipse.org/eclipse/updates/4.9</site>
+								<site>http://download.eclipse.org/releases/2019-06</site>
+								<site>http://download.eclipse.org/eclipse/updates/4.12</site>
 								<site>http://download.eclipse.org/cbi/updates/license</site>
-								<site>http://download.eclipse.org/tools/cdt/releases/9.5</site>
+								<site>http://download.eclipse.org/tools/cdt/releases/9.8</site>
 								<site>http://updates.yakindu.org/sct/releases</site>
 							</associateSites>
 						</configuration>

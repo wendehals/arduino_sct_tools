@@ -2,7 +2,7 @@
 <feature
       id="org.yakindu.sct.arduino"
       label="YAKINDU Statechart Tools for Arduino"
-      version="0.9.0.qualifier"
+      version="0.10.0.qualifier"
       provider-name="Lothar Wendehals"
       license-feature="org.eclipse.license"
       license-feature-version="1.0.1.qualifier">
@@ -25,10 +25,14 @@
       <import plugin="org.yakindu.sct.generator.core"/>
       <import plugin="org.yakindu.sct.generator.genmodel"/>
       <import plugin="org.yakindu.sct.generator.c"/>
-      <import plugin="org.yakindu.sct.generator.cpp" version="3.1.1" match="greaterOrEqual"/>
+      <import plugin="org.yakindu.sct.generator.cpp" version="3.5.0" match="equivalent"/>
       <import plugin="org.eclipse.cdt.ui"/>
       <import plugin="org.eclipse.core.resources"/>
       <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.cdt.core"/>
+      <import plugin="org.eclipse.emf.transaction"/>
+      <import plugin="org.eclipse.emf.workspace"/>
+      <import plugin="org.eclipse.gmf.runtime.emf.commands.core"/>
       <import plugin="org.eclipse.tools.templates.freemarker"/>
       <import plugin="org.eclipse.tools.templates.ui"/>
       <import plugin="org.eclipse.ui"/>
@@ -37,13 +41,10 @@
       <import plugin="org.eclipse.ui.ide"/>
       <import plugin="org.eclipse.xtext.ui"/>
       <import plugin="org.yakindu.sct.ui"/>
+      <import plugin="org.yakindu.sct.ui.editor"/>
       <import plugin="org.yakindu.sct.generator.builder"/>
       <import plugin="org.yakindu.sct.generator.genmodel.ui"/>
-      <import plugin="org.eclipse.cdt.core"/>
-      <import plugin="org.eclipse.emf.transaction"/>
-      <import plugin="org.eclipse.emf.workspace"/>
-      <import plugin="org.eclipse.gmf.runtime.emf.commands.core"/>
-      <import plugin="org.yakindu.sct.ui.editor"/>
+      <import plugin="org.yakindu.sct.model.stext.lib"/>
       <import plugin="org.eclipse.emf.common.ui"/>
       <import plugin="org.yakindu.sct.model.sgen"/>
       <import feature="org.eclipse.cdt.arduino"/>
