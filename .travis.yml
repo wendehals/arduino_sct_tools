@@ -2,8 +2,4 @@ dist: trusty
 language: java
 jdk:
   - oraclejdk8
-
-before_script:
-  - cd build/org.yakindu.sct.arduino.build
- 
-script: mvn clean install
+script: mvn clean verify
