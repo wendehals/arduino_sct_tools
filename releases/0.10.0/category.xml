@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.yakindu.sct.arduino_0.10.0.201911291035.jar" id="org.yakindu.sct.arduino" version="0.10.0.201911291035">
+      <category name="org.yakindu.sct.arduino.p2repo"/>
+   </feature>
+   <category-def name="org.yakindu.sct.arduino.p2repo" label="YAKINDU Statechart Tools for Arduino">
+      <description>
+         Here you can find Arduino support for the YAKINDU Statechart Tools.
+      </description>
+   </category-def>
+   <repository-reference location="http://download.eclipse.org/cbi/updates/license" enabled="true" />
+   <repository-reference location="http://updates.yakindu.org/sct/mars/releases" enabled="true" />
+   <repository-reference location="http://download.eclipse.org/tools/cdt/releases/9.0" enabled="true" />
+</site>
