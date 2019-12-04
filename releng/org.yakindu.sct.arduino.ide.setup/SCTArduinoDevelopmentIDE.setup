@@ -85,7 +85,7 @@
             source="http:/www.eclipse.org/oomph/targlets/TargetDefinitionGenerator">
           <detail
               key="location">
-            <value>${git.clone.arduino_sct_tools.location}/build/org.yakindu.sct.arduino.target/2019-06-generated.target</value>
+            <value>${git.clone.arduino_sct_tools.location}/releng/org.yakindu.sct.arduino.target/2019-06-generated.target</value>
           </detail>
           <detail
               key="includeAllPlatforms">
